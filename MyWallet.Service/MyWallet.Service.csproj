@@ -44,5 +44,11 @@
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyWallet.Data\MyWallet.Data.csproj">
+      <Project>{A9E29F83-0C10-4C16-8668-B3B74A583621}</Project>
+      <Name>MyWallet.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

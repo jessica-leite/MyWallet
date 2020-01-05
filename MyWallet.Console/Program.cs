@@ -1,5 +1,5 @@
 ﻿using MyWallet.Data;
-using MyWallet.Data.Domain;
+//using MyWallet.Data;
 using System;
 
 namespace MyWallet.Console
