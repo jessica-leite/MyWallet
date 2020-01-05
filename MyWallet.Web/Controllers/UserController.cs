@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyWallet.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,8 @@ namespace MyWallet.Web.Controllers
         // GET: User
         public ActionResult Create()
         {
+            var userService = new UserService();
+
             return View();
         }
 
