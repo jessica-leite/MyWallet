@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Country.cs" />
     <Compile Include="Domain\CurrencyType.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Mapping\CountryMapping.cs" />
     <Compile Include="Mapping\CurrencyTypeMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Migrations\202001052042210_InitialCreate.cs" />
@@ -62,6 +64,10 @@
     <Compile Include="Migrations\202001062052579_CreateTable_CurrencyType.cs" />
     <Compile Include="Migrations\202001062052579_CreateTable_CurrencyType.designer.cs">
       <DependentUpon>202001062052579_CreateTable_CurrencyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001062104511_CreateTable_Country.cs" />
+    <Compile Include="Migrations\202001062104511_CreateTable_Country.designer.cs">
+      <DependentUpon>202001062104511_CreateTable_Country.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />
@@ -78,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001062052579_CreateTable_CurrencyType.resx">
       <DependentUpon>202001062052579_CreateTable_CurrencyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001062104511_CreateTable_Country.resx">
+      <DependentUpon>202001062104511_CreateTable_Country.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
