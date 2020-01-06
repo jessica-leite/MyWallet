@@ -51,8 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\CurrencyType.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Mapping\CurrencyTypeMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
+    <Compile Include="Migrations\202001052042210_InitialCreate.cs" />
+    <Compile Include="Migrations\202001052042210_InitialCreate.designer.cs">
+      <DependentUpon>202001052042210_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001062052579_CreateTable_CurrencyType.cs" />
+    <Compile Include="Migrations\202001062052579_CreateTable_CurrencyType.designer.cs">
+      <DependentUpon>202001062052579_CreateTable_CurrencyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\UserRepository.cs" />
@@ -61,7 +72,14 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202001052042210_InitialCreate.resx">
+      <DependentUpon>202001052042210_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001062052579_CreateTable_CurrencyType.resx">
+      <DependentUpon>202001062052579_CreateTable_CurrencyType.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
