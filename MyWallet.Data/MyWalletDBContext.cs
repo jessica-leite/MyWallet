@@ -10,6 +10,7 @@ namespace MyWallet.Data
         public DbSet<User> User { get; set; }
         public DbSet<CurrencyType> CurrencyType { get; set; }
         public DbSet<Country> Country { get; set; }
+        public DbSet<Context> Context { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -18,6 +19,7 @@ namespace MyWallet.Data
             modelBuilder.Configurations.Add(new UserMapping());
             modelBuilder.Configurations.Add(new CurrencyTypeMapping());
             modelBuilder.Configurations.Add(new CountryMapping());
+            modelBuilder.Configurations.Add(new ContextMapping());
         }
     }
 }

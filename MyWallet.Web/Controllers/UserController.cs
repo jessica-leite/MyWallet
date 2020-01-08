@@ -30,7 +30,7 @@ namespace MyWallet.Web.Controllers
             var userService = new UserService();
             userService.Add(user);
 
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Create", "Context", user);
         }
 
         public ActionResult ResetPassword()
