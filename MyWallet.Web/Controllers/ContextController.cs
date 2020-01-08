@@ -41,7 +41,7 @@ namespace MyWallet.Web.Controllers
 
             contextService.Add(context);
 
-            return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Dashboard");
         }
     }
 }

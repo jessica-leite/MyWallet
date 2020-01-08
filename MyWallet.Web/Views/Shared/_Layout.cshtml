@@ -21,12 +21,18 @@
         @Html.Partial("_LeftMenu")
 
         <div id="content-wrapper" class="d-flex flex-column">
-            @Html.Partial("_Navbar")
-
             <div id="content">
+                @Html.Partial("_Navbar")
                 <div class="container-fluid">
                     @RenderBody()
                 </div>
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright © MyWallet @DateTime.Now.Year</span>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
@@ -55,13 +61,7 @@
         </div>
     </div>
 
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright © MyWallet @DateTime.Now.Year</span>
-            </div>
-        </div>
-    </footer>
+
 
     @Scripts.Render("~/bundles/jquery-bootstrap")
     @RenderSection("scripts", required: false)
