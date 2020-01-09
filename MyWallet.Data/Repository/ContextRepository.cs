@@ -1,6 +1,4 @@
 ﻿using MyWallet.Data.Domain;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MyWallet.Data.Repository
 {

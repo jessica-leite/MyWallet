@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using MyWallet.Web.ViewModels.User;
-using MyWallet.Data.Domain;
+﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Context;
+using MyWallet.Web.ViewModels.User;
+using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
@@ -38,7 +34,6 @@ namespace MyWallet.Web.Controllers
             context.UserId = contextViewModel.UserId;
 
             var contextService = new ContextService();
-
             contextService.Add(context);
 
             return RedirectToAction("Index", "Dashboard");

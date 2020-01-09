@@ -1,0 +1,24 @@
+﻿@model IEnumerable<MyWallet.Data.Domain.Category>
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                Categories
+            </th>
+        </tr>
+
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => category.Name)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<a href="/Category/Add">
+    <i class="fas fa-plus-circle"></i>
+    <span>Add Category</span>
+</a>

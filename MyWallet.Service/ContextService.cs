@@ -5,11 +5,16 @@ namespace MyWallet.Service
 {
     public class ContextService
     {
-        ContextRepository contextRepository = new ContextRepository();
+        private readonly ContextRepository _contextRepository;
+
+        public ContextService()
+        {
+            _contextRepository = new ContextRepository();
+        }
 
         public void Add(Context context)
         {
-            contextRepository.Add(context);
+            _contextRepository.Add(context);
         }
     }
 }

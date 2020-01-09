@@ -51,10 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Context.cs" />
     <Compile Include="Domain\Country.cs" />
     <Compile Include="Domain\CurrencyType.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Mapping\CategoryMapping.cs" />
     <Compile Include="Mapping\CountryMapping.cs" />
     <Compile Include="Mapping\ContextMapping.cs" />
     <Compile Include="Mapping\CurrencyTypeMapping.cs" />
@@ -79,9 +81,22 @@
     <Compile Include="Migrations\202001081104373_UpdateTable_Context.designer.cs">
       <DependentUpon>202001081104373_UpdateTable_Context.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001091218488_CreateTable_Category.cs" />
+    <Compile Include="Migrations\202001091218488_CreateTable_Category.designer.cs">
+      <DependentUpon>202001091218488_CreateTable_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001091248415_UpdateForeignKeys_Category_Context.cs" />
+    <Compile Include="Migrations\202001091248415_UpdateForeignKeys_Category_Context.designer.cs">
+      <DependentUpon>202001091248415_UpdateForeignKeys_Category_Context.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001091257457_UpdateForeignKeys_Category_Context1.cs" />
+    <Compile Include="Migrations\202001091257457_UpdateForeignKeys_Category_Context1.designer.cs">
+      <DependentUpon>202001091257457_UpdateForeignKeys_Category_Context1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
     <Compile Include="Repository\ContextRepository.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
     <Compile Include="Repository\CurrencyTypeRepository.cs" />
@@ -106,6 +121,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001081104373_UpdateTable_Context.resx">
       <DependentUpon>202001081104373_UpdateTable_Context.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001091218488_CreateTable_Category.resx">
+      <DependentUpon>202001091218488_CreateTable_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001091248415_UpdateForeignKeys_Category_Context.resx">
+      <DependentUpon>202001091248415_UpdateForeignKeys_Category_Context.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001091257457_UpdateForeignKeys_Category_Context1.resx">
+      <DependentUpon>202001091257457_UpdateForeignKeys_Category_Context1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyWallet.Data.Domain;
+﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
+using System.Collections.Generic;
 
 namespace MyWallet.Service
 {
