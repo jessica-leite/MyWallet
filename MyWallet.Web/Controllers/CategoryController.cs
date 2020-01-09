@@ -16,13 +16,13 @@ namespace MyWallet.Web.Controllers
             return View(categories);
         }
 
-        public ActionResult Add()
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Add(Category category)
+        public ActionResult Create(Category category)
         {
             categoryService.Add(category);
             return RedirectToAction("Index");
