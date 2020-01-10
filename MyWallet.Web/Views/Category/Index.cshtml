@@ -14,11 +14,21 @@
                 <td>
                     @Html.DisplayFor(model => category.Name)
                 </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = category.Id})">Edit</a>
+                </td>
+                <td>
+                    <a href="@Url.Action("Delete", new {id = category.Id})">Delete</a>
+                </td>
             </tr>
         }
     </table>
 </div>
-<a href="/Category/Create">
-    <i class="fas fa-plus-circle"></i>
-    <span>Add Category</span>
-</a>
+<div>
+    <a href="@Url.Action("Create")" class="btn btn-primary btn-icon-split">
+        <span class="icon text-white-50">
+            <i class="fas fa-plus-circle"></i>
+        </span>
+        <span class="text">Add New Category</span>
+    </a>
+</div>

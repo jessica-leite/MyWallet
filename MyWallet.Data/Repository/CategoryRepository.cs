@@ -22,5 +22,31 @@ namespace MyWallet.Data.Repository
                 return context.Category.ToList();
             }
         }
+
+        public Category GetById(int id)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.Category.Find(id);
+            }
+        }
+
+        public void Edit(Category category)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(category).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public void Delete(Category category)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
     }
 }

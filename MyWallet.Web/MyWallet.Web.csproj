@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
     <Compile Include="ViewModels\Context\CreateContextViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
   </ItemGroup>
@@ -1917,6 +1918,8 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
