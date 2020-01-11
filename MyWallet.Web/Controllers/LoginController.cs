@@ -11,7 +11,7 @@ using System.Web.Security;
 
 namespace MyWallet.Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         // GET: Login
         public ActionResult Index()
@@ -30,7 +30,7 @@ namespace MyWallet.Web.Controllers
                     return View(loginViewModel);
                 }
 
-                FormsAuthentication.SetAuthCookie(userDatabase.Name, loginViewModel.RememberMe);
+                FormsAuthentication.SetAuthCookie(userDatabase.Id.ToString(), loginViewModel.RememberMe);
                 return RedirectToAction("Index", "Dashboard");
             }
 

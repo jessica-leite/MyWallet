@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace MyWallet.Web.Controllers
 {
     [Authorize]
-    public class ContextController : Controller
+    public class ContextController : BaseController
     {
         // GET: Context
         public ActionResult Create(CreateUserViewModel createdUserId)

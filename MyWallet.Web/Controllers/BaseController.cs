@@ -6,13 +6,11 @@ using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
-    [Authorize]
-    public class BankAccountController : BaseController
+    public abstract class BaseController : Controller
     {
-        // GET: BankAccount
-        public ActionResult Create()
+        public int GetUserIdLogged()
         {
-            return View();
+            return Convert.ToInt32(User.Identity.Name);
         }
     }
 }

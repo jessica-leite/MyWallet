@@ -9,7 +9,7 @@ using MyWallet.Service;
 
 namespace MyWallet.Web.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         public ActionResult Create()
         {

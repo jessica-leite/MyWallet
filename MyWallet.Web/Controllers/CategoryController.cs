@@ -6,7 +6,7 @@ using System.Web.Mvc;
 namespace MyWallet.Web.Controllers
 {
     [Authorize]
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         private CategoryService _categoryService = new CategoryService();
 
