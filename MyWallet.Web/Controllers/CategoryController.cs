@@ -22,8 +22,13 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Category category)
+        public ActionResult Create(CreateCategoryViewModel createCategoryViewModel)
         {
+            var category = new Category()
+            {
+                Name = createCategoryViewModel.Name,
+                UserId = createCategoryViewModel.UserId
+            };
             _categoryService.Add(category);
             return RedirectToAction("Index");
         }

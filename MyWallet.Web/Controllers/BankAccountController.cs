@@ -10,7 +10,7 @@ namespace MyWallet.Web.Controllers
     public class BankAccountController : Controller
     {
         // GET: BankAccount
-        public ActionResult Index()
+        public ActionResult Create()
         {
             return View();
         }
