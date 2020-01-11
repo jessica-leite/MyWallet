@@ -5,9 +5,9 @@ using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
-
         private CategoryService _categoryService = new CategoryService();
 
         public ActionResult Index()
@@ -71,7 +71,5 @@ namespace MyWallet.Web.Controllers
             _categoryService.Delete(category);
             return RedirectToAction("Index");
         }
-
-
     }
 }
