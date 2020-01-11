@@ -1,4 +1,4 @@
-﻿@model MyWallet.Data.Domain.Category
+﻿ @model MyWallet.Data.Domain.Category
 
 <div class="">
     <nav aria-label="breadcrumb">
@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Category", FormMethod.Post))
+        @using (Html.BeginForm("Create", "Category", FormMethod.Post, new { @class = "user" }))
         {
             <fieldset>
                 <legend>New Category</legend>
@@ -26,7 +26,7 @@
                     @Html.LabelFor(c => c.UserId)
                 </div>
                 <div class="form-group">
-                    @Html.TextBoxFor(c => c.User, new { @class = "form-control form-control-user" })
+                    @Html.TextBoxFor(c => c.UserId, new { @class = "form-control form-control-user" })
                 </div>
                 <button type="submit" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">

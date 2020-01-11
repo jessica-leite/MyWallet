@@ -1,5 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
+using MyWallet.Web.ViewModels.Category;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -30,14 +31,32 @@ namespace MyWallet.Web.Controllers
         public ActionResult Edit(int id)
         {
             var category = _categoryService.GetById(id);
-            return View(category);
+
+            var categoryViewModel = new EditCategoryViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                UserId = category.UserId
+            };
+
+            return View(categoryViewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(EditCategoryViewModel categoryViewModel)
         {
-            _categoryService.Edit(category);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var category = new Category()
+                {
+                    Id = categoryViewModel.Id,
+                    Name = categoryViewModel.Name,
+                    UserId = categoryViewModel.UserId
+                };
+                _categoryService.Edit(category);
+                return RedirectToAction("Index");
+            }
+            return View(categoryViewModel);
         }
 
         public ActionResult Delete(int id)

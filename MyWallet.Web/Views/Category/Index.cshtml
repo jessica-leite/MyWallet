@@ -1,29 +1,39 @@
 ﻿@model IEnumerable<MyWallet.Data.Domain.Category>
 
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                Categories
-            </th>
-        </tr>
+<div class="row">
+    <div class="col-md-4">
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <th>
+                        Categories
+                    </th>
+                </tr>
 
-        @foreach (var category in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => category.Name)
-                </td>
-                <td>
-                    <a href="@Url.Action("Edit", new { id = category.Id})">Edit</a>
-                </td>
-                <td>
-                    <a href="@Url.Action("Delete", new {id = category.Id})">Delete</a>
-                </td>
-            </tr>
-        }
-    </table>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => category.Name)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = category.Id})" class="btn btn-warning btn-circle">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", new {id = category.Id})" class="btn btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
 </div>
+
 <div>
     <a href="@Url.Action("Create")" class="btn btn-primary btn-icon-split">
         <span class="icon text-white-50">
@@ -31,4 +41,5 @@
         </span>
         <span class="text">Add New Category</span>
     </a>
+
 </div>

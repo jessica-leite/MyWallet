@@ -116,6 +116,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BankAccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContextController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -1924,6 +1925,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Img\" />
+    <Folder Include="Views\BankAccount\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
