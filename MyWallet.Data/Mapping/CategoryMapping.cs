@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MyWallet.Data.Domain;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyWallet.Data.Domain;
 
 namespace MyWallet.Data.Mapping
 {
-    class CategoryMapping : EntityTypeConfiguration<Category>
+    public class CategoryMapping : EntityTypeConfiguration<Category>
     {
         public CategoryMapping()
         {
@@ -17,7 +12,7 @@ namespace MyWallet.Data.Mapping
             HasKey(c => c.Id);
 
             Property(c => c.Name).IsRequired().HasMaxLength(255);
-            Property(c => c.UserId).IsRequired();
+            Property(c => c.ContextId).IsRequired();
         }
     }
 }

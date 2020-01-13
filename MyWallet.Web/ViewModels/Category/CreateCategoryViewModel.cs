@@ -14,6 +14,6 @@ namespace MyWallet.Web.ViewModels.Category
             [Required(ErrorMessage = "Name is required")]
             public string Name { get; set; }
 
-            public int UserId { get; set; }
+            public int ContextId { get; set; }
         }
 }

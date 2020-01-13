@@ -127,11 +127,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\CookieUtil.cs" />
+    <Compile Include="Util\UserToken.cs" />
+    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\CreateCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
-    <Compile Include="ViewModels\Context\CreateContextViewModel.cs" />
+    <Compile Include="ViewModels\Category\ListAllCategoriesViewModel.cs" />
+    <Compile Include="ViewModels\Context\ContextViewModel.cs" />
+    <Compile Include="ViewModels\CountryViewModel.cs" />
+    <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
+    <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\sb-admin-2.css" />

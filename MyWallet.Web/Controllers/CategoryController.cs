@@ -13,7 +13,18 @@ namespace MyWallet.Web.Controllers
         public ActionResult Index()
         {
             var categories = _categoryService.GetAll();
-            return View(categories);
+
+            var listAllCategoriesViewModel = new ListAllCategoriesViewModel();
+            foreach (var category in categories)
+            {
+                var categoryViewModel = new CategoryViewModel();
+                categoryViewModel.Name = category.Name;
+                categoryViewModel.Id = category.Id;
+
+                listAllCategoriesViewModel.Categories.Add(categoryViewModel);
+            }
+
+            return View(listAllCategoriesViewModel);
         }
 
         public ActionResult Create()
@@ -27,7 +38,7 @@ namespace MyWallet.Web.Controllers
             var category = new Category()
             {
                 Name = createCategoryViewModel.Name,
-                UserId = createCategoryViewModel.UserId
+                ContextId = createCategoryViewModel.ContextId
             };
             _categoryService.Add(category);
             return RedirectToAction("Index");
@@ -41,7 +52,7 @@ namespace MyWallet.Web.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                UserId = category.UserId
+                ContextId = category.ContextId
             };
 
             return View(categoryViewModel);
@@ -56,9 +67,9 @@ namespace MyWallet.Web.Controllers
                 {
                     Id = categoryViewModel.Id,
                     Name = categoryViewModel.Name,
-                    UserId = categoryViewModel.UserId
+                    ContextId = categoryViewModel.ContextId
                 };
-                _categoryService.Edit(category);
+                _categoryService.Update(category);
                 return RedirectToAction("Index");
             }
             return View(categoryViewModel);

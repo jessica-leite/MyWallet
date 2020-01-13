@@ -1,9 +1,8 @@
-﻿@model MyWallet.Web.ViewModels.Context.CreateContextViewModel
+﻿@model MyWallet.Web.ViewModels.Context.ContextViewModel
 
 @{
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
 
 <div class="card o-hidden border-0 shadow-lg my-5">
     <div class="card-body p-0">
@@ -17,6 +16,10 @@
                     </div>
                     @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user" }))
                     {
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.UserId)
+                        @Html.HiddenFor(m => m.IsMainContext)
+
                         <div class="form-group row">
                             <div class="col-sm-12 mb-6 mb-sm-0">
                                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control form-control-user", placeholder = "Enter a New Context Name" })
@@ -39,10 +42,6 @@
                                     Model.CountrySelectList,
                                     new { @class = "form-control form-control-user custom-select custom-select-lg mb-3" })
                             </div>
-                        </div>
-
-                        <div>
-                            @Html.HiddenFor(m => m.UserId)
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-user btn-block">Create</button>

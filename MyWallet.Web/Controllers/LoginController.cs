@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using MyWallet.Data.Domain;
 using MyWallet.Service;
 using System.Web.Security;
+using MyWallet.Web.Util;
 
 namespace MyWallet.Web.Controllers
 {
@@ -22,6 +23,8 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel loginViewModel)
         {
+            var userToken = GetUserToken();
+
             if (ModelState.IsValid)
             {
                 var userDatabase = new UserService().GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);
@@ -30,7 +33,7 @@ namespace MyWallet.Web.Controllers
                     return View(loginViewModel);
                 }
 
-                FormsAuthentication.SetAuthCookie(userDatabase.Id.ToString(), loginViewModel.RememberMe);
+                CookieUtil.SetAuthCookie(userDatabase.Id, userDatabase.Name, userDatabase.GetTheMainContextId(), loginViewModel.RememberMe);
                 return RedirectToAction("Index", "Dashboard");
             }
 

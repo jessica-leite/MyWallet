@@ -10,9 +10,9 @@ namespace MyWallet.Web.Controllers
     public class ContextController : BaseController
     {
         // GET: Context
-        public ActionResult Create(CreateUserViewModel createdUserId)
+        public ActionResult Create(CreateUserViewModel createdUser)
         {
-            var contextViewModel = new CreateContextViewModel();
+            var contextViewModel = new ContextViewModel();
 
             var listCurrency = new CurrencyTypeService().GetAll();
             contextViewModel.CurrencyTypeSelectList = new SelectList(listCurrency, "Id", "Name");
@@ -20,22 +20,25 @@ namespace MyWallet.Web.Controllers
             var listCountry = new CountryService().GetAll();
             contextViewModel.CountrySelectList = new SelectList(listCountry, "Id", "Name");
 
-            contextViewModel.UserId = createdUserId.Id;
+            contextViewModel.Id = createdUser.ContextId;
+            contextViewModel.Name = string.Empty;
+            contextViewModel.UserId = createdUser.Id;
 
             return View(contextViewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(CreateContextViewModel contextViewModel)
+        public ActionResult Create(ContextViewModel contextViewModel)
         {
             var context = new Context();
+            context.Id = contextViewModel.Id;
             context.Name = contextViewModel.Name;
             context.CurrencyTypeId = contextViewModel.CurrencyTypeId;
             context.CountryId = contextViewModel.CountryId;
             context.UserId = contextViewModel.UserId;
 
             var contextService = new ContextService();
-            contextService.Add(context);
+            contextService.AddOrUpdate(context);
 
             return RedirectToAction("Index", "Dashboard");
         }

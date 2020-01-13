@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using MyWallet.Web.Util;
+using Newtonsoft.Json;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
     public abstract class BaseController : Controller
     {
-        public int GetUserIdLogged()
+        protected int GetCurrentUserId()
         {
-            return Convert.ToInt32(User.Identity.Name);
+            return GetUserToken().UserId;
+        }
+
+        protected UserToken GetUserToken()
+        {
+            var userToken = JsonConvert.DeserializeObject<UserToken>(User.Identity.Name);
+            return userToken;
         }
     }
 }

@@ -12,9 +12,13 @@ namespace MyWallet.Service
             _contextRepository = new ContextRepository();
         }
 
-        public void Add(Context context)
+        public void AddOrUpdate(Context context)
         {
-            _contextRepository.Add(context);
+            if (context.IsNew())
+                _contextRepository.Add(context);
+            else
+                _contextRepository.Update(context);
         }
     }
+
 }

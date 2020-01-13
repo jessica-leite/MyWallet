@@ -31,7 +31,7 @@ namespace MyWallet.Data.Repository
             }
         }
 
-        public void Edit(Category category)
+        public void Update(Category category)
         {
             using (var context = new MyWalletDBContext())
             {

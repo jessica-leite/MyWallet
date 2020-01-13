@@ -12,7 +12,7 @@ namespace MyWallet.Web.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            var userId = GetUserIdLogged();
+            var userId = GetCurrentUserId();
 
             return View();
         }

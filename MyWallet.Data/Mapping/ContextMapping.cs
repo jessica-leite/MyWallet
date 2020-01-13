@@ -15,6 +15,7 @@ namespace MyWallet.Data.Mapping
             Property(u => u.UserId).IsRequired();
             Property(u => u.CurrencyTypeId).IsRequired();
             Property(u => u.CountryId).IsRequired();
+            Property(u => u.IsMainContext).IsRequired();
         }
     }
 }

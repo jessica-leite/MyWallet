@@ -24,9 +24,9 @@ namespace MyWallet.Service
             return _categoryRepository.GetById(id);
         }
 
-        public void Edit(Category category)
+        public void Update(Category category)
         {
-            _categoryRepository.Edit(category);
+            _categoryRepository.Update(category);
         }
 
         public void Delete(Category category)

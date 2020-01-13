@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MyWallet.Web.ViewModels.User;
 using MyWallet.Data.Domain;
 using MyWallet.Service;
+using MyWallet.Web.Util;
 
 namespace MyWallet.Web.Controllers
 {
@@ -27,10 +28,30 @@ namespace MyWallet.Web.Controllers
                 Password = userViewModel.Password
             };
 
+            var mainContext = new Context()
+            {
+                UserId = user.Id,
+                IsMainContext = true,
+                Name = string.Empty,
+                CountryId = userViewModel.CountryId,
+                CurrencyTypeId = userViewModel.CurrencyTypeId
+            };
+
+            user.AddNewContext(mainContext);
+
             var userService = new UserService();
             userService.Add(user);
 
-            return RedirectToAction("Create", "Context", user);
+
+            //Context
+            userViewModel.ContextId = mainContext.Id;
+            userViewModel.ContextName = mainContext.Name;
+            userViewModel.Id = mainContext.UserId;
+
+            //Login into plataform - bacause of the Autorization (attribute)
+            CookieUtil.SetAuthCookie(user.Id, user.Name, user.GetTheMainContextId());
+
+            return RedirectToAction("Create", "Context", userViewModel);
         }
 
         public ActionResult ResetPassword()
