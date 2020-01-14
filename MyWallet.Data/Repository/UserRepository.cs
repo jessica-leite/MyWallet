@@ -1,5 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using System.Linq;
+using System.Data.Entity;
 
 namespace MyWallet.Data.Repository
 {
@@ -18,7 +19,11 @@ namespace MyWallet.Data.Repository
         {
             using (var context = new MyWalletDBContext())
             {
-               return context.User.FirstOrDefault(u => u.Email == email && u.Password == password);
+                var userWithContexts = context.User
+                            .Include(u => u.Contexts)
+                            .FirstOrDefault(u => u.Email == email && u.Password == password);
+
+                return userWithContexts;
             }
         }
     }
