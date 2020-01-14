@@ -1,9 +1,6 @@
 ﻿using MyWallet.Data.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyWallet.Data.Repository
 {
@@ -19,5 +16,12 @@ namespace MyWallet.Data.Repository
             }
         }
 
+        public IEnumerable<BankAccount> GetAll()
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.BankAccount.ToList();
+            }
+        }
     }
 }

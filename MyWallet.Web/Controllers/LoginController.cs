@@ -23,8 +23,6 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel loginViewModel)
         {
-            var userToken = GetUserToken();
-
             if (ModelState.IsValid)
             {
                 var userDatabase = new UserService().GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);

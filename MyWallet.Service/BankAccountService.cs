@@ -16,5 +16,10 @@ namespace MyWallet.Service
         {
             _bankAccountRepository.Add(bankAccount);
         }
+
+        public IEnumerable<BankAccount> GetAll()
+        {
+            return _bankAccountRepository.GetAll();
+        }
     }
 }

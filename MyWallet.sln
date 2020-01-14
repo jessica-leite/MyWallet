@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Service", "MyWalle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Data", "MyWallet.Data\MyWallet.Data.csproj", "{A9E29F83-0C10-4C16-8668-B3B74A583621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Console", "MyWallet.Console\MyWallet.Console.csproj", "{ED6BF770-063F-40A1-88D9-2CED9EEC33BA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{A9E29F83-0C10-4C16-8668-B3B74A583621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E29F83-0C10-4C16-8668-B3B74A583621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E29F83-0C10-4C16-8668-B3B74A583621}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED6BF770-063F-40A1-88D9-2CED9EEC33BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED6BF770-063F-40A1-88D9-2CED9EEC33BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED6BF770-063F-40A1-88D9-2CED9EEC33BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED6BF770-063F-40A1-88D9-2CED9EEC33BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

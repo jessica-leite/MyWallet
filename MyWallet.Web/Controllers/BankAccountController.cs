@@ -21,9 +21,20 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Index()
         {
-            var viewModel = new ListAllBankAccountsViewModel();
+            var list = _bankAccountService.GetAll();
+            var listViewModel = new ListAllBankAccountsViewModel();
+            foreach (var bankAccount in list)
+            {
+                var viewModel = new BankAccountViewModel()
+                {
+                    Id = bankAccount.Id,
+                    Name = bankAccount.Name
+                };
 
-            return View(viewModel);
+                listViewModel.BankAccounts.Add(viewModel);
+            }
+
+            return View(listViewModel);
         }
 
         public ActionResult Create()
@@ -44,7 +55,6 @@ namespace MyWallet.Web.Controllers
 
             return RedirectToAction("Index", "Dashboard");
         }
-
 
     }
 }
