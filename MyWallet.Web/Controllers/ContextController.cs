@@ -23,6 +23,7 @@ namespace MyWallet.Web.Controllers
             contextViewModel.Id = createdUser.ContextId;
             contextViewModel.Name = string.Empty;
             contextViewModel.UserId = createdUser.Id;
+            contextViewModel.CountryId = 1;
 
             return View(contextViewModel);
         }
