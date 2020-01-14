@@ -1,5 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
+using System.Collections.Generic;
 
 namespace MyWallet.Service
 {
@@ -19,6 +20,12 @@ namespace MyWallet.Service
             else
                 _contextRepository.Update(context);
         }
+
+        public IEnumerable<Context> GetAll()
+        {
+            return _contextRepository.GetAll();
+        }
+
     }
 
 }

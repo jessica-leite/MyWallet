@@ -1,4 +1,6 @@
 ﻿using MyWallet.Data.Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyWallet.Data.Repository
 {
@@ -19,6 +21,14 @@ namespace MyWallet.Data.Repository
             {
                 dbContext.Entry(context).State = System.Data.Entity.EntityState.Modified;
                 dbContext.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Context> GetAll()
+        {
+            using (var dbcontext = new MyWalletDBContext())
+            {
+                return dbcontext.Context.ToList();
             }
         }
     }

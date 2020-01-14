@@ -11,6 +11,11 @@ namespace MyWallet.Web.Controllers
             return GetUserToken().UserId;
         }
 
+        protected int GetCurrentContextId()
+        {
+            return GetUserToken().MainContextId;
+        }
+
         protected UserToken GetUserToken()
         {
             var userToken = JsonConvert.DeserializeObject<UserToken>(User.Identity.Name);

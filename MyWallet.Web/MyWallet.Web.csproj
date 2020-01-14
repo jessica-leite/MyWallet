@@ -129,12 +129,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\CookieUtil.cs" />
     <Compile Include="Util\UserToken.cs" />
-    <Compile Include="ViewModels\BankAccountViewModel.cs" />
+    <Compile Include="ViewModels\BankAccount\BankAccountViewModel.cs" />
+    <Compile Include="ViewModels\BankAccount\ListAllBankAccountsViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\CreateCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\ListAllCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Context\ContextViewModel.cs" />
+    <Compile Include="ViewModels\Context\ListAllContextsViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
@@ -1933,6 +1935,7 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\BankAccount\Create.cshtml" />
+    <Content Include="Views\BankAccount\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,16 +14,10 @@ namespace MyWallet.Data.Repository
             using (var context = new MyWalletDBContext())
             {
                 context.BankAccount.Add(bankAccount);
+                context.SaveChanges();
+
             }
         }
 
-        public void Update(Context context)
-        {
-            using (var dbContext = new MyWalletDBContext())
-            {
-                dbContext.Entry(context).State = System.Data.Entity.EntityState.Modified;
-                dbContext.SaveChanges();
-            }
-        }
     }
 }

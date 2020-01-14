@@ -11,14 +11,10 @@ namespace MyWallet.Service
     public class BankAccountService
     {
         private BankAccountRepository _bankAccountRepository = new BankAccountRepository();
+
         public void Add(BankAccount bankAccount)
         {
             _bankAccountRepository.Add(bankAccount);
-        }
-
-        public void Update(BankAccount bankAccount)
-        {
-            _bankAccountRepository.Update(bankAccount);
         }
     }
 }
