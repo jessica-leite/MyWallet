@@ -38,7 +38,7 @@ namespace MyWallet.Web.Controllers
             var category = new Category()
             {
                 Name = createCategoryViewModel.Name,
-                ContextId = createCategoryViewModel.ContextId
+                ContextId = GetCurrentContextId()
             };
             _categoryService.Add(category);
             return RedirectToAction("Index");

@@ -1,6 +1,5 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
-using MyWallet.Web.ViewModels;
 using MyWallet.Web.ViewModels.BankAccount;
 using System;
 using System.Web.Mvc;
@@ -53,7 +52,7 @@ namespace MyWallet.Web.Controllers
 
             _bankAccountService.Add(bankAccount);
 
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Edit(int id)
