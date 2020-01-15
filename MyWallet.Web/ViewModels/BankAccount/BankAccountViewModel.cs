@@ -2,7 +2,7 @@
 using System;
 using System.Web.Mvc;
 
-namespace MyWallet.Web.ViewModels
+namespace MyWallet.Web.ViewModels.BankAccount
 {
     public class BankAccountViewModel
     {

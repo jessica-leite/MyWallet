@@ -23,5 +23,22 @@ namespace MyWallet.Data.Repository
                 return context.BankAccount.ToList();
             }
         }
+
+        public BankAccount GetById(int id)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.BankAccount.Find(id);
+            }
+        }
+
+        public void Update(BankAccount bankAccount)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
     }
 }

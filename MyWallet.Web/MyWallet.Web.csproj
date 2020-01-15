@@ -1936,6 +1936,7 @@
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\BankAccount\Create.cshtml" />
     <Content Include="Views\BankAccount\Index.cshtml" />
+    <Content Include="Views\BankAccount\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

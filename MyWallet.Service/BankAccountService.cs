@@ -21,5 +21,15 @@ namespace MyWallet.Service
         {
             return _bankAccountRepository.GetAll();
         }
+
+        public BankAccount GetById(int id)
+        {
+            return _bankAccountRepository.GetById(id);
+        }
+
+        public void Update(BankAccount bankAccount)
+        {
+            _bankAccountRepository.Update(bankAccount);
+        }
     }
 }
