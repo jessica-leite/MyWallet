@@ -15,22 +15,6 @@ namespace MyWallet.Data.Repository
             }
         }
 
-        public IEnumerable<Category> GetAll()
-        {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Category.ToList();
-            }
-        }
-
-        public Category GetById(int id)
-        {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Category.Find(id);
-            }
-        }
-
         public void Update(Category category)
         {
             using (var context = new MyWalletDBContext())
@@ -46,6 +30,22 @@ namespace MyWallet.Data.Repository
             {
                 context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
                 context.SaveChanges();
+            }
+        }
+
+        public Category GetById(int id)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.Category.Find(id);
+            }
+        }
+
+        public IEnumerable<Category> GetAll()
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.Category.ToList();
             }
         }
     }

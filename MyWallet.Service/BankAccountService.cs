@@ -17,9 +17,14 @@ namespace MyWallet.Service
             _bankAccountRepository.Add(bankAccount);
         }
 
-        public IEnumerable<BankAccount> GetAll()
+        public void Update(BankAccount bankAccount)
         {
-            return _bankAccountRepository.GetAll();
+            _bankAccountRepository.Update(bankAccount);
+        }
+
+        public void Delete(BankAccount bankAccount)
+        {
+            _bankAccountRepository.Delete(bankAccount);
         }
 
         public BankAccount GetById(int id)
@@ -27,9 +32,9 @@ namespace MyWallet.Service
             return _bankAccountRepository.GetById(id);
         }
 
-        public void Update(BankAccount bankAccount)
+        public IEnumerable<BankAccount> GetAll()
         {
-            _bankAccountRepository.Update(bankAccount);
+            return _bankAccountRepository.GetAll();
         }
     }
 }

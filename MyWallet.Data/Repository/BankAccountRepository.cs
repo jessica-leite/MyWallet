@@ -16,12 +16,23 @@ namespace MyWallet.Data.Repository
             }
         }
 
-        public IEnumerable<BankAccount> GetAll()
+        public void Update(BankAccount bankAccount)
         {
             using (var context = new MyWalletDBContext())
             {
-                return context.BankAccount.ToList();
+                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
             }
+        }
+
+        public void Delete(BankAccount bankAccount)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Deleted;
+                context.SaveChanges();
+            }
+
         }
 
         public BankAccount GetById(int id)
@@ -32,12 +43,11 @@ namespace MyWallet.Data.Repository
             }
         }
 
-        public void Update(BankAccount bankAccount)
+        public IEnumerable<BankAccount> GetAll()
         {
             using (var context = new MyWalletDBContext())
             {
-                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
+                return context.BankAccount.ToList();
             }
         }
     }

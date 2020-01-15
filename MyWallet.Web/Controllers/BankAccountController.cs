@@ -84,5 +84,13 @@ namespace MyWallet.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Delete(int id)
+        {
+            var bankAccount = _bankAccountService.GetById(id);
+            _bankAccountService.Delete(bankAccount);
+
+            return RedirectToAction("Index");
+        }
     }
 }
