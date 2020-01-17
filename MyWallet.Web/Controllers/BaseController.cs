@@ -1,5 +1,7 @@
 ﻿using MyWallet.Web.Util;
+using MyWallet.Web.ViewModels.Shared;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -20,6 +22,17 @@ namespace MyWallet.Web.Controllers
         {
             var userToken = JsonConvert.DeserializeObject<UserToken>(User.Identity.Name);
             return userToken;
+        }
+
+        protected void SendModelStateErrors()
+        {
+            var errors = new List<ErrorViewModel>();
+            foreach(var state in ModelState)
+            {
+                foreach (ModelError error in state.Value.Errors)
+                    errors.Add(new ErrorViewModel { Message = error.ErrorMessage });
+            }
+            ViewBag.Errors = errors;
         }
     }
 }

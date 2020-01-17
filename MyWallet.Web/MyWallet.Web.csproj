@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\Context\ListAllContextsViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
+    <Compile Include="ViewModels\Shared\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
     <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />

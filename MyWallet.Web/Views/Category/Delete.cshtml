@@ -1,9 +1,11 @@
-﻿@model MyWallet.Data.Domain.Category
+﻿@model MyWallet.Web.ViewModels.Category.CategoryViewModel
 
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "user" }))
         {
+            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(c => c.ContextId)
             <fieldset>
                 <legend>Delete Category</legend>
                 <hr />
@@ -12,12 +14,6 @@
                 </div>
                 <div class="form-group">
                     @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user", disabled = true})
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(c => c.ContextId)
-                </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(c => c.ContextId, new { @class = "form-control form-control-user", disabled = true})
                 </div>
                 <button type="submit" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">

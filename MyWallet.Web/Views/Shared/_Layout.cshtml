@@ -25,6 +25,18 @@
             <div id="content">
                 @Html.Partial("_Navbar")
                 <div class="container-fluid">
+                    @if (ViewBag.Errors != null)
+                    {
+                        var errors = (IEnumerable<MyWallet.Web.ViewModels.Shared.ErrorViewModel>)ViewBag.Errors;
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach (var error in errors)
+                                {
+                                    <li>@error.Message</li>
+                                }
+                            </ul>
+                        </div>
+                    }
                     @RenderBody()
                 </div>
             </div>

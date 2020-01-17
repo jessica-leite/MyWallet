@@ -35,13 +35,22 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Create(CreateCategoryViewModel createCategoryViewModel)
         {
-            var category = new Category()
+            if (ModelState.IsValid)
             {
-                Name = createCategoryViewModel.Name,
-                ContextId = GetCurrentContextId()
-            };
-            _categoryService.Add(category);
-            return RedirectToAction("Index");
+                var category = new Category()
+                {
+                    Name = createCategoryViewModel.Name,
+                    ContextId = GetCurrentContextId()
+                };
+                _categoryService.Add(category);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                SendModelStateErrors();
+                return View(createCategoryViewModel);
+            }
+
         }
 
         public ActionResult Edit(int id)
@@ -72,18 +81,34 @@ namespace MyWallet.Web.Controllers
                 _categoryService.Update(category);
                 return RedirectToAction("Index");
             }
-            return View(categoryViewModel);
+            else
+            {
+                SendModelStateErrors();
+                return View(categoryViewModel);
+            }
         }
 
         public ActionResult Delete(int id)
         {
             var category = _categoryService.GetById(id);
-            return View(category);
+            var viewModel = new CategoryViewModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                ContextId = category.ContextId
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Delete(Category category)
+        public ActionResult Delete(CategoryViewModel categoryViewModel)
         {
+            var category = new Category()
+            {
+                Id = categoryViewModel.Id,
+                Name = categoryViewModel.Name,
+                ContextId = categoryViewModel.ContextId
+            };
             _categoryService.Delete(category);
             return RedirectToAction("Index");
         }

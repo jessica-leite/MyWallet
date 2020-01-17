@@ -44,15 +44,24 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Create(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = new BankAccount();
-            bankAccount.Name = bankAccountViewModel.Name;
-            bankAccount.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
-            bankAccount.ContextId = GetCurrentContextId();
-            bankAccount.CreationDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                var bankAccount = new BankAccount();
+                bankAccount.Name = bankAccountViewModel.Name;
+                bankAccount.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
+                bankAccount.ContextId = GetCurrentContextId();
+                bankAccount.CreationDate = DateTime.Now;
 
-            _bankAccountService.Add(bankAccount);
+                _bankAccountService.Add(bankAccount);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                SendModelStateErrors();
+                return View(bankAccountViewModel);
+            }
+
         }
 
         public ActionResult Edit(int id)
@@ -72,21 +81,52 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Edit(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = new BankAccount();
-            bankAccount.Id = bankAccountViewModel.Id;
-            bankAccount.Name = bankAccountViewModel.Name;
-            bankAccount.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
-            bankAccount.ContextId = bankAccountViewModel.ContextId;
-            bankAccount.CreationDate = bankAccountViewModel.CreationDate;
+            if (ModelState.IsValid)
+            {
+                var bankAccount = new BankAccount();
+                bankAccount.Id = bankAccountViewModel.Id;
+                bankAccount.Name = bankAccountViewModel.Name;
+                bankAccount.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
+                bankAccount.ContextId = bankAccountViewModel.ContextId;
+                bankAccount.CreationDate = bankAccountViewModel.CreationDate;
 
-            _bankAccountService.Update(bankAccount);
+                _bankAccountService.Update(bankAccount);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                SendModelStateErrors();
+                return View(bankAccountViewModel);
+            }
+
         }
 
         public ActionResult Delete(int id)
         {
             var bankAccount = _bankAccountService.GetById(id);
+            var viewModel = new BankAccountViewModel()
+            {
+                Id = bankAccount.Id,
+                Name = bankAccount.Name,
+                ContextId = bankAccount.ContextId,
+                OpeningBalance = bankAccount.OpeningBalance,
+                CreationDate = bankAccount.CreationDate
+            };
+            return View(bankAccount);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
+        {
+            var bankAccount = new BankAccount()
+            {
+                Id = bankAccountViewModel.Id,
+                Name = bankAccountViewModel.Name,
+                ContextId = bankAccountViewModel.ContextId,
+                OpeningBalance = bankAccountViewModel.OpeningBalance.Value,
+                CreationDate = bankAccountViewModel.CreationDate
+            };
             _bankAccountService.Delete(bankAccount);
 
             return RedirectToAction("Index");
