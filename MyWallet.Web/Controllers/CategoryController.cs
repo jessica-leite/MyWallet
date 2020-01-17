@@ -95,7 +95,7 @@ namespace MyWallet.Web.Controllers
             {
                 Id = category.Id,
                 Name = category.Name,
-                ContextId = category.ContextId
+
             };
             return View(viewModel);
         }
@@ -106,8 +106,6 @@ namespace MyWallet.Web.Controllers
             var category = new Category()
             {
                 Id = categoryViewModel.Id,
-                Name = categoryViewModel.Name,
-                ContextId = categoryViewModel.ContextId
             };
             _categoryService.Delete(category);
             return RedirectToAction("Index");

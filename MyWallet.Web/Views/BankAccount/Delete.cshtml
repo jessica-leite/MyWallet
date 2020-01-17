@@ -1,18 +1,18 @@
-﻿@model MyWallet.Web.ViewModels.Category.CategoryViewModel
+﻿@model MyWallet.Web.ViewModels.BankAccount.BankAccountViewModel
 
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "user" }))
+        @using (Html.BeginForm("Delete", "BankAccount", FormMethod.Post, new { @class = "user" }))
         {
             @Html.HiddenFor(c => c.Id)
             <fieldset>
-                <legend>Delete Category</legend>
+                <legend>Delete BankAccount</legend>
                 <hr />
                 <div class="form-group">
                     @Html.LabelFor(c => c.Name)
                 </div>
                 <div class="form-group">
-                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user", disabled = true})
+                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user", disabled = true })
                 </div>
                 <button type="submit" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">

@@ -109,11 +109,8 @@ namespace MyWallet.Web.Controllers
             {
                 Id = bankAccount.Id,
                 Name = bankAccount.Name,
-                ContextId = bankAccount.ContextId,
-                OpeningBalance = bankAccount.OpeningBalance,
-                CreationDate = bankAccount.CreationDate
             };
-            return View(bankAccount);
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -122,10 +119,6 @@ namespace MyWallet.Web.Controllers
             var bankAccount = new BankAccount()
             {
                 Id = bankAccountViewModel.Id,
-                Name = bankAccountViewModel.Name,
-                ContextId = bankAccountViewModel.ContextId,
-                OpeningBalance = bankAccountViewModel.OpeningBalance.Value,
-                CreationDate = bankAccountViewModel.CreationDate
             };
             _bankAccountService.Delete(bankAccount);
 

@@ -2,6 +2,7 @@
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Context;
 using MyWallet.Web.ViewModels.User;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -9,7 +10,30 @@ namespace MyWallet.Web.Controllers
     [Authorize]
     public class ContextController : BaseController
     {
-        // GET: Context
+        ContextService _contextService;
+
+        public ContextController()
+        {
+            _contextService = new ContextService();
+        }
+
+        public ActionResult Index()
+        {
+            IEnumerable<Context> listContext = _contextService.GetAll();
+            List <ContextViewModel> viewModel = new List<ContextViewModel>();
+
+            foreach (var context in listContext)
+            {
+                var contextVM = new ContextViewModel();
+                contextVM.Id = context.Id;
+                contextVM.Name = context.Name;
+
+                viewModel.Add(contextVM);
+            }
+
+            return View(viewModel);
+        }
+
         public ActionResult Create(CreateUserViewModel createdUser)
         {
             var contextViewModel = new ContextViewModel();
@@ -21,7 +45,6 @@ namespace MyWallet.Web.Controllers
             contextViewModel.CountrySelectList = new SelectList(listCountry, "Id", "Name");
 
             contextViewModel.Id = createdUser.ContextId;
-            contextViewModel.Name = string.Empty;
             contextViewModel.UserId = createdUser.Id;
             contextViewModel.CountryId = 1;
 
@@ -31,17 +54,29 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Create(ContextViewModel contextViewModel)
         {
-            var context = new Context();
-            context.Id = contextViewModel.Id;
-            context.Name = contextViewModel.Name;
-            context.CurrencyTypeId = contextViewModel.CurrencyTypeId;
-            context.CountryId = contextViewModel.CountryId;
-            context.UserId = contextViewModel.UserId;
+            if (ModelState.IsValid)
+            {
+                var context = new Context();
+                context.Id = contextViewModel.Id;
+                context.Name = contextViewModel.Name;
+                context.CurrencyTypeId = contextViewModel.CurrencyTypeId;
+                context.CountryId = contextViewModel.CountryId;
 
-            var contextService = new ContextService();
-            contextService.AddOrUpdate(context);
+                if (contextViewModel.UserId == 0)
+                    context.UserId = GetCurrentUserId();
+                else
+                    context.UserId = contextViewModel.UserId;
 
-            return RedirectToAction("Index", "Dashboard");
+                _contextService.AddOrUpdate(context);
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                SendModelStateErrors();
+                return View(contextViewModel);
+            }
+
         }
     }
 }
