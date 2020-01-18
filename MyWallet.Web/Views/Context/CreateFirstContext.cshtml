@@ -14,7 +14,7 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Create a Context</h1>
                     </div>
-                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user" }))
+                    @using (Html.BeginForm("Update", "Context", FormMethod.Post, new { @class = "user" }))
                     {
                         @Html.HiddenFor(m => m.Id)
                         @Html.HiddenFor(m => m.UserId)

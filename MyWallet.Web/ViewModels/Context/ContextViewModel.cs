@@ -17,7 +17,5 @@ namespace MyWallet.Web.ViewModels.Context
 
         public SelectList CurrencyTypeSelectList { get; set; }
         public SelectList CountrySelectList { get; set; }
-
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Context;
-using MyWallet.Web.ViewModels.User;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -34,38 +33,29 @@ namespace MyWallet.Web.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Create(CreateUserViewModel createdUser)
+        public ActionResult CreateFirstContext(ContextViewModel contextViewModel)
         {
-            var contextViewModel = new ContextViewModel();
-
             var listCurrency = new CurrencyTypeService().GetAll();
             contextViewModel.CurrencyTypeSelectList = new SelectList(listCurrency, "Id", "Name");
 
             var listCountry = new CountryService().GetAll();
             contextViewModel.CountrySelectList = new SelectList(listCountry, "Id", "Name");
 
-            contextViewModel.Id = createdUser.ContextId;
-            contextViewModel.UserId = createdUser.Id;
-            contextViewModel.CountryId = 1;
-
             return View(contextViewModel);
         }
 
         [HttpPost]
-        public ActionResult Create(ContextViewModel contextViewModel)
+        public ActionResult Update(ContextViewModel contextViewModel)
         {
             if (ModelState.IsValid)
             {
                 var context = new Context();
                 context.Id = contextViewModel.Id;
                 context.Name = contextViewModel.Name;
+                context.IsMainContext = contextViewModel.IsMainContext;
                 context.CurrencyTypeId = contextViewModel.CurrencyTypeId;
                 context.CountryId = contextViewModel.CountryId;
-
-                if (contextViewModel.UserId == 0)
-                    context.UserId = GetCurrentUserId();
-                else
-                    context.UserId = contextViewModel.UserId;
+                context.UserId = GetCurrentUserId(); 
 
                 _contextService.AddOrUpdate(context);
 
@@ -76,7 +66,30 @@ namespace MyWallet.Web.Controllers
                 SendModelStateErrors();
                 return View(contextViewModel);
             }
+        }
 
+        public ActionResult Delete(int id)
+        {
+            var context = _contextService.GetById(id);
+            var viewModel = new ContextViewModel()
+            {
+                Id = context.Id,
+                Name = context.Name
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(ContextViewModel viewModel)
+        {
+            var context = new Context()
+            {
+                Id = viewModel.Id
+            };
+            _contextService.Delete(context);
+
+            return RedirectToAction("Index");
         }
     }
 }

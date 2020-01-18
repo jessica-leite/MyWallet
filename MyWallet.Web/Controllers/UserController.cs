@@ -7,6 +7,7 @@ using MyWallet.Web.ViewModels.User;
 using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.Util;
+using MyWallet.Web.ViewModels.Context;
 
 namespace MyWallet.Web.Controllers
 {
@@ -18,7 +19,7 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateUserViewModel userViewModel)
+        public ActionResult Create(UserViewModel userViewModel)
         {
             var user = new User
             {
@@ -33,8 +34,8 @@ namespace MyWallet.Web.Controllers
                 UserId = user.Id,
                 IsMainContext = true,
                 Name = string.Empty,
-                CountryId = userViewModel.CountryId,
-                CurrencyTypeId = userViewModel.CurrencyTypeId
+                CountryId = 1,
+                CurrencyTypeId = 1
             };
 
             user.AddNewContext(mainContext);
@@ -42,16 +43,18 @@ namespace MyWallet.Web.Controllers
             var userService = new UserService();
             userService.Add(user);
 
-
-            //Context
-            userViewModel.ContextId = mainContext.Id;
-            userViewModel.ContextName = mainContext.Name;
-            userViewModel.Id = mainContext.UserId;
-
-            //Login into plataform - bacause of the Autorization (attribute)
+            // Login into plataform - bacause of the Autorization (attribute)
             CookieUtil.SetAuthCookie(user.Id, user.Name, user.GetTheMainContextId());
 
-            return RedirectToAction("Create", "Context", userViewModel);
+            // Context - redirect (for update the main context)
+            var contextViewModel = new ContextViewModel();
+            contextViewModel.Id = mainContext.Id;
+            contextViewModel.IsMainContext = true;
+            contextViewModel.UserId = user.Id;
+            contextViewModel.CountryId = 1;
+            contextViewModel.CurrencyTypeId = 1;
+
+            return RedirectToAction("CreateFirstContext", "Context", contextViewModel);
         }
 
         public ActionResult ResetPassword()

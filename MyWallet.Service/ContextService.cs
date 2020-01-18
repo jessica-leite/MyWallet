@@ -21,6 +21,16 @@ namespace MyWallet.Service
                 _contextRepository.Update(context);
         }
 
+        public void Delete(Context context)
+        {
+            _contextRepository.Delete(context);
+        }
+
+        public Context GetById(int id)
+        {
+            return _contextRepository.GetById(id);
+        }
+
         public IEnumerable<Context> GetAll()
         {
             return _contextRepository.GetAll();

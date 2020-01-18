@@ -141,7 +141,6 @@
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
     <Compile Include="ViewModels\Shared\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
-    <Compile Include="ViewModels\User\CreateUserViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1929,7 +1928,7 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
-    <Content Include="Views\Context\Create.cshtml" />
+    <Content Include="Views\Context\CreateFirstContext.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
@@ -1940,6 +1939,7 @@
     <Content Include="Views\BankAccount\Edit.cshtml" />
     <Content Include="Views\BankAccount\Delete.cshtml" />
     <Content Include="Views\Context\Index.cshtml" />
+    <Content Include="Views\Context\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
