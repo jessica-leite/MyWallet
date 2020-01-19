@@ -11,11 +11,24 @@ namespace MyWallet.Data.Mapping
 
             HasKey(u => u.Id);
 
-            Property(u => u.Name).IsRequired().HasMaxLength(255);
-            Property(u => u.UserId).IsRequired();
-            Property(u => u.CurrencyTypeId).IsRequired();
-            Property(u => u.CountryId).IsRequired();
-            Property(u => u.IsMainContext).IsRequired();
+            Property(u => u.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            HasRequired(u => u.User)
+                .WithMany(e => e.Contexts)
+                .HasForeignKey(u => u.UserId);
+
+            HasRequired(u => u.CurrencyType)
+                .WithMany()
+                .HasForeignKey(u => u.CurrencyTypeId);
+
+            HasRequired(u => u.Country)
+                .WithMany()
+                .HasForeignKey(u => u.CountryId);
+
+            Property(u => u.IsMainContext)
+                .IsRequired();
         }
     }
 }

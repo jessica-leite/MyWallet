@@ -63,6 +63,7 @@
     <Compile Include="Mapping\CountryMapping.cs" />
     <Compile Include="Mapping\ContextMapping.cs" />
     <Compile Include="Mapping\CurrencyTypeMapping.cs" />
+    <Compile Include="Mapping\ExpenseMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />

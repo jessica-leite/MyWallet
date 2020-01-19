@@ -18,5 +18,6 @@ namespace MyWallet.Data.Domain
         public BankAccount BankAccount { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

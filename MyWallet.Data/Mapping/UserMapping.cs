@@ -11,11 +11,24 @@ namespace MyWallet.Data.Mapping
 
             HasKey(u => u.Id);
 
-            Property(u => u.Name).IsRequired().HasMaxLength(255);
-            Property(u => u.LastName).IsRequired().HasMaxLength(255);
-            Property(u => u.Email).IsRequired().HasMaxLength(255);
-            Property(u => u.Password).IsRequired().HasMaxLength(255);
-            Property(u => u.CreationDate).IsRequired();
+            Property(u => u.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            Property(u => u.LastName)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            Property(u => u.Email)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            Property(u => u.Password)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            Property(u => u.CreationDate)
+                .IsRequired();
         }
     }
 }

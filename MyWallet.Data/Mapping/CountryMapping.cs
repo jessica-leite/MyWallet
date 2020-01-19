@@ -11,7 +11,9 @@ namespace MyWallet.Data.Mapping
 
             HasKey(u => u.Id);
 
-            Property(u => u.Name).IsRequired().HasMaxLength(255);
+            Property(u => u.Name)
+                .IsRequired()
+                .HasMaxLength(255);
         }
     }
 }
