@@ -52,6 +52,12 @@ namespace MyWallet.Web.Controllers
             return View(listAll);
         }
 
+        [HttpPost]
+        public ActionResult Create(ExpenseViewModel expenseViewModel)
+        {
+            return Json(expenseViewModel);
+        }
+
 
     }
 }

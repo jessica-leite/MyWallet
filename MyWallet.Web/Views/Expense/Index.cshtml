@@ -53,7 +53,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Create", null, FormMethod.Post, new { @class = "user" }))
+                @using (Html.BeginForm("Create", null, FormMethod.Post, new { @class = "user", id = "formModalCreateExpense" }))
                 {
                     <div class="form-group">
                         <input type="email" class="form-control form-control-user" id="description" placeholder="Description">
@@ -84,13 +84,13 @@
                     </div>
 
                     @*<div class="form-group row">
-                        <div class="col-sm-12 mb-6 mb-sm-0">
-                            @Html.DropDownListFor(
-                                m => m.CurrencyTypeId,
-                                Model.CurrencyTypeSelectList,
-                                new { @class = "form-control" })
-                        </div>
-                    </div>*@
+                            <div class="col-sm-12 mb-6 mb-sm-0">
+                                @Html.DropDownListFor(
+                                    m => m.CurrencyTypeId,
+                                    Model.CurrencyTypeSelectList,
+                                    new { @class = "form-control" })
+                            </div>
+                        </div>*@
 
                 }
             </div>
@@ -116,28 +116,29 @@
             $('#dataTable').DataTable();
 
             $('#btnModalCreateExpense').click(function () {
-                var description = $('#description').val();
-                var value = $('#value').val();
-                var date = $('#date').val();
-                var bankAccount = $('#bankAccount').val();
-                var category = $('#category').val();
 
-                var objJson = {
-                    Description: description,
-                    Value: value,
-                    Date: date,
-                    BankAccountId: bankAccount,
-                    CategoryId: category
+                var expenseJson = {
+                    Description: $('#description').val(),
+                    Value: $('#value').val(),
+                    Date: $('#date').val(),
+                    BankAccountId: $('#bankAccount').val(),
+                    CategoryId: $('#category').val()
                 }
-                console.log(objJson);
+
+                $.ajax({
+                    url: $('#formModalCreateExpense').attr('action'),
+                    type: "POST", 
+                    data: expenseJson,
+                    success: function (data) {
+                        alert("Expense added");
+                        location.reload();
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
             });
-
-
-
-
-
-
-
 
 
         });
