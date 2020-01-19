@@ -51,17 +51,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\BankAccount.cs" />
+    <Compile Include="Domain\Category.cs" />
+    <Compile Include="Domain\Context.cs" />
+    <Compile Include="Domain\Country.cs" />
+    <Compile Include="Domain\CurrencyType.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Mapping\BankAccountMapping.cs" />
+    <Compile Include="Mapping\CategoryMapping.cs" />
+    <Compile Include="Mapping\CountryMapping.cs" />
+    <Compile Include="Mapping\ContextMapping.cs" />
+    <Compile Include="Mapping\CurrencyTypeMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BankAccountRepository.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
+    <Compile Include="Repository\ContextRepository.cs" />
+    <Compile Include="Repository\CountryRepository.cs" />
+    <Compile Include="Repository\CurrencyTypeRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

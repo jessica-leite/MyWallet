@@ -14,6 +14,9 @@ namespace MyWallet.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/css/sb-admin-2.min.css"));
 
+            bundles.Add(new StyleBundle("~/Content/MyWallet").Include(
+                     "~/Content/MyWallet.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery-bootstrap").Include(
                 "~/vendor/jquery/jquery.min.js",
                 "~/vendor/bootstrap/js/bootstrap.bundle.min.js",

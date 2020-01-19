@@ -1,0 +1,46 @@
+﻿@model MyWallet.Web.ViewModels.Category.ListAllCategoriesViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Categories
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var category in Model.Categories)
+                {
+                    <tr>
+                        <td>
+                            @category.Name
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = category.Id })" class="btn btn-warning btn-circle">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", new { id = category.Id })" class="btn btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+            <span class="text">Add New Category</span>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model MyWallet.Web.ViewModels.BankAccount.ListAllBankAccountsViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Bank Accounts
+                        </th>
+                    </tr>
+                </thead>
+                @foreach (var bankAccount in Model.BankAccounts)
+                {
+                    <tr>
+                        <td>
+                            @bankAccount.Name
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = bankAccount.Id })" class="btn btn-warning btn-circle">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", new { id = bankAccount.Id })" class="btn btn-danger btn-circle">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create")" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+            <span class="text">Add New Bank Account</span>
+        </a>
+    </div>
+</div>
