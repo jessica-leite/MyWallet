@@ -1,0 +1,149 @@
+﻿@model MyWallet.Web.ViewModels.Expense.ListAllExpensesViewModel
+
+<h1 class="h3 mb-2 text-gray-800">Expenses</h1>
+
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-12">
+        <button data-toggle="modal" data-target="#createExpenseModal" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+            <span class="text">Add Expense</span>
+        </button>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Bank Account</th>
+                        <th>@Model.Currency</th>
+                        <th>Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var expense in Model.Expenses)
+                    {
+                        <tr>
+                            <td onclick="alert('@expense.Description');">@expense.Description</td>
+                            <td>@expense.Category</td>
+                            <td>@expense.BankAccount</td>
+                            <td>@expense.Value</td>
+                            <td>@expense.IsPaid</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Expense</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", null, FormMethod.Post, new { @class = "user" }))
+                {
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-user" id="description" placeholder="Description">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="form-control form-control-user" id="value" placeholder="Value">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <select class="form-control" id="bankAccount">
+                                <option>Select Bank Account</option>
+                                <option value="1">Nubank</option>
+                                <option value="2">Santander</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="category">
+                                <option>Select a Category</option>
+                                <option value="1">Home</option>
+                                <option value="2">Petshop</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    @*<div class="form-group row">
+                        <div class="col-sm-12 mb-6 mb-sm-0">
+                            @Html.DropDownListFor(
+                                m => m.CurrencyTypeId,
+                                Model.CurrencyTypeSelectList,
+                                new { @class = "form-control" })
+                        </div>
+                    </div>*@
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button id="btnModalCreateExpense" type="submit" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+
+            $('#btnModalCreateExpense').click(function () {
+                var description = $('#description').val();
+                var value = $('#value').val();
+                var date = $('#date').val();
+                var bankAccount = $('#bankAccount').val();
+                var category = $('#category').val();
+
+                var objJson = {
+                    Description: description,
+                    Value: value,
+                    Date: date,
+                    BankAccountId: bankAccount,
+                    CategoryId: category
+                }
+                console.log(objJson);
+            });
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+}
+
+@section otherCss{
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}

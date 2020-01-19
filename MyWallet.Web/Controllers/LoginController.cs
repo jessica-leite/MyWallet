@@ -1,14 +1,8 @@
-﻿using MyWallet.Data.Repository;
-using MyWallet.Web.ViewModels.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using MyWallet.Data.Domain;
-using MyWallet.Service;
-using System.Web.Security;
+﻿using MyWallet.Service;
 using MyWallet.Web.Util;
+using MyWallet.Web.ViewModels.Shared;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MyWallet.Web.Controllers
 {
