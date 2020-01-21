@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
+    //[Authorize]
     public abstract class BaseController : Controller
     {
         protected int GetCurrentUserId()

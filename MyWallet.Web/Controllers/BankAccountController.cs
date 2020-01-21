@@ -2,12 +2,13 @@
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.BankAccount;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 
 
 namespace MyWallet.Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class BankAccountController : BaseController
     {
         private BankAccountService _bankAccountService;
@@ -61,7 +62,6 @@ namespace MyWallet.Web.Controllers
                 SendModelStateErrors();
                 return View(bankAccountViewModel);
             }
-
         }
 
         public ActionResult Edit(int id)
@@ -123,6 +123,21 @@ namespace MyWallet.Web.Controllers
             _bankAccountService.Delete(bankAccount);
 
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetAllByContextId(int? contextId)
+        {
+            var id = contextId.HasValue ? contextId.Value : GetCurrentContextId();
+
+            var listBankAccount = _bankAccountService.GetByContextId(id);
+
+            var json = listBankAccount.Select(b => new 
+            { 
+                b.Id,
+                b.Name
+            });
+
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

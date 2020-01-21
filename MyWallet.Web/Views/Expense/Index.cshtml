@@ -43,6 +43,7 @@
     </div>
 </div>
 
+<!-- Modal Form - Add Expense -->
 <div class="modal fade" id="createExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
@@ -68,30 +69,12 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <select class="form-control" id="bankAccount">
-                                <option>Select Bank Account</option>
-                                <option value="1">Nubank</option>
-                                <option value="2">Santander</option>
-                            </select>
+                            <select class="form-control" id="bankAccount"></select>
                         </div>
                         <div class="col-sm-6">
-                            <select class="form-control" id="category">
-                                <option>Select a Category</option>
-                                <option value="1">Home</option>
-                                <option value="2">Petshop</option>
-                            </select>
+                            <select class="form-control" id="category"></select>
                         </div>
                     </div>
-
-                    @*<div class="form-group row">
-                            <div class="col-sm-12 mb-6 mb-sm-0">
-                                @Html.DropDownListFor(
-                                    m => m.CurrencyTypeId,
-                                    Model.CurrencyTypeSelectList,
-                                    new { @class = "form-control" })
-                            </div>
-                        </div>*@
-
                 }
             </div>
             <div class="modal-footer">
@@ -113,6 +96,9 @@
 
     <script>
         $(document).ready(function () {
+
+            loadBankAccountDropDownList();
+
             $('#dataTable').DataTable();
 
             $('#btnModalCreateExpense').click(function () {
@@ -139,9 +125,20 @@
                     }
                 });
             });
-
-
         });
+
+        function loadBankAccountDropDownList() {
+            var url = '@Url.Action("GetAllByContextId", "BankAccount")';
+            $.getJSON(url, function (data) {
+                //$("#bankAccount").empty();
+                $.each(data, function (index, obj) {
+                    var $option = $("<option/>");
+                    $option.text(obj.Name);
+                    $option.val(obj.Id);
+                    $("#bankAccount").append($option);
+                })
+            });
+        }
     </script>
 }
 

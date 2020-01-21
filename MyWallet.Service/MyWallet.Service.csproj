@@ -46,6 +46,7 @@
     <Compile Include="CountryService.cs" />
     <Compile Include="ContextService.cs" />
     <Compile Include="CurrencyTypeService.cs" />
+    <Compile Include="ExpenseService.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

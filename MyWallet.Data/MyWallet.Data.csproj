@@ -73,6 +73,7 @@
     <Compile Include="Repository\ContextRepository.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
     <Compile Include="Repository\CurrencyTypeRepository.cs" />
+    <Compile Include="Repository\ExpenseRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

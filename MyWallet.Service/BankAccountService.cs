@@ -32,6 +32,11 @@ namespace MyWallet.Service
             return _bankAccountRepository.GetById(id);
         }
 
+        public IEnumerable<BankAccount> GetByContextId(int contextId)
+        {
+            return _bankAccountRepository.GetByContextId(contextId);
+        }
+
         public IEnumerable<BankAccount> GetAll()
         {
             return _bankAccountRepository.GetAll();

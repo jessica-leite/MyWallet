@@ -1,4 +1,6 @@
-﻿using MyWallet.Web.ViewModels.Expense;
+﻿using MyWallet.Data.Domain;
+using MyWallet.Service;
+using MyWallet.Web.ViewModels.Expense;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +9,26 @@ using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
-    public class ExpenseController : Controller
+    [Authorize]
+    public class ExpenseController : BaseController
     {
-        // GET: Expense
+        private ExpenseService _expenseService;
+
+        public ExpenseController()
+        {
+            try
+            {
+                var user = GetUserToken();
+            }
+            catch (Exception ex)
+            {
+                var test = ex;
+            }
+
+
+            _expenseService = new ExpenseService();
+        }
+
         public ActionResult Index()
         {
             var listAll = new ListAllExpensesViewModel();
@@ -55,7 +74,21 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Create(ExpenseViewModel expenseViewModel)
         {
-            return Json(expenseViewModel);
+            var user = GetUserToken();
+
+
+            var expense = new Expense();
+            expense.BankAccountId = expenseViewModel.BankAccountId;
+            expense.CategoryId = expenseViewModel.CategoryId;
+            expense.CreationDate = DateTime.Now;
+            expense.Date = expenseViewModel.Date;
+            expense.Description = expenseViewModel.Description;
+            expense.IsPaid = expenseViewModel.IsPaid;
+            expense.Observation = expenseViewModel.Observation;
+            expense.Value = expenseViewModel.Value;
+
+            _expenseService.Add(expense);
+            return null;
         }
 
 
