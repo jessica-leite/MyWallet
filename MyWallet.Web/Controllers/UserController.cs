@@ -8,6 +8,7 @@ using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.Util;
 using MyWallet.Web.ViewModels.Context;
+using System.IO;
 
 namespace MyWallet.Web.Controllers
 {
@@ -59,6 +60,19 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult ResetPassword()
         {
+            return View();
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(HttpPostedFileBase profilePhoto)
+        {
+            
+
             return View();
         }
     }

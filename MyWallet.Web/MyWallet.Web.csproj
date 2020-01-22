@@ -1944,6 +1944,7 @@
     <Content Include="Views\Context\Index.cshtml" />
     <Content Include="Views\Context\Delete.cshtml" />
     <Content Include="Views\Expense\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
