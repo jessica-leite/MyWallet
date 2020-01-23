@@ -1,9 +1,7 @@
 ﻿using MyWallet.Data.Domain;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyWallet.Data.Repository
 {
@@ -15,6 +13,20 @@ namespace MyWallet.Data.Repository
             {
                 context.Expense.Add(expense);
                 context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<Expense> GetByContextId(int contextId)
+        {
+            using(var context = new MyWalletDBContext())
+            {
+              var expenses =  context.Expense.Where(e => e.ContextId == contextId)
+                    .Include(e => e.BankAccount)
+                    .Include(e => e.Category)
+                    .ToList();
+
+                return expenses;
+
             }
         }
     }

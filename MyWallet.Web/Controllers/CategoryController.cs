@@ -1,6 +1,7 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Category;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -109,6 +110,20 @@ namespace MyWallet.Web.Controllers
             };
             _categoryService.Delete(category);
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetAllByContextId(int? contextId)
+        {
+            var id = contextId.HasValue ? contextId.Value : GetCurrentContextId();
+
+            var listCategory = _categoryService.GetByContextId(id);
+
+            var json = listCategory.Select(c => new
+            {
+                c.Id,
+                c.Name
+            });
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

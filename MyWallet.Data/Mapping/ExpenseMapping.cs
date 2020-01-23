@@ -40,6 +40,11 @@ namespace MyWallet.Data.Mapping
 
             Property(e => e.CreationDate)
                 .IsRequired();
+
+            HasRequired(e => e.Context)
+                .WithMany()
+                .HasForeignKey(e => e.ContextId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

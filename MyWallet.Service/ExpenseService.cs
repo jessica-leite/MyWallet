@@ -23,5 +23,9 @@ namespace MyWallet.Service
             _expenseRepository.Add(expense);
         }
 
+        public IEnumerable<Expense> GetByContextId(int contextId)
+        {
+            return _expenseRepository.GetByContextId(contextId);
+        }
     }
 }

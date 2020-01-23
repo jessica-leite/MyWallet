@@ -30,7 +30,7 @@
                     @foreach (var expense in Model.Expenses)
                     {
                         <tr>
-                            <td onclick="alert('@expense.Description');">@expense.Description</td>
+                            <td>@expense.Description</td>
                             <td>@expense.Category</td>
                             <td>@expense.BankAccount</td>
                             <td>@expense.Value</td>
@@ -98,6 +98,7 @@
         $(document).ready(function () {
 
             loadBankAccountDropDownList();
+            loadCategoryDropDownList()
 
             $('#dataTable').DataTable();
 
@@ -136,8 +137,20 @@
                     $option.text(obj.Name);
                     $option.val(obj.Id);
                     $("#bankAccount").append($option);
-                })
+                });
             });
+        }
+
+        function loadCategoryDropDownList() {
+            var url = '@Url.Action("GetAllByContextId","Category")';
+                $.get(url, function (data) {
+                    $.each(data, function (index, obj) {
+                        var $option = $("<option />");
+                        $option.text(obj.Name);
+                        $option.val(obj.Id);
+                        $("#category").append($option);
+                    })
+                });
         }
     </script>
 }

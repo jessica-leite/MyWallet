@@ -48,5 +48,14 @@ namespace MyWallet.Data.Repository
                 return context.Category.ToList();
             }
         }
+
+        public IEnumerable<Category> GetByContextId(int contextId)
+        {
+            using(var context = new MyWalletDBContext())
+            {
+                var list = context.Category.Where(c => c.ContextId == contextId).ToList();
+                return list;
+            }
+        }
     }
 }

@@ -31,44 +31,33 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Index()
         {
-            var listAll = new ListAllExpensesViewModel();
-            listAll.Currency = "€";
+            var contextId = GetCurrentContextId();
 
-            //var expense = new ExpenseViewModel();
-            //expense.Id = 1;
-            //expense.Description = "potato";
-            //expense.Category = "food";
-            //expense.IsPaid = false;
-            //expense.BankAccount = "Santander";
-            //expense.Value = 854;
+            var expenseList = _expenseService.GetByContextId(contextId);
 
-            //listAll.Expenses.Add(expense);
-
-            //expense = new ExpenseViewModel();
-            //expense.Id = 2;
-            //expense.Description = "tomato";
-            //expense.Category = "food";
-            //expense.IsPaid = true;
-            //expense.BankAccount = "ActivoBank";
-            //expense.Value = 90;
+            var viewModelList = new ListAllExpensesViewModel();
+            viewModelList.Currency = "€";
 
 
-            for (int i = 0; i < 500; i++)
+            foreach (var item in expenseList)
             {
-                var expense = new ExpenseViewModel();
-                expense.Id = 1;
-                expense.Description = $"{Guid.NewGuid()} potato {i}";
-                expense.Category = "food";
-                expense.IsPaid = false;
-                expense.BankAccount = "Santander";
-                expense.Value = 854;
+                var expense = new ExpenseViewModel()
+                {
+                    Id = item.Id,
+                    Description = item.Description,
+                    CategoryId = item.CategoryId,
+                    IsPaid = item.IsPaid,
+                    BankAccountId = item.BankAccountId,
+                    Value = item.Value,
+                    Date = item.Date,
+                    Observation = item.Observation,
+                    BankAccount = item.BankAccount.Name,
+                    Category = item.Category.Name
+                };
 
-                listAll.Expenses.Add(expense);
+                viewModelList.Expenses.Add(expense);
             }
-
-
-
-            return View(listAll);
+            return View(viewModelList);
         }
 
         [HttpPost]

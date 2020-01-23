@@ -1,64 +1,66 @@
 ﻿@model MyWallet.Web.ViewModels.User.UserViewModel
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user", enctype = "multipart/form-data" }))
-{
-    <div class=" row">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <h1>User name</h1>
-            <div id="profilePhoto">
-                <img src="#" alt="Alternate Text" />
-            </div>
-            <label for="profilePhoto">Upload a different photo...</label>
-            <input type="file" name="profilePhoto" id="profilePhoto" /><br />
 
+
+<div class=" row">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user", enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-lg-5 d-none d-lg-block">
+                <h1>User name</h1>
+                <div id="profilePhoto">
+                    <img src="C:\Users\Jéssica\Desktop\me.jpg" class="rounded-circle" alt="Alternate Text" />
+                </div>
+                <label for="profilePhoto">Upload a different photo...</label>
+                <input type="file" name="profilePhoto" id="profilePhoto" /><br />
+            </div>
+            <div class="col-lg-7">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Edit your Account</h1>
+                    </div>
+                    <form class="user">
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Repeat Password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+
+                                <button type="submit" class="btn btn-success btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span class="text">Save</span>
+                                </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-secondary btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-undo-alt"></i>
+                                    </span>
+                                    <span class="text">Reset</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="form-group row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                    @Html.Label("First Name")
-                    @Html.TextBoxFor(p => p.Name)
-                </div>
-
-                <div class="col-sm-6">
-                    @Html.Label("Last Name")
-                    @Html.TextBoxFor(p => p.LastName)
-
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                    @Html.Label("Email")
-                    @Html.TextBoxFor(p => p.Email)
-                </div>
-
-                <div class="col-sm-6">
-                    @Html.Label("Password")
-                    @Html.TextBoxFor(p => p.Password)
-
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-
-                    <button type="submit" class="btn btn-success btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-check"></i>
-                        </span>
-                        <span class="text">Save</span>
-                    </button>
-                </div>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-secondary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                        <span class="text">Reset</span>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-}
+    }
+</div>
