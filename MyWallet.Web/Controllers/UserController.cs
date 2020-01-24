@@ -69,7 +69,7 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(HttpPostedFileBase profilePhoto)
+        public ActionResult Edit(UserViewModel userViewModel)
         {
             
 

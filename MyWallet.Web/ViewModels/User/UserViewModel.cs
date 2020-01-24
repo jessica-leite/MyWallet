@@ -1,4 +1,6 @@
-﻿namespace MyWallet.Web.ViewModels.User
+﻿using System.Web;
+
+namespace MyWallet.Web.ViewModels.User
 {
     public class UserViewModel
     {
@@ -8,5 +10,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string RepeatPassword { get; set; }
+        public HttpPostedFileBase Photo { get; set; }
     }
 }

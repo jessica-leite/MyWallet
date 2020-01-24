@@ -2,9 +2,6 @@
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Expense;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -31,13 +28,17 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
             var contextId = GetCurrentContextId();
 
             var expenseList = _expenseService.GetByContextId(contextId);
 
             var viewModelList = new ListAllExpensesViewModel();
             viewModelList.Currency = "€";
-
 
             foreach (var item in expenseList)
             {
@@ -79,7 +80,5 @@ namespace MyWallet.Web.Controllers
             _expenseService.Add(expense);
             return null;
         }
-
-
     }
 }

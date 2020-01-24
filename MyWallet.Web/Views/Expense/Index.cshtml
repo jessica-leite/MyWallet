@@ -3,13 +3,16 @@
 <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
 
 <div class="row" style="margin-bottom: 20px">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <button data-toggle="modal" data-target="#createExpenseModal" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus-circle"></i>
             </span>
             <span class="text">Add Expense</span>
         </button>
+    </div>
+    <div class="col-md-3">
+        @ViewBag.Message
     </div>
 </div>
 
