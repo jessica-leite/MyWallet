@@ -22,14 +22,18 @@ namespace MyWallet.Web.Controllers
                 var userDatabase = new UserService().GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);
                 if (userDatabase == null)
                 {
+                    SendModelStateErrors("Email or Password is invalid");
                     return View(loginViewModel);
                 }
 
                 CookieUtil.SetAuthCookie(userDatabase.Id, userDatabase.Name, userDatabase.GetTheMainContextId(), loginViewModel.RememberMe);
                 return RedirectToAction("Index", "Dashboard");
             }
-
-            return View(loginViewModel);
+            else
+            {
+                SendModelStateErrors();
+                return View(loginViewModel);
+            }
         }
 
         public ActionResult Logout()

@@ -20,6 +20,16 @@ namespace MyWallet.Service
             _userRepository.Add(user);
         }
 
+        public void Update(User user)
+        {
+            _userRepository.Update(user);
+        }
+
+        public User GetById(int id)
+        {
+            return _userRepository.GetById(id);
+        }
+
         public User GetByEmailAndPassword(string email, string password)
         {
             return _userRepository.GetByEmailAndPassword(email, password);

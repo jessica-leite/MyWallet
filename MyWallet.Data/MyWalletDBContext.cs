@@ -1,4 +1,5 @@
-﻿using MyWallet.Data.Domain;
+﻿using MyWallet.Data.DBInitializer;
+using MyWallet.Data.Domain;
 using MyWallet.Data.Mapping;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -7,6 +8,11 @@ namespace MyWallet.Data
 {
     public class MyWalletDBContext : DbContext
     {
+        public MyWalletDBContext()
+        {
+            Database.SetInitializer<MyWalletDBContext>(new MyWalletInitializer());
+        }
+
         public DbSet<User> User { get; set; }
         public DbSet<CurrencyType> CurrencyType { get; set; }
         public DbSet<Country> Country { get; set; }

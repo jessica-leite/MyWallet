@@ -6,7 +6,6 @@ using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
-    //[Authorize]
     public abstract class BaseController : Controller
     {
         protected int GetCurrentUserId()
@@ -34,6 +33,12 @@ namespace MyWallet.Web.Controllers
                     errors.Add(new ErrorViewModel { Message = error.ErrorMessage });
             }
             ViewBag.Errors = errors;
+        }
+
+        protected void SendModelStateErrors(string addMessage)
+        {
+            ModelState.AddModelError(string.Empty, addMessage);
+            SendModelStateErrors();
         }
     }
 }

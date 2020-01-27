@@ -9,11 +9,19 @@ using MyWallet.Service;
 using MyWallet.Web.Util;
 using MyWallet.Web.ViewModels.Context;
 using System.IO;
+using System.Text;
 
 namespace MyWallet.Web.Controllers
 {
     public class UserController : BaseController
     {
+        private UserService _userService;
+
+        public UserController()
+        {
+            _userService = new UserService();
+        }
+
         public ActionResult Create()
         {
             return View();
@@ -41,8 +49,7 @@ namespace MyWallet.Web.Controllers
 
             user.AddNewContext(mainContext);
 
-            var userService = new UserService();
-            userService.Add(user);
+            _userService.Add(user);
 
             // Login into plataform - bacause of the Autorization (attribute)
             CookieUtil.SetAuthCookie(user.Id, user.Name, user.GetTheMainContextId());
@@ -65,15 +72,49 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Edit()
         {
-            return View();
+            var user = _userService.GetById(GetCurrentUserId());
+            var viewModel = new UserViewModel()
+            {
+                Name = user.Name,
+                LastName = user.LastName,
+                Email = user.Email,
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel)
         {
-            
+            if (ModelState.IsValid)
+            {
+                byte[] photo = null;
+                using (var memoryStream = new MemoryStream())
+                {
+                    userViewModel.Photo.InputStream.CopyTo(memoryStream);
+                    photo = memoryStream.ToArray();
+                }
 
-            return View();
+                var oldUser = _userService.GetById(GetCurrentUserId());
+
+                var updateUser = new User()
+                {
+                    Id = GetCurrentUserId(),
+                    Name = userViewModel.Name,
+                    LastName = userViewModel.LastName,
+                    CreationDate = oldUser.CreationDate,
+                    Email = userViewModel.Email,
+                    Password = userViewModel.Password,
+                    Photo = photo
+                };
+                _userService.Update(updateUser);
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+            {
+                SendModelStateErrors();
+                return View();
+            }
         }
     }
 }

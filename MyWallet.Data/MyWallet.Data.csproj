@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBInitializer\MyWalletInitializer.cs" />
     <Compile Include="Domain\BankAccount.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Context.cs" />

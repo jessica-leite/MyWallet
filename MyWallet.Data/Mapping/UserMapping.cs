@@ -27,6 +27,9 @@ namespace MyWallet.Data.Mapping
                 .IsRequired()
                 .HasMaxLength(255);
 
+            Property(u => u.Photo)
+                .IsOptional();
+
             Property(u => u.CreationDate)
                 .IsRequired();
         }
