@@ -122,7 +122,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\ExpenseController.cs" />
-    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\IncomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -143,6 +143,8 @@
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
     <Compile Include="ViewModels\Expense\ExpenseViewModel.cs" />
     <Compile Include="ViewModels\Expense\ListAllExpensesViewModel.cs" />
+    <Compile Include="ViewModels\Income\IncomeViewModel.cs" />
+    <Compile Include="ViewModels\Income\ListAllIncomeViewModel.cs" />
     <Compile Include="ViewModels\Shared\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
@@ -1947,10 +1949,10 @@
     <Content Include="Views\Context\Delete.cshtml" />
     <Content Include="Views\Expense\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Income\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Import\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
