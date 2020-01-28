@@ -3,7 +3,7 @@
 <h1 class="h3 mb-2 text-gray-800">Expenses</h1>
 
 <div class="row" style="margin-bottom: 20px">
-    <div class="col-md-3">
+    <div class="col-md-12">
         <button data-toggle="modal" data-target="#createExpenseModal" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus-circle"></i>
@@ -11,14 +11,11 @@
             <span class="text">Add Expense</span>
         </button>
     </div>
-    <div class="col-md-3">
-        @ViewBag.Message
-    </div>
 </div>
 
 <div class="card shadow mb-4">
     <div class="card-body">
-        <div class="table-responsive">
+        <div id="divExpenseDataTable" class="table-responsive">
             <table class="table table-hover" id="dataTable">
                 <thead>
                     <tr>
@@ -67,7 +64,7 @@
                             <input type="text" class="form-control form-control-user" id="value" placeholder="Value">
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date">
+                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date" value="@DateTime.Now.ToShortDateString()">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -117,11 +114,11 @@
 
                 $.ajax({
                     url: $('#formModalCreateExpense').attr('action'),
-                    type: "POST", 
+                    type: "POST",
                     data: expenseJson,
                     success: function (data) {
+                        reloadExpenseDataTable();
                         alert("Expense added");
-                        location.reload();
                     },
                     error: function (error) {
                         alert("Error, check console");
@@ -130,6 +127,13 @@
                 });
             });
         });
+
+        function reloadExpenseDataTable() {
+            var url = '@Url.Action("GetExpenses")';
+            $('#divExpenseDataTable').load(url, null, function () {
+                $('#dataTable').DataTable();
+            });
+        }
 
         function loadBankAccountDropDownList() {
             var url = '@Url.Action("GetAllByContextId", "BankAccount")';

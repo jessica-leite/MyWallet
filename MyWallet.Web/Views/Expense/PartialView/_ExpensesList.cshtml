@@ -1,0 +1,25 @@
+﻿@model MyWallet.Web.ViewModels.Expense.ListAllExpensesViewModel
+
+<table class="table table-hover" id="dataTable">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Bank Account</th>
+            <th>@Model.Currency</th>
+            <th>Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var expense in Model.Expenses)
+        {
+            <tr>
+                <td>@expense.Description</td>
+                <td>@expense.Category</td>
+                <td>@expense.BankAccount</td>
+                <td>@expense.Value</td>
+                <td>@expense.IsPaid</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,6 +2,7 @@
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Expense;
 using System;
+using System.Net;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -13,26 +14,11 @@ namespace MyWallet.Web.Controllers
 
         public ExpenseController()
         {
-            try
-            {
-                var user = GetUserToken();
-            }
-            catch (Exception ex)
-            {
-                var test = ex;
-            }
-
-
             _expenseService = new ExpenseService();
         }
 
         public ActionResult Index()
         {
-            if (TempData["Message"] != null)
-            {
-                ViewBag.Message = TempData["Message"];
-            }
-
             var contextId = GetCurrentContextId();
 
             var expenseList = _expenseService.GetByContextId(contextId);
@@ -62,11 +48,8 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ExpenseViewModel expenseViewModel)
+        public HttpStatusCodeResult Create(ExpenseViewModel expenseViewModel)
         {
-            var user = GetUserToken();
-
-
             var expense = new Expense();
             expense.BankAccountId = expenseViewModel.BankAccountId;
             expense.CategoryId = expenseViewModel.CategoryId;
@@ -76,9 +59,40 @@ namespace MyWallet.Web.Controllers
             expense.IsPaid = expenseViewModel.IsPaid;
             expense.Observation = expenseViewModel.Observation;
             expense.Value = expenseViewModel.Value;
+            expense.ContextId = GetCurrentContextId();
 
             _expenseService.Add(expense);
-            return null;
+            return new HttpStatusCodeResult(HttpStatusCode.Created);
+        }
+
+        public PartialViewResult GetExpenses()
+        {
+            var contextId = GetCurrentContextId();
+
+            var expenseList = _expenseService.GetByContextId(contextId);
+
+            var viewModelList = new ListAllExpensesViewModel();
+            viewModelList.Currency = "€";
+
+            foreach (var item in expenseList)
+            {
+                var expense = new ExpenseViewModel()
+                {
+                    Id = item.Id,
+                    Description = item.Description,
+                    CategoryId = item.CategoryId,
+                    IsPaid = item.IsPaid,
+                    BankAccountId = item.BankAccountId,
+                    Value = item.Value,
+                    Date = item.Date,
+                    Observation = item.Observation,
+                    BankAccount = item.BankAccount.Name,
+                    Category = item.Category.Name
+                };
+
+                viewModelList.Expenses.Add(expense);
+            }
+            return PartialView("~/Views/Expense/PartialView/_ExpensesList.cshtml", viewModelList);
         }
     }
 }
