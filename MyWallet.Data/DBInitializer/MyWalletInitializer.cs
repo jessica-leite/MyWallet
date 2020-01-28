@@ -40,6 +40,24 @@ namespace MyWallet.Data.DBInitializer
 
             context.User.AddOrUpdate(x => x.Id, user);
 
+            var bankAccount = new BankAccount()
+            {
+                Id = 1,
+                Name = "Default",
+                ContextId = mainContext.Id,
+                CreationDate = DateTime.Now,
+                OpeningBalance = 10000
+            };
+            context.BankAccount.AddOrUpdate(x => x.Id, bankAccount);
+
+            var category = new Category()
+            {
+                Id = 1,
+                Name = "Default",
+                ContextId = mainContext.Id
+            };
+            context.Category.AddOrUpdate(x => x.Id, category);
+
             var rowsAffected = context.SaveChanges();
         }
 

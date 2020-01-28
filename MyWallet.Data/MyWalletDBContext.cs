@@ -20,6 +20,7 @@ namespace MyWallet.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Expense> Expense { get; set; }
+        public DbSet<Income> Income { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,6 +33,7 @@ namespace MyWallet.Data
             modelBuilder.Configurations.Add(new CategoryMapping());
             modelBuilder.Configurations.Add(new BankAccountMapping());
             modelBuilder.Configurations.Add(new ExpenseMapping());
+            modelBuilder.Configurations.Add(new IncomeMapping());
         }
     }
 }
