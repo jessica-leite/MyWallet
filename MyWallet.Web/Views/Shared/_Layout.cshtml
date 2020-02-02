@@ -27,6 +27,8 @@
             <div id="content">
                 @Html.Partial("_Navbar")
                 <div class="container-fluid">
+                    @RenderSection("breadcrumb", required: false)
+
                     @if (ViewBag.Errors != null)
                     {
                         var errors = (IEnumerable<MyWallet.Web.ViewModels.Shared.ErrorViewModel>)ViewBag.Errors;
