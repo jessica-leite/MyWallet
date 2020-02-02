@@ -58,18 +58,17 @@ namespace MyWallet.Web.Controllers
         {
             var category = _categoryService.GetById(id);
 
-            var categoryViewModel = new EditCategoryViewModel
+            var categoryViewModel = new CategoryViewModel
             {
                 Id = category.Id,
                 Name = category.Name,
-                ContextId = category.ContextId
             };
 
             return View(categoryViewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(EditCategoryViewModel categoryViewModel)
+        public ActionResult Edit(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
