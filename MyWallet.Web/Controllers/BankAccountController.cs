@@ -68,30 +68,26 @@ namespace MyWallet.Web.Controllers
         public ActionResult Edit(int id)
         {
             var bankAccount = _bankAccountService.GetById(id);
+
             var viewModel = new BankAccountViewModel();
             viewModel.Id = bankAccount.Id;
             viewModel.Name = bankAccount.Name;
             viewModel.OpeningBalance = bankAccount.OpeningBalance;
-            viewModel.ContextId = bankAccount.ContextId;
-            viewModel.CreationDate = bankAccount.CreationDate;
 
             return View(viewModel);
         }
-
 
         [HttpPost]
         public ActionResult Edit(BankAccountViewModel bankAccountViewModel)
         {
             if (ModelState.IsValid)
             {
-                var bankAccount = new BankAccount();
-                bankAccount.Id = bankAccountViewModel.Id;
-                bankAccount.Name = bankAccountViewModel.Name;
-                bankAccount.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
-                bankAccount.ContextId = bankAccountViewModel.ContextId;
-                bankAccount.CreationDate = bankAccountViewModel.CreationDate;
+                var bankAccountUpdate = _bankAccountService.GetById(bankAccountViewModel.Id);
 
-                _bankAccountService.Update(bankAccount);
+                bankAccountUpdate.Name = bankAccountViewModel.Name;
+                bankAccountUpdate.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
+
+                _bankAccountService.Update(bankAccountUpdate);
 
                 return RedirectToAction("Index");
             }
@@ -100,7 +96,6 @@ namespace MyWallet.Web.Controllers
                 SendModelStateErrors();
                 return View(bankAccountViewModel);
             }
-
         }
 
         public ActionResult Delete(int id)
