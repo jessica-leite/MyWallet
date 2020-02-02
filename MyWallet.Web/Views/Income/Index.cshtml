@@ -67,7 +67,7 @@
                             <input type="text" class="form-control form-control-user" id="value" placeholder="Value">
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date">
+                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date" value="@DateTime.Now.ToShortDateString()">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -162,7 +162,7 @@
                     type: "POST",
                     data: expenseJson,
                     success: function (data) {
-                        alert("Expense added");
+                        alert("Income added");
                         location.reload();
                     },
                     error: function (error) {

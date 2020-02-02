@@ -1,6 +1,8 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -9,7 +11,7 @@ namespace MyWallet.Data.Repository
     {
         public void Add(Income income)
         {
-            using(var context = new MyWalletDBContext())
+            using (var context = new MyWalletDBContext())
             {
                 context.Income.Add(income);
                 context.SaveChanges();
@@ -18,12 +20,13 @@ namespace MyWallet.Data.Repository
 
         public IEnumerable<Income> GetByContextId(int contextId)
         {
-            using(var context = new MyWalletDBContext())
+            using (var context = new MyWalletDBContext())
             {
-                 var incomeList = context.Income.Where(i => i.ContextId == contextId)
-                    .Include(i => i.BankAccount)
-                    .Include(i => i.Category)
-                    .ToList();
+                var incomeList = context.Income.Where(i => i.ContextId == contextId)
+                   .Include(i => i.BankAccount)
+                   .Include(i => i.Category)
+                   .Include(i => i.Context)
+                   .ToList();
 
                 return incomeList;
             }

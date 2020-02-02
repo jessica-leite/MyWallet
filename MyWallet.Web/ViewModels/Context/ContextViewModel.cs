@@ -1,4 +1,5 @@
 ﻿using MyWallet.Web.ViewModels.User;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.ViewModels.Context
@@ -6,6 +7,8 @@ namespace MyWallet.Web.ViewModels.Context
     public class ContextViewModel
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         public int UserId { get; set; }
         public UserViewModel User { get; set; }

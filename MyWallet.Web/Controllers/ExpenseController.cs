@@ -50,6 +50,7 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public HttpStatusCodeResult Create(ExpenseViewModel expenseViewModel)
         {
+
             var expense = new Expense();
             expense.BankAccountId = expenseViewModel.BankAccountId;
             expense.CategoryId = expenseViewModel.CategoryId;

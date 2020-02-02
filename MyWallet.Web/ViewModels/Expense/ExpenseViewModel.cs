@@ -9,13 +9,13 @@ namespace MyWallet.Web.ViewModels.Expense
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Value is required")]
         public decimal Value { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
 
         public bool IsPaid { get; set; }

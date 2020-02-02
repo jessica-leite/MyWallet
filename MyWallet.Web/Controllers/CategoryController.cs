@@ -77,7 +77,7 @@ namespace MyWallet.Web.Controllers
                 {
                     Id = categoryViewModel.Id,
                     Name = categoryViewModel.Name,
-                    ContextId = categoryViewModel.ContextId
+                    ContextId = GetCurrentContextId()
                 };
                 _categoryService.Update(category);
                 return RedirectToAction("Index");

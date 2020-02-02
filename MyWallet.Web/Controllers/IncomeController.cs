@@ -23,6 +23,7 @@ namespace MyWallet.Web.Controllers
         {
             var incomeList = _incomeService.GetByContextId(GetCurrentContextId());
             var viewModelList = new ListAllIncomeViewModel();
+            //viewModelList.Currency = incomeList.First().Context.CurrencyType.Symbol;
             viewModelList.Currency = "€";
 
             foreach (var income in incomeList)
@@ -56,7 +57,7 @@ namespace MyWallet.Web.Controllers
             {
                 BankAccountId = viewModel.BankAccountId,
                 CategoryId = viewModel.CategoryId,
-                ContextId = viewModel.ContextId,
+                ContextId = GetCurrentContextId(),
                 CreationDate = DateTime.Now,
                 Date = viewModel.Date,
                 Description = viewModel.Description,

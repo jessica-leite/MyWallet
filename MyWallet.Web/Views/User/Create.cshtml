@@ -11,6 +11,18 @@
             <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
             <div class="col-lg-7">
                 <div class="p-5">
+                    @if (ViewBag.Errors != null)
+                    {
+                        var errors = (IEnumerable<MyWallet.Web.ViewModels.Shared.ErrorViewModel>)ViewBag.Errors;
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul>
+                                @foreach (var error in errors)
+                                {
+                                    <li>@error.Message</li>
+                                }
+                            </ul>
+                        </div>
+                    }
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                     </div>

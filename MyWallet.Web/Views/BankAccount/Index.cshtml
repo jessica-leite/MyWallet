@@ -9,6 +9,9 @@
                         <th>
                             Bank Accounts
                         </th>
+                        <th>
+                            Opening Balance
+                        </th>
                     </tr>
                 </thead>
                 @foreach (var bankAccount in Model.BankAccounts)
@@ -16,6 +19,9 @@
                     <tr>
                         <td>
                             @bankAccount.Name
+                        </td>
+                        <td>
+                            @bankAccount.OpeningBalance
                         </td>
                         <td>
                             <a href="@Url.Action("Edit", new { id = bankAccount.Id })" class="btn btn-warning btn-circle">

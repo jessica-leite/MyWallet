@@ -28,7 +28,8 @@ namespace MyWallet.Web.Controllers
                 var viewModel = new BankAccountViewModel()
                 {
                     Id = bankAccount.Id,
-                    Name = bankAccount.Name
+                    Name = bankAccount.Name,
+                    OpeningBalance = bankAccount.OpeningBalance
                 };
 
                 listViewModel.BankAccounts.Add(viewModel);
