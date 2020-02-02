@@ -20,10 +20,7 @@ namespace MyWallet.Data.Repository
         {
             using (var context = new MyWalletDBContext())
             {
-                foreach (var expense in expenses)
-                {
-                    context.Expense.Add(expense);
-                }
+                context.Expense.AddRange(expenses);
                 context.SaveChanges();
             }
         }

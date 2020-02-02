@@ -43,95 +43,6 @@
     </div>
 </div>
 
-<!-- Modal Form - Add Expense -->
-<div class="modal fade" id="createIncomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Income</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Create", null, FormMethod.Post, new { @class = "user", id = "formModalCreateExpense" }))
-                {
-                    <div class="form-group">
-                        <input type="text" class="form-control form-control-user" id="description" placeholder="Description">
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="text" class="form-control form-control-user" id="value" placeholder="Value">
-                        </div>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control form-control-user" id="date" placeholder="Date" value="@DateTime.Now.ToShortDateString()">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <select class="form-control" id="bankAccount"></select>
-                        </div>
-                        <div class="col-sm-6">
-                            <select class="form-control" id="category"></select>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <button id="btnModalCreateExpense" type="submit" class="btn btn-success btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-check"></i>
-                    </span>
-                    <span class="text">Save</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal Form - Upload Expense -->
-<div class="modal fade" id="importExpensesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload Expenses</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Index", "Import", FormMethod.Post, new { @class = "user", id = "formModalUploadExpenses" }))
-                {
-                    <div class="input-group mb-3" style="margin-top: 15px;">
-                        <div class="custom-file">
-                            @Html.TextBox("file", null, new { type = "file", @class = "custom-file-input" })
-                            <label class="custom-file-label" for="Name"></label>
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <button id="btnModalUploadExpenses" type="submit" class="btn btn-success btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-check"></i>
-                    </span>
-                    <span class="text">Save</span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
 @section scripts{
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -168,16 +79,11 @@
                     }
                 });
             });
-
-            //$('#btnModalUpdateExpenses').click(function () {
-
-            //})
         });
 
         function loadBankAccountDropDownList() {
             var url = '@Url.Action("GetAllByContextId", "BankAccount")';
             $.getJSON(url, function (data) {
-                //$("#bankAccount").empty();
                 $.each(data, function (index, obj) {
                     var $option = $("<option/>");
                     $option.text(obj.Name);
