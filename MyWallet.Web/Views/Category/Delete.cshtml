@@ -1,8 +1,17 @@
 ﻿@model MyWallet.Web.ViewModels.Category.CategoryViewModel
 
+@section breadcrumb {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index")">Categories</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+}
+
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Delete", "Category", FormMethod.Post, new { @class = "user" }))
+        @using (Html.BeginForm())
         {
             @Html.HiddenFor(c => c.Id)
             <fieldset>
@@ -10,9 +19,7 @@
                 <hr />
                 <div class="form-group">
                     @Html.LabelFor(c => c.Name)
-                </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user", disabled = true})
+                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control", disabled = true })
                 </div>
                 <button type="submit" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">
