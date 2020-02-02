@@ -1,7 +1,7 @@
 ﻿@model MyWallet.Web.ViewModels.User.UserViewModel
 
 <div class="row">
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user", enctype = "multipart/form-data" }))
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.HiddenFor(m => m.Id)
 
@@ -56,14 +56,6 @@
                             <i class="fas fa-check"></i>
                         </span>
                         <span class="text">Save</span>
-                    </button>
-                </div>
-                <div class="col-sm-6">
-                    <button type="submit" class="btn btn-secondary btn-icon-split">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-undo-alt"></i>
-                        </span>
-                        <span class="text">Reset</span>
                     </button>
                 </div>
             </div>
