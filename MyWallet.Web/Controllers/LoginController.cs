@@ -11,7 +11,10 @@ namespace MyWallet.Web.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            if (GetUserToken() == null)
+                return View();
+
+            return RedirectToAction("Index", "Dashboard");
         }
 
         [HttpPost]
