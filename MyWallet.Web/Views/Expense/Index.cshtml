@@ -4,7 +4,7 @@
 
 <div class="row" style="margin-bottom: 20px">
     <div class="col-md-12">
-        <button data-toggle="modal" data-target="#createExpenseModal" class="btn btn-primary btn-icon-split">
+        <button id="btnOpenExpenseModal" class="btn btn-primary btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus-circle"></i>
             </span>
@@ -16,37 +16,17 @@
 <div class="card shadow mb-4">
     <div class="card-body">
         <div id="divExpenseDataTable" class="table-responsive">
-            <table class="table table-hover" id="dataTable">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Bank Account</th>
-                        <th>@Model.Currency</th>
-                        <th>Paid</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var expense in Model.Expenses)
-                    {
-                        <tr>
-                            <td>@expense.Description</td>
-                            <td>@expense.Category</td>
-                            <td>@expense.BankAccount</td>
-                            <td>@expense.Value</td>
-                            <td>@expense.IsPaid</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @Html.Partial("PartialView/_ExpensesList", Model)
         </div>
     </div>
 </div>
 
 <!-- Modal Form - Add Expense -->
-@Html.Partial("~/Views/Expense/PartialView/_ModalAddExpense.cshtml")
+@Html.Partial("PartialView/_ModalAddExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
 
-@section scripts{
+@section scripts {
+    @Scripts.Render("~/bundles/jquery-val")
+
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
@@ -54,27 +34,51 @@
         $(document).ready(function () {
 
             loadBankAccountDropDownList();
-            loadCategoryDropDownList()
+            loadCategoryDropDownList();
 
             $('#dataTable').DataTable();
 
+            $('#btnOpenExpenseModal').click(function () {
+                $('#formModalCreateExpense')[0].reset();
+                $('#createExpenseModal').modal('show');
+            });
+
+            $('#btnIsPaid').click(function () {
+                var $isPaid = $('#IsPaid');
+
+                if ($isPaid.val() == "False") {
+                    $isPaid.val("True");
+                } else {
+                    $isPaid.val("False");
+                }
+
+                $(this).toggleClass("btn-danger btn-success");
+                $(this).children().toggleClass("fa-thumbs-down fa-thumbs-up");
+            });
+
             $('#btnModalCreateExpense').click(function () {
+                var $form = $('#formModalCreateExpense');
+
+                if (!$form.valid()) {
+                    return;
+                }
 
                 var expenseJson = {
-                    Description: $('#description').val(),
-                    Value: $('#value').val(),
-                    Date: $('#date').val(),
-                    BankAccountId: $('#bankAccount').val(),
-                    CategoryId: $('#category').val()
+                    Description: $('#Description').val(),
+                    Value: $('#Value').val(),
+                    Date: $('#Date').val(),
+                    BankAccountId: $('#BankAccountId').val(),
+                    CategoryId: $('#CategoryId').val(),
+                    IsPaid: $('#IsPaid').val()
                 }
 
                 $.ajax({
-                    url: $('#formModalCreateExpense').attr('action'),
+                    url: $form.attr('action'),
                     type: "POST",
                     data: expenseJson,
                     success: function (data) {
                         reloadExpenseDataTable();
-                        alert("Expense added");
+                        $('#createExpenseModal').modal('hide');
                     },
                     error: function (error) {
                         alert("Error, check console");
@@ -94,12 +98,11 @@
         function loadBankAccountDropDownList() {
             var url = '@Url.Action("GetAllByContextId", "BankAccount")';
             $.getJSON(url, function (data) {
-                //$("#bankAccount").empty();
                 $.each(data, function (index, obj) {
                     var $option = $("<option/>");
                     $option.text(obj.Name);
                     $option.val(obj.Id);
-                    $("#bankAccount").append($option);
+                    $("#BankAccountId").append($option);
                 });
             });
         }
@@ -111,7 +114,7 @@
                         var $option = $("<option />");
                         $option.text(obj.Name);
                         $option.val(obj.Id);
-                        $("#category").append($option);
+                        $("#CategoryId").append($option);
                     })
                 });
         }

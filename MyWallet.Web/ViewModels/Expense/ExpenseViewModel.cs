@@ -22,15 +22,15 @@ namespace MyWallet.Web.ViewModels.Expense
         public string Observation { get; set; }
 
         [Required]
+        [DisplayName("Bank Account")]
         public int? BankAccountId { get; set; }
 
         [Required]
+        [DisplayName("Category")]
         public int? CategoryId { get; set; }
 
         // Auxiliar labels
         public string Category { get; set; }
-
-        [DisplayName("Bank Account")]
         public string BankAccount { get; set; }
     }
 }

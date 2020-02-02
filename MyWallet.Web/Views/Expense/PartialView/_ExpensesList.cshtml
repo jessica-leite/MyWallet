@@ -18,7 +18,20 @@
                 <td>@expense.Category</td>
                 <td>@expense.BankAccount</td>
                 <td>@expense.Value</td>
-                <td>@expense.IsPaid</td>
+                <td>
+                    @if (expense.IsPaid)
+                    {
+                        <button type="button" class="btn btn-success" disabled>
+                            <i class="far fa-thumbs-up"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger" disabled>
+                            <i class="far fa-thumbs-down"></i>
+                        </button>
+                    }
+                </td>
             </tr>
         }
     </tbody>
