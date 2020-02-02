@@ -1,4 +1,5 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,14 @@ namespace MyWallet.Data.Repository
                 context.Entry(bankAccount).State = System.Data.Entity.EntityState.Deleted;
                 context.SaveChanges();
             }
+        }
 
+        public IEnumerable<BankAccount> GetByContextId(int contextId)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.BankAccount.Where(b => b.ContextId == contextId).ToList();
+            }
         }
 
         public BankAccount GetById(int id)

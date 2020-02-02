@@ -1,6 +1,7 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Category;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -57,18 +58,17 @@ namespace MyWallet.Web.Controllers
         {
             var category = _categoryService.GetById(id);
 
-            var categoryViewModel = new EditCategoryViewModel
+            var categoryViewModel = new CategoryViewModel
             {
                 Id = category.Id,
                 Name = category.Name,
-                ContextId = category.ContextId
             };
 
             return View(categoryViewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(EditCategoryViewModel categoryViewModel)
+        public ActionResult Edit(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace MyWallet.Web.Controllers
                 {
                     Id = categoryViewModel.Id,
                     Name = categoryViewModel.Name,
-                    ContextId = categoryViewModel.ContextId
+                    ContextId = GetCurrentContextId()
                 };
                 _categoryService.Update(category);
                 return RedirectToAction("Index");
@@ -109,6 +109,20 @@ namespace MyWallet.Web.Controllers
             };
             _categoryService.Delete(category);
             return RedirectToAction("Index");
+        }
+
+        public JsonResult GetAllByContextId(int? contextId)
+        {
+            var id = contextId.HasValue ? contextId.Value : GetCurrentContextId();
+
+            var listCategory = _categoryService.GetByContextId(id);
+
+            var json = listCategory.Select(c => new
+            {
+                c.Id,
+                c.Name
+            });
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
     }
 }

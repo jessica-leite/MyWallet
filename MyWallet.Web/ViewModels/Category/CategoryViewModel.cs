@@ -1,17 +1,12 @@
-﻿using MyWallet.Web.ViewModels.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MyWallet.Web.ViewModels.Category
 {
     public class CategoryViewModel
     {
         public int Id { get; set; }
+        
+        [Required]
         public string Name { get; set; }
-
-        public int ContextId { get; set; }
-        public ContextViewModel Context { get; set; }
     }
 }

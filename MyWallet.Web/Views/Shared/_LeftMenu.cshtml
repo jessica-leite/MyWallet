@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="/Dashboard">
+        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
             <i class="fas fa-chart-line"></i>
             <span>Dashboard</span>
         </a>
@@ -25,7 +25,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="@Url.Action("Index", "Expense")">
             <i class="fas fa-hand-holding-usd"></i>
             <span>Expenses</span>
         </a>
@@ -35,7 +35,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="@Url.Action("Index","Income")">
             <i class="fas fa-piggy-bank"></i>
             <span>Incomes</span>
         </a>
@@ -64,7 +64,7 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="/Category/Index">
+        <a class="nav-link" href="@Url.Action("Index","Category")">
             <i class="fas fa-list-ul"></i>
             <span>Categories</span>
         </a>
@@ -73,16 +73,16 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="/BankAccount">
+        <a class="nav-link" href="@Url.Action("Index", "BankAccount")">
             <i class="fas fa-money-check-alt"></i>
-            <span>Bank accounts</span>
+            <span>Bank Accounts</span>
         </a>
     </li>
 
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">
-        <a class="nav-link" href="/Context">
+        <a class="nav-link" href="@Url.Action("Index","Context")">
             <i class="fas fa-random"></i>
             <span>Context</span>
         </a>

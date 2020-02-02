@@ -1,0 +1,112 @@
+﻿@model MyWallet.Web.ViewModels.Income.ListAllIncomeViewModel
+
+<h1 class="h3 mb-2 text-gray-800">Incomes</h1>
+
+<div class="row" style="margin-bottom: 20px">
+    <div class="col-md-4">
+        <button data-toggle="modal" data-target="#createIncomeModal" class="btn btn-primary btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus-circle"></i>
+            </span>
+            <span class="text">Add Income</span>
+        </button>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Bank Account</th>
+                        <th>@Model.Currency</th>
+                        <th>Received</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var income in Model.IncomeList)
+                    {
+                        <tr>
+                            <td>@income.Description</td>
+                            <td>@income.Category</td>
+                            <td>@income.BankAccount</td>
+                            <td>@income.Value</td>
+                            <td>@income.Received</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            loadBankAccountDropDownList();
+            loadCategoryDropDownList()
+
+            $('#dataTable').DataTable();
+
+            $('#btnModalCreateExpense').click(function () {
+
+                var expenseJson = {
+                    Description: $('#description').val(),
+                    Value: $('#value').val(),
+                    Date: $('#date').val(),
+                    BankAccountId: $('#bankAccount').val(),
+                    CategoryId: $('#category').val()
+                }
+
+                $.ajax({
+                    url: $('#formModalCreateExpense').attr('action'),
+                    type: "POST",
+                    data: expenseJson,
+                    success: function (data) {
+                        alert("Income added");
+                        location.reload();
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        function loadBankAccountDropDownList() {
+            var url = '@Url.Action("GetAllByContextId", "BankAccount")';
+            $.getJSON(url, function (data) {
+                $.each(data, function (index, obj) {
+                    var $option = $("<option/>");
+                    $option.text(obj.Name);
+                    $option.val(obj.Id);
+                    $("#bankAccount").append($option);
+                });
+            });
+        }
+
+        function loadCategoryDropDownList() {
+            var url = '@Url.Action("GetAllByContextId","Category")';
+                $.get(url, function (data) {
+                    $.each(data, function (index, obj) {
+                        var $option = $("<option />");
+                        $option.text(obj.Name);
+                        $option.val(obj.Id);
+                        $("#category").append($option);
+                    })
+                });
+        }
+    </script>
+}
+
+@section otherCss{
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}

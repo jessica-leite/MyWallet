@@ -1,6 +1,7 @@
 ﻿using MyWallet.Data.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace MyWallet.Data.Repository
 {
@@ -19,7 +20,7 @@ namespace MyWallet.Data.Repository
         {
             using (var context = new MyWalletDBContext())
             {
-                context.Entry(category).State = System.Data.Entity.EntityState.Modified;
+                context.Entry(category).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
@@ -46,6 +47,15 @@ namespace MyWallet.Data.Repository
             using (var context = new MyWalletDBContext())
             {
                 return context.Category.ToList();
+            }
+        }
+
+        public IEnumerable<Category> GetByContextId(int contextId)
+        {
+            using(var context = new MyWalletDBContext())
+            {
+                var list = context.Category.Where(c => c.ContextId == contextId).ToList();
+                return list;
             }
         }
     }

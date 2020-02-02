@@ -34,5 +34,11 @@ namespace MyWallet.Web.Controllers
             }
             ViewBag.Errors = errors;
         }
+
+        protected void SendModelStateErrors(string addMessage)
+        {
+            ModelState.AddModelError(string.Empty, addMessage);
+            SendModelStateErrors();
+        }
     }
 }

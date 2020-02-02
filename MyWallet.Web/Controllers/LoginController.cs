@@ -1,14 +1,8 @@
-﻿using MyWallet.Data.Repository;
-using MyWallet.Web.ViewModels.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using MyWallet.Data.Domain;
-using MyWallet.Service;
-using System.Web.Security;
+﻿using MyWallet.Service;
 using MyWallet.Web.Util;
+using MyWallet.Web.ViewModels.Shared;
+using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MyWallet.Web.Controllers
 {
@@ -17,7 +11,10 @@ namespace MyWallet.Web.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            if (GetUserToken() == null)
+                return View();
+
+            return RedirectToAction("Index", "Dashboard");
         }
 
         [HttpPost]
@@ -28,14 +25,18 @@ namespace MyWallet.Web.Controllers
                 var userDatabase = new UserService().GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);
                 if (userDatabase == null)
                 {
+                    SendModelStateErrors("Email or Password is invalid");
                     return View(loginViewModel);
                 }
 
                 CookieUtil.SetAuthCookie(userDatabase.Id, userDatabase.Name, userDatabase.GetTheMainContextId(), loginViewModel.RememberMe);
                 return RedirectToAction("Index", "Dashboard");
             }
-
-            return View(loginViewModel);
+            else
+            {
+                SendModelStateErrors();
+                return View(loginViewModel);
+            }
         }
 
         public ActionResult Logout()

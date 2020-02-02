@@ -9,36 +9,38 @@
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
                 <div class="row">
-                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-5 d-none d-lg-block bg-login-image"></div>
+                    <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Welcome!</h1>
+                                @if (ViewBag.Errors != null)
+                                {
+                                    var errors = (IEnumerable<MyWallet.Web.ViewModels.Shared.ErrorViewModel>)ViewBag.Errors;
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <ul>
+                                            @foreach (var error in errors)
+                                            {
+                                                <li style="text-align: left">@error.Message</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
                             </div>
                             @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "user" }))
                             {
                                 <div class="form-group">
-                                    @Html.TextBoxFor(u => u.Email, new { @class = "form-control form-control-user", placeholder = "Enter Email Address" })
+                                    @Html.TextBoxFor(u => u.Email, new { @class = "form-control", placeholder = "Enter Email Address" })
                                 </div>
                                 <div class="form-group">
-                                    @Html.PasswordFor(u => u.Password, new { @class = "form-control form-control-user", placeholder = "Enter Password" })
+                                    @Html.PasswordFor(u => u.Password, new { @class = "form-control", placeholder = "Enter Password" })
                                 </div>
-                                @*@<div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
-                                            <label class="custom-control-label" for="customCheck">Remember Me</label>
-                                        </div>
-                                    </div>*@
-
-
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox small">
                                         @Html.CheckBoxFor(u => u.RememberMe, new { @class = "custom-control-input" })
                                         <label class="custom-control-label" for="RememberMe">Remember Me</label>
                                     </div>
                                 </div>
-
-
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Login
                                 </button>

@@ -11,8 +11,13 @@ namespace MyWallet.Data.Mapping
 
             HasKey(c => c.Id);
 
-            Property(c => c.Name).IsRequired().HasMaxLength(255);
-            Property(c => c.ContextId).IsRequired();
+            Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            HasRequired(c => c.Context)
+                .WithMany()
+                .HasForeignKey(c => c.ContextId);
         }
     }
 }

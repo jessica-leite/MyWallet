@@ -33,5 +33,10 @@ namespace MyWallet.Service
         {
             _categoryRepository.Delete(category);
         }
+
+        public IEnumerable<Category> GetByContextId(int contextId)
+        {
+            return _categoryRepository.GetByContextId(contextId);
+        }
     }
 }

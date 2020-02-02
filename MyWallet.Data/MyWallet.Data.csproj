@@ -51,17 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBInitializer\MyWalletInitializer.cs" />
     <Compile Include="Domain\BankAccount.cs" />
     <Compile Include="Domain\Category.cs" />
     <Compile Include="Domain\Context.cs" />
     <Compile Include="Domain\Country.cs" />
     <Compile Include="Domain\CurrencyType.cs" />
+    <Compile Include="Domain\Expense.cs" />
+    <Compile Include="Domain\Income.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Mapping\BankAccountMapping.cs" />
     <Compile Include="Mapping\CategoryMapping.cs" />
     <Compile Include="Mapping\CountryMapping.cs" />
     <Compile Include="Mapping\ContextMapping.cs" />
     <Compile Include="Mapping\CurrencyTypeMapping.cs" />
+    <Compile Include="Mapping\ExpenseMapping.cs" />
+    <Compile Include="Mapping\IncomeMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyWalletDBContext.cs" />
@@ -71,6 +76,8 @@
     <Compile Include="Repository\ContextRepository.cs" />
     <Compile Include="Repository\CountryRepository.cs" />
     <Compile Include="Repository\CurrencyTypeRepository.cs" />
+    <Compile Include="Repository\ExpenseRepository.cs" />
+    <Compile Include="Repository\IncomeRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

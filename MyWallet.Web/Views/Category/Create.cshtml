@@ -1,26 +1,24 @@
-﻿ @model MyWallet.Web.ViewModels.Category.CreateCategoryViewModel
+﻿@model MyWallet.Web.ViewModels.Category.CreateCategoryViewModel
 
-<div class="">
+@section breadcrumb {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index")">Categories</a></li>
             <li class="breadcrumb-item active" aria-current="page">Create</li>
         </ol>
     </nav>
-</div>
+}
 
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Category", FormMethod.Post, new { @class = "user" }))
+        @using (Html.BeginForm())
         {
             <fieldset>
                 <legend>New Category</legend>
-                <hr />  
+                <hr />
                 <div class="form-group">
                     @Html.LabelFor(c => c.Name)
-                </div>
-                <div class="form-group">
-                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user" })
+                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
                 </div>
                 <button type="submit" class="btn btn-success btn-icon-split">
                     <span class="icon text-white-50">

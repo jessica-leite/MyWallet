@@ -22,6 +22,10 @@ namespace MyWallet.Web
                 "~/vendor/bootstrap/js/bootstrap.bundle.min.js",
                 "~/vendor/jquery-easing/jquery.easing.min.js",
                 "~/js/sb-admin-2.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js"));
         }
     }
 }
