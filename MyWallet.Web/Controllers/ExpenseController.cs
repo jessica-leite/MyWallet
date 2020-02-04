@@ -69,6 +69,42 @@ namespace MyWallet.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        [HttpPost]
+        public HttpStatusCodeResult Edit(ExpenseViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var expense = _expenseService.GetById(viewModel.Id);
+                expense.Date = viewModel.Date.Value;
+                expense.Description = viewModel.Description;
+                expense.CategoryId = viewModel.CategoryId.Value;
+                expense.BankAccountId = viewModel.BankAccountId.Value;
+                expense.Value = viewModel.Value.Value;
+                expense.IsPaid = viewModel.IsPaid;
+
+                _expenseService.Update(expense);
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPost]
+        public HttpStatusCodeResult Delete(ExpenseViewModel viewModel)
+        {
+            var expense = new Expense()
+            {
+                Id = viewModel.Id
+            };
+
+            _expenseService.Delete(expense);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
         public PartialViewResult GetExpenses()
         {
             var contextId = GetCurrentContextId();

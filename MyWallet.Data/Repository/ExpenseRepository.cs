@@ -25,6 +25,32 @@ namespace MyWallet.Data.Repository
             }
         }
 
+        public void Update(Expense expense)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(expense).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
+        public void Delete(Expense expense)
+        {
+            using(var context = new MyWalletDBContext())
+            {
+                context.Entry(expense).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
+        public Expense GetById(int id)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                return context.Expense.Find(id);
+            }
+        }
+
         public IEnumerable<Expense> GetByContextId(int contextId)
         {
             using (var context = new MyWalletDBContext())

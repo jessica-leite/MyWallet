@@ -24,6 +24,21 @@ namespace MyWallet.Service
             _expenseRepository.Add(expenses);
         }
 
+        public void Update(Expense expense)
+        {
+            _expenseRepository.Update(expense);
+        }
+
+        public void Delete(Expense expense)
+        {
+            _expenseRepository.Delete(expense);
+        }
+
+        public Expense GetById(int id)
+        {
+            return _expenseRepository.GetById(id);
+        }
+
         public IEnumerable<Expense> GetByContextId(int contextId)
         {
             return _expenseRepository.GetByContextId(contextId);

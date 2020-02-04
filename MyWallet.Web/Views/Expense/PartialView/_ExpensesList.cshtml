@@ -9,6 +9,8 @@
             <th>Bank Account</th>
             <th>@Model.Currency</th>
             <th>Paid</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -33,6 +35,16 @@
                             <i class="far fa-thumbs-down"></i>
                         </button>
                     }
+                </td>
+                <td>
+                    <button data-expense-id="@expense.Id" type="button" class="btn btn-warning btn-circle">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </td>
+                <td>
+                    <button data-expense-id="@expense.Id" type="button" class="btn btn-danger btn-circle btnDeleteExpenseModal">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         }

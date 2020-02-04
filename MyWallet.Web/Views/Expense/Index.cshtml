@@ -24,6 +24,10 @@
 <!-- Modal Form - Add Expense -->
 @Html.Partial("PartialView/_ModalAddExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
 
+
+<!-- Modal Form - Delete Expense -->
+@Html.Partial("PartialView/_ModalDeleteExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
+
 @section scripts {
     @Scripts.Render("~/bundles/jquery-val")
 
@@ -41,6 +45,33 @@
             $('#btnOpenExpenseModal').click(function () {
                 $('#formModalCreateExpense')[0].reset();
                 $('#createExpenseModal').modal('show');
+            });
+
+            $(document).on('click', '.btnDeleteExpenseModal', function () {
+                $('#deleteExpenseModal').modal('show');
+
+                var expenseId = $(this).data("expense-id");
+                $('#idModalDeleteExpense').attr("value", expenseId);
+            });
+
+            $('#btnDeleteExpense').click(function () {
+                var $form = $('#formModalDeleteExpense');
+
+                var id = $form.serializeArray()
+
+               $.ajax({
+                    url: $form.attr('action'),
+                    type: "POST",
+                    data: id,
+                    success: function (data) {
+                        reloadExpenseDataTable();
+                        $('#deleteExpenseModal').modal('hide');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
             });
 
             $('#btnIsPaid').click(function () {
@@ -63,19 +94,10 @@
                     return;
                 }
 
-                var expenseJson = {
-                    Description: $('#Description').val(),
-                    Value: $('#Value').val(),
-                    Date: $('#Date').val(),
-                    BankAccountId: $('#BankAccountId').val(),
-                    CategoryId: $('#CategoryId').val(),
-                    IsPaid: $('#IsPaid').val()
-                }
-
                 $.ajax({
                     url: $form.attr('action'),
                     type: "POST",
-                    data: expenseJson,
+                    data: $form.serializeArray(),
                     success: function (data) {
                         reloadExpenseDataTable();
                         $('#createExpenseModal').modal('hide');
