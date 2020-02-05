@@ -1,11 +1,12 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
+using System.Data.SqlClient;
 
 namespace MyWallet.Data.Repository
 {
-    public class ExpenseRepository
+    public class ExpenseRepository : BaseRepository
     {
         public void Add(Expense expense)
         {
@@ -36,7 +37,7 @@ namespace MyWallet.Data.Repository
 
         public void Delete(Expense expense)
         {
-            using(var context = new MyWalletDBContext())
+            using (var context = new MyWalletDBContext())
             {
                 context.Entry(expense).State = EntityState.Deleted;
                 context.SaveChanges();
@@ -51,15 +52,48 @@ namespace MyWallet.Data.Repository
             }
         }
 
-        public IEnumerable<Expense> GetByContextId(int contextId)
+        public IEnumerable<Expense> GetAllByContextId(int contextId)
         {
-            using (var context = new MyWalletDBContext())
+            using (var connection = new SqlConnection(GetConnectionString))
             {
-                var expenses = context.Expense.Where(e => e.ContextId == contextId)
-                      .Include(e => e.BankAccount)
-                      .Include(e => e.Category)
-                      .ToList();
+                var sqlText = @"SELECT 
+                                    e.Id, 
+	                                e.Description, 
+	                                e.Value, 
+	                                e.Date, 
+	                                e.IsPaid, 
+	                                e.Observation, 
+	                                b.Name BankAccount,
+                                    c.Name Category
+                                FROM
+                                    Expense e
+                                INNER JOIN Category c ON c.Id = e.CategoryId
+                                INNER JOIN BankAccount b ON b.Id = e.BankAccountId
+                                WHERE
+                                    e.ContextId = @ContextId";
 
+                var command = new SqlCommand(sqlText, connection);
+                command.Parameters.AddWithValue("ContextId", contextId);
+
+                connection.Open();
+
+                var result = command.ExecuteReader();
+
+                var expenses = new List<Expense>();
+                while (result.Read())
+                {
+                    var expense = new Expense();
+                    expense.Id = int.Parse(result["Id"].ToString());
+                    expense.Description = result["Description"].ToString();
+                    expense.Value = decimal.Parse(result["Value"].ToString());
+                    expense.Date = DateTime.Parse(result["Date"].ToString());
+                    expense.IsPaid = bool.Parse(result["IsPaid"].ToString());
+                    expense.Observation = result["Observation"].ToString();
+                    expense.BankAccount = new BankAccount { Name = result["BankAccount"].ToString() };
+                    expense.Category = new Category { Name = result["Category"].ToString() };
+
+                    expenses.Add(expense);
+                }
                 return expenses;
             }
         }

@@ -69,6 +69,22 @@ namespace MyWallet.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
+        public JsonResult GetExpenseById(ExpenseViewModel viewModel)
+        {
+            var entity = _expenseService.GetById(viewModel.Id);
+            var expense = new
+            {
+                entity.Id,
+                entity.Description,
+                entity.Value,
+                Date = entity.Date.ToShortDateString(),
+                entity.IsPaid,
+                entity.BankAccountId,
+                entity.CategoryId
+            };
+            return Json(expense, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public HttpStatusCodeResult Edit(ExpenseViewModel viewModel)
         {
@@ -91,7 +107,7 @@ namespace MyWallet.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
-
+        
         [HttpPost]
         public HttpStatusCodeResult Delete(ExpenseViewModel viewModel)
         {
@@ -100,7 +116,7 @@ namespace MyWallet.Web.Controllers
                 Id = viewModel.Id
             };
 
-            _expenseService.Delete(expense);
+        _expenseService.Delete(expense);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
