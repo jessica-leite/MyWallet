@@ -1,12 +1,13 @@
 ﻿@model MyWallet.Web.ViewModels.Expense.ExpenseViewModel
 
-<div class="modal fade" id="createExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="editExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            @using (Html.BeginForm("Create", null, FormMethod.Post, new { id = "formModalCreateExpense" }))
+            @using (Html.BeginForm("Edit", null, FormMethod.Post, new { id = "formModalEditExpense" }))
             {
+                @Html.HiddenFor(m => m.Id)
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Expense</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Expense</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

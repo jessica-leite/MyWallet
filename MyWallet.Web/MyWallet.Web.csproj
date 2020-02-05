@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Img\img_avatar.png" />
+    <Content Include="css\bootstrap-datepicker3.min.css" />
     <Content Include="css\sb-admin-2.css" />
     <Content Include="css\sb-admin-2.min.css" />
     <Content Include="favicon.ico" />
@@ -167,6 +168,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datepicker.pt.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1951,6 +1954,7 @@
     <Content Include="Views\Expense\PartialView\_ExpensesList.cshtml" />
     <Content Include="Views\Expense\PartialView\_ModalAddExpense.cshtml" />
     <Content Include="Views\Expense\PartialView\_ModalDeleteExpense.cshtml" />
+    <Content Include="Views\Expense\PartialView\_ModalEditExpense.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

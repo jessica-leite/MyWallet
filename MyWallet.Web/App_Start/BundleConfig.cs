@@ -12,7 +12,8 @@ namespace MyWallet.Web
                       "~/vendor/fontawesome-free/css/all.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                     "~/css/sb-admin-2.min.css"));
+                     "~/css/sb-admin-2.min.css",
+                     "~/css/bootstrap-datepicker3.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/MyWallet").Include(
                      "~/Content/MyWallet.css"));
@@ -21,7 +22,9 @@ namespace MyWallet.Web
                 "~/vendor/jquery/jquery.min.js",
                 "~/vendor/bootstrap/js/bootstrap.bundle.min.js",
                 "~/vendor/jquery-easing/jquery.easing.min.js",
-                "~/js/sb-admin-2.min.js"));
+                "~/js/sb-admin-2.min.js",
+                "~/Scripts/bootstrap-datepicker.min.js",
+                "~/Scripts/bootstrap-datepicker.pt.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
                 "~/Scripts/jquery.validate.min.js",

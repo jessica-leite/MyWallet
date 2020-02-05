@@ -24,9 +24,12 @@
 <!-- Modal Form - Add Expense -->
 @Html.Partial("PartialView/_ModalAddExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
 
+<!-- Modal Form - Edit Expense -->
+@Html.Partial("PartialView/_ModalEditExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
 
 <!-- Modal Form - Delete Expense -->
 @Html.Partial("PartialView/_ModalDeleteExpense", new MyWallet.Web.ViewModels.Expense.ExpenseViewModel())
+
 
 @section scripts {
     @Scripts.Render("~/bundles/jquery-val")
@@ -45,6 +48,28 @@
             $('#btnOpenExpenseModal').click(function () {
                 $('#formModalCreateExpense')[0].reset();
                 $('#createExpenseModal').modal('show');
+            });
+
+            $(document).on('click', '.btnEditExpenseModal', function () {
+                var expenseId = $(this).data("expense-id");
+
+                $.ajax({
+                    url: '@Url.Action("GetExpenseById","Expense")',
+                    type: "GET",
+                    data: {Id: expenseId},
+                    success: function (expense) {
+                        console.log(expense);
+                        $('#formModalEditExpense #Description').val(expense.Description);
+                        $('#formModalEditExpense #Value').val(expense.Value);
+                        $('#formModalEditExpense #Date').val(expense.Date);
+                        
+                        $('#editExpenseModal').modal('show');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
             });
 
             $(document).on('click', '.btnDeleteExpenseModal', function () {
@@ -124,7 +149,7 @@
                     var $option = $("<option/>");
                     $option.text(obj.Name);
                     $option.val(obj.Id);
-                    $("#BankAccountId").append($option);
+                    $(".bank-account-list").append($option);
                 });
             });
         }
@@ -136,7 +161,7 @@
                         var $option = $("<option />");
                         $option.text(obj.Name);
                         $option.val(obj.Id);
-                        $("#CategoryId").append($option);
+                        $(".category-list").append($option);
                     })
                 });
         }
