@@ -1960,6 +1960,7 @@
     <Content Include="Views\Expense\PartialView\_ModalDeleteExpense.cshtml" />
     <Content Include="Views\Expense\PartialView\_ModalEditExpense.cshtml" />
     <Content Include="Views\Income\PartialView\_IncomeList.cshtml" />
+    <Content Include="Views\Income\PartialView\_ModalAddIncome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

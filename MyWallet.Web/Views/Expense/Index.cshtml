@@ -44,6 +44,7 @@
             loadCategoryDropDownList();
 
             $('#dataTable').DataTable();
+
             $('.datepicker').datepicker({
                  format: 'dd/mm/yyyy',
             });
@@ -63,13 +64,11 @@
                     type: "GET",
                     data: {Id: expenseId},
                     success: function (expense) {
-                        console.log(expense);
-
                         $('#formModalEditExpense #Id').val(expense.Id);
-                       $('#formModalEditExpense #Description').val(expense.Description);
+                        $('#formModalEditExpense #Description').val(expense.Description);
                         $('#formModalEditExpense #Value').val(expense.Value);
                         $('#formModalEditExpense #Date').val(expense.Date);
-                        
+
                         $('#editExpenseModal').modal('show');
                     },
                     error: function (error) {
@@ -80,7 +79,7 @@
             });
 
             $(document).on('click', '#btnModalEditExpense', function () {
-                $form = $('#formModalEditExpense'); 
+                $form = $('#formModalEditExpense');
 
                 $.ajax({
                     url: $form.attr('action'),
@@ -166,7 +165,7 @@
             $('#divExpenseDataTable').load(url, null, function () {
                 $('#dataTable').DataTable();
             });
-        }
+        };
 
         function loadBankAccountDropDownList() {
             var url = '@Url.Action("GetAllByContextId", "BankAccount")';
@@ -178,7 +177,7 @@
                     $(".bank-account-list").append($option);
                 });
             });
-        }
+        };
 
         function loadCategoryDropDownList() {
             var url = '@Url.Action("GetAllByContextId","Category")';
@@ -190,7 +189,7 @@
                         $(".category-list").append($option);
                     })
                 });
-        }
+        };
     </script>
 }
 

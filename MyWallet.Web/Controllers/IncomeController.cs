@@ -23,26 +23,22 @@ namespace MyWallet.Web.Controllers
         {
             var incomeList = _incomeService.GetByContextId(GetCurrentContextId());
             var viewModelList = new ListAllIncomeViewModel();
-            //viewModelList.Currency = incomeList.First().Context.CurrencyType.Symbol;
             viewModelList.Currency = "€";
 
             foreach (var income in incomeList)
             {
                 var viewModel = new IncomeViewModel()
                 {
+                    Id = income.Id,
                     Description = income.Description,
+                    CategoryId = income.CategoryId,
+                    Received = income.Received,
                     BankAccountId = income.BankAccountId,
+                    Value = income.Value,
+                    Date = income.Date,
+                    Observation = income.Observation,
                     BankAccount = income.BankAccount.Name,
                     Category = income.Category.Name,
-                    CategoryId = income.CategoryId,
-                    Context = income.Context.Name,
-                    ContextId = income.ContextId,
-                    CreationDate = income.CreationDate,
-                    Date = income.Date,
-                    Id = income.Id,
-                    Observation = income.Observation,
-                    Received = income.Received,
-                    Value = income.Value,
                 };
 
                 viewModelList.IncomeList.Add(viewModel);
@@ -59,15 +55,40 @@ namespace MyWallet.Web.Controllers
                 CategoryId = viewModel.CategoryId,
                 ContextId = GetCurrentContextId(),
                 CreationDate = DateTime.Now,
-                //Date = viewModel.Date,
+                Date = viewModel.Date.Value,
                 Description = viewModel.Description,
                 Observation = viewModel.Observation,
                 Received = viewModel.Received,
-                Value = viewModel.Value
+                Value = viewModel.Value.Value
             };
             _incomeService.Add(income);
 
             return RedirectToAction("Index");
+        }
+
+        public PartialViewResult GetByContext()
+        {
+            var incomeList = _incomeService.GetByContextId(GetCurrentContextId());
+
+            var viewModelList = new ListAllIncomeViewModel();
+            viewModelList.Currency = "€";
+
+            foreach (var item in incomeList)
+            {
+                var income = new IncomeViewModel
+                {
+                    Id = item.Id,
+                    Description = item.Description,
+                    Value = item.Value,
+                    Date = item.Date,
+                    Received = item.Received,
+                    BankAccount = item.BankAccount.Name,
+                    Category = item.Category.Name
+                };
+
+                viewModelList.IncomeList.Add(income);
+            }
+            return PartialView("PartialView/_IncomeList",viewModelList);
         }
     }
 }

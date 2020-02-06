@@ -1,12 +1,12 @@
-﻿@model MyWallet.Web.ViewModels.Expense.ExpenseViewModel
+﻿@model MyWallet.Web.ViewModels.Income.IncomeViewModel
 
-<div class="modal fade" id="createExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="createIncomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            @using (Html.BeginForm("Create", null, FormMethod.Post, new { id = "formModalCreateExpense"}))
+            @using (Html.BeginForm("Create", null, FormMethod.Post, new { id = "formModalCreateIncome" }))
             {
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Expense</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">New Income</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -19,9 +19,9 @@
                             @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group col-md-2 text-center">
-                            @Html.LabelFor(m => m.IsPaid)
-                            @Html.HiddenFor(m => m.IsPaid)
-                            <button id="btnIsPaid" type="button" class="btn btn-danger btn-circle">
+                            @Html.LabelFor(m => m.Received)
+                            @Html.HiddenFor(m => m.Received)
+                            <button id="btnReceived" type="button" class="btn btn-danger btn-circle">
                                 <i class="fas fa-thumbs-down"></i>
                             </button>
                         </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button id="btnModalCreateExpense" type="button" class="btn btn-success btn-icon-split">
+                    <button id="btnModalCreateIncome" type="button" class="btn btn-success btn-icon-split">
                         <span class="icon text-white-50">
                             <i class="fas fa-check"></i>
                         </span>
