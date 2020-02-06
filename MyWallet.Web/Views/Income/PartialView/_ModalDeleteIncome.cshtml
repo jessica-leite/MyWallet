@@ -1,0 +1,30 @@
+﻿@model MyWallet.Web.ViewModels.Income.IncomeViewModel
+
+<div class="modal fade" id="deleteIncomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("Delete", null, FormMethod.Post, new { id = "formModalDeleteIncome" }))
+            {
+                @Html.HiddenFor(m => m.Id, new { id = "idModalDeleteIncome" })
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this income? </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="btnDeleteIncome" type="button" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text">Delete</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

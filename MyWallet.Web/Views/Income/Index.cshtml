@@ -24,6 +24,9 @@
 <!-- Modal Form - Add Income -->
 @Html.Partial("PartialView/_ModalAddIncome", new MyWallet.Web.ViewModels.Income.IncomeViewModel())
 
+<!-- Modal Form - Add Income -->
+@Html.Partial("PartialView/_ModalDeleteIncome", new MyWallet.Web.ViewModels.Income.IncomeViewModel())
+
 
 @section scripts {
     @Scripts.Render("~/bundles/jquery-val")
@@ -39,10 +42,7 @@
 
         $('#dataTable').DataTable();
 
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-        });
-
+  
          $('#btnOpenIncomeModal').click(function () {
                 $('#formModalCreateIncome')[0].reset();
                 $('#createIncomeModal').modal('show');
@@ -81,6 +81,31 @@
                         console.log(error);
                     }
                 });
+        });
+
+        $(document).on('click','.btnOpenDeleteIncomeModal', function () {
+            $('#deleteIncomeModal').modal('show');
+
+            var incomeId = $(this).data('income-id');
+            $('#idModalDeleteIncome').attr("value", incomeId);
+        });
+
+        $('#btnDeleteIncome').click(function () {
+            var $form = $('#formModalDeleteIncome');
+
+            $.ajax({
+                url: '@Url.Action("Delete","Income")',
+                method: "POST",
+                data: $form.serializeArray(),
+                success: function () {
+                    reloadIncomeDataTable();
+                    $('#deleteIncomeModal').modal('hide');
+                },
+                error: function (error) {
+                    alert("Error, check console");
+                    console.log(error);
+                }
+            });
         });
 
         function reloadIncomeDataTable() {

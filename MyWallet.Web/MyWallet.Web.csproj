@@ -161,6 +161,7 @@
     <Content Include="js\demo\chart-bar-demo.js" />
     <Content Include="js\demo\chart-pie-demo.js" />
     <Content Include="js\demo\datatables-demo.js" />
+    <Content Include="Scripts\MyWallet.js" />
     <Content Include="js\sb-admin-2.js" />
     <Content Include="js\sb-admin-2.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -1961,6 +1962,7 @@
     <Content Include="Views\Expense\PartialView\_ModalEditExpense.cshtml" />
     <Content Include="Views\Income\PartialView\_IncomeList.cshtml" />
     <Content Include="Views\Income\PartialView\_ModalAddIncome.cshtml" />
+    <Content Include="Views\Income\PartialView\_ModalDeleteIncome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
