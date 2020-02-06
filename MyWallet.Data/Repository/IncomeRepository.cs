@@ -18,6 +18,15 @@ namespace MyWallet.Data.Repository
             }
         }
 
+        public void Delete(Income income)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(income).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public IEnumerable<Income> GetByContextId(int contextId)
         {
             using (var context = new MyWalletDBContext())

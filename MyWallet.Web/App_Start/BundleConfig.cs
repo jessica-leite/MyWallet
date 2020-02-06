@@ -24,7 +24,8 @@ namespace MyWallet.Web
                 "~/vendor/jquery-easing/jquery.easing.min.js",
                 "~/js/sb-admin-2.min.js",
                 "~/Scripts/bootstrap-datepicker.min.js",
-                "~/Scripts/bootstrap-datepicker.pt.min.js"));
+                "~/Scripts/bootstrap-datepicker.pt.min.js",
+                "~/Scripts/MyWallet.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
                 "~/Scripts/jquery.validate.min.js",

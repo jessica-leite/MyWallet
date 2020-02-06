@@ -4,6 +4,7 @@ using MyWallet.Web.ViewModels.Income;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -64,6 +65,13 @@ namespace MyWallet.Web.Controllers
             _incomeService.Add(income);
 
             return RedirectToAction("Index");
+        }
+
+        public HttpStatusCodeResult Delete(int id)
+        {
+            _incomeService.Delete(new Income { Id = id});
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         public PartialViewResult GetByContext()

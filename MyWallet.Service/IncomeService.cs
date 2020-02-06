@@ -18,6 +18,11 @@ namespace MyWallet.Service
             _incomeRepository.Add(income);
         }
 
+        public void Delete(Income income)
+        {
+            _incomeRepository.Delete(income);
+        }
+
         public IEnumerable<Income> GetByContextId(int contextId)
         {
             return _incomeRepository.GetByContextId(contextId);
