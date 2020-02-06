@@ -5,7 +5,7 @@
         <div class="modal-content">
             @using (Html.BeginForm("Delete", null, FormMethod.Post, new { id = "formModalDeleteExpense" }))
             {
-                @Html.HiddenFor(m => m.Id, new {id = "idModalDeleteExpense"})
+                @Html.HiddenFor(m => m.Id, new { id = "idModalDeleteExpense" })
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
@@ -13,12 +13,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>You are about to exclude expense X. Do you want to confirm deletion? </p>
+                    <p>Are you sure you want to delete this expense? </p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button id="btnDeleteExpense" type="button" class="btn btn-danger btn-circle">
-                        <i class="fas fa-trash"></i>
+                    <button id="btnDeleteExpense" type="button" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text">Delete</span>
                     </button>
                 </div>
             }

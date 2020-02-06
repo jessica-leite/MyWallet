@@ -44,6 +44,11 @@
             loadCategoryDropDownList();
 
             $('#dataTable').DataTable();
+            $('.datepicker').datepicker({
+                 format: 'dd/mm/yyyy',
+            });
+
+            $('.datepicker').datepicker();
 
             $('#btnOpenExpenseModal').click(function () {
                 $('#formModalCreateExpense')[0].reset();
@@ -59,7 +64,9 @@
                     data: {Id: expenseId},
                     success: function (expense) {
                         console.log(expense);
-                        $('#formModalEditExpense #Description').val(expense.Description);
+
+                        $('#formModalEditExpense #Id').val(expense.Id);
+                       $('#formModalEditExpense #Description').val(expense.Description);
                         $('#formModalEditExpense #Value').val(expense.Value);
                         $('#formModalEditExpense #Date').val(expense.Date);
                         
@@ -72,6 +79,25 @@
                 });
             });
 
+            $(document).on('click', '#btnModalEditExpense', function () {
+                $form = $('#formModalEditExpense'); 
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: "POST",
+                    data: $form.serializeArray(),
+                    success: function (data) {
+                        reloadExpenseDataTable();
+                        $('#editExpenseModal').modal('hide');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
+
+            });
+
             $(document).on('click', '.btnDeleteExpenseModal', function () {
                 $('#deleteExpenseModal').modal('show');
 
@@ -82,7 +108,7 @@
             $('#btnDeleteExpense').click(function () {
                 var $form = $('#formModalDeleteExpense');
 
-                var id = $form.serializeArray()
+                var id = $form.serializeArray();
 
                $.ajax({
                     url: $form.attr('action'),

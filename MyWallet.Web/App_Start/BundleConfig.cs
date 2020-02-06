@@ -28,7 +28,8 @@ namespace MyWallet.Web
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
                 "~/Scripts/jquery.validate.min.js",
-                "~/Scripts/jquery.validate.unobtrusive.min.js"));
+                "~/Scripts/jquery.validate.unobtrusive.min.js," +
+                "~/Scripts/moment.min.js"));
         }
     }
 }
