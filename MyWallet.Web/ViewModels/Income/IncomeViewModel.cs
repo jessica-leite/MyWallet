@@ -14,7 +14,7 @@ namespace MyWallet.Web.ViewModels.Income
         public decimal Value { get; set; }
 
         [Required(ErrorMessage = "Date is required")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public bool Received { get; set; }
         public DateTime CreationDate { get; set; }
         public string Observation { get; set; }

@@ -59,7 +59,7 @@ namespace MyWallet.Web.Controllers
                 CategoryId = viewModel.CategoryId,
                 ContextId = GetCurrentContextId(),
                 CreationDate = DateTime.Now,
-                Date = viewModel.Date,
+                //Date = viewModel.Date,
                 Description = viewModel.Description,
                 Observation = viewModel.Observation,
                 Received = viewModel.Received,

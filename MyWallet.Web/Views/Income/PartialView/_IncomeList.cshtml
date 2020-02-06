@@ -1,0 +1,52 @@
+﻿@model MyWallet.Web.ViewModels.Income.ListAllIncomeViewModel
+
+<table class="table table-hover" id="dataTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Bank Account</th>
+            <th>@Model.Currency</th>
+            <th>Paid</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var income in Model.IncomeList)
+        {
+            <tr>
+                <td>@income.Date.Value.ToShortDateString()</td>
+                <td>@income.Description</td>
+                <td>@income.Category</td>
+                <td>@income.BankAccount</td>
+                <td>@income.Value</td>
+                <td>
+                    @if (income.Received)
+                    {
+                        <button type="button" class="btn btn-success" disabled>
+                            <i class="far fa-thumbs-up"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger" disabled>
+                            <i class="far fa-thumbs-down"></i>
+                        </button>
+                    }
+                </td>
+                <td>
+                    <button data-income-id="@income.Id" type="button" class="btn btn-warning btn-circle btnEditIncomeModal">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </td>
+                <td>
+                    <button data-income-id="@income.Id" type="button" class="btn btn-danger btn-circle btnDeleteExpenseModal">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
