@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyWallet.Web.ViewModels.Income
@@ -7,22 +8,33 @@ namespace MyWallet.Web.ViewModels.Income
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Description is required")]
+        [Required]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Value is required")]
-        public decimal Value { get; set; }
+        [Required]
+        public decimal? Value { get; set; }
 
-        [Required(ErrorMessage = "Date is required")]
+        [Required]
         public DateTime? Date { get; set; }
+
+        [DisplayName("Received?")]
         public bool Received { get; set; }
         public DateTime CreationDate { get; set; }
         public string Observation { get; set; }
+
         public int ContextId { get; set; }
         public string Context { get; set; }
+
+        [Required]
+        [DisplayName("Bank Account")]
         public int BankAccountId { get; set; }
-        public string BankAccount { get; set; }
+
+        [Required]
+        [DisplayName("Category")]
         public int CategoryId { get; set; }
+
+        // Auxiliar labels
         public string Category { get; set; }
+        public string BankAccount { get; set; }
     }
 }
