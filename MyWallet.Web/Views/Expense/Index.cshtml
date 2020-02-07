@@ -75,6 +75,10 @@
             $(document).on('click', '#btnModalEditExpense', function () {
                 $form = $('#formModalEditExpense');
 
+                if (!$form.valid()) {
+                    return;
+                }
+
                 $.ajax({
                     url: $form.attr('action'),
                     type: "POST",
