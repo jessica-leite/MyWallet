@@ -44,6 +44,15 @@ namespace MyWallet.Data.Repository
             }
         }
 
+        public void Delete(int id)
+        {
+            using (var context = new MyWalletDBContext())
+            {
+                context.Entry(new Expense { Id = id }).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
         public Expense GetById(int id)
         {
             using (var context = new MyWalletDBContext())

@@ -126,14 +126,9 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public HttpStatusCodeResult Delete(ExpenseViewModel viewModel)
+        public HttpStatusCodeResult Delete(int id)
         {
-            var expense = new Expense()
-            {
-                Id = viewModel.Id
-            };
-
-            _expenseService.Delete(expense);
+            _expenseService.Delete(id);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
