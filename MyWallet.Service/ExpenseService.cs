@@ -29,9 +29,9 @@ namespace MyWallet.Service
             _expenseRepository.Update(expense);
         }
 
-        public void Delete(Expense expense)
+        public void Delete(int id)
         {
-            _expenseRepository.Delete(expense);
+            _expenseRepository.Delete(id);
         }
 
         public Expense GetById(int id)
