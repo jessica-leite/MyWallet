@@ -57,11 +57,10 @@
                     url: '@Url.Action("GetExpenseById","Expense")',
                     type: "GET",
                     data: {Id: expenseId},
-                    success: function (expense) {
-                        $('#formModalEditExpense #Id').val(expense.Id);
-                        $('#formModalEditExpense #Description').val(expense.Description);
-                        $('#formModalEditExpense #Value').val(expense.Value);
-                        $('#formModalEditExpense #Date').val(expense.Date);
+                    success: function (partialView) {
+                        $('#contentModal-EditExpense').html(partialView);
+                        $.validator.unobtrusive.parse($('#formModalEditExpense'));
+                        applyDatePicker();
 
                         $('#editExpenseModal').modal('show');
                     },
@@ -73,7 +72,7 @@
             });
 
             $(document).on('click', '#btnModalEditExpense', function () {
-                $form = $('#formModalEditExpense');
+                var $form = $('#formModalEditExpense');
 
                 if (!$form.valid()) {
                     return;
@@ -85,6 +84,7 @@
                     data: $form.serializeArray(),
                     success: function (data) {
                         reloadExpenseDataTable();
+
                         $('#editExpenseModal').modal('hide');
                     },
                     error: function (error) {
@@ -122,8 +122,8 @@
                 });
             });
 
-            $('#btnIsPaid').click(function () {
-                var $isPaid = $('#IsPaid');
+            $(document).on('click','.btnIsPaid', function () {
+                var $isPaid = $(this).parent().children('#IsPaid');
 
                 if ($isPaid.val() == "False") {
                     $isPaid.val("True");

@@ -11,10 +11,14 @@ namespace MyWallet.Web.Controllers
     public class ExpenseController : BaseController
     {
         private ExpenseService _expenseService;
+        private BankAccountService _bankAccountService;
+        private CategoryService _categoryService;
 
         public ExpenseController()
         {
             _expenseService = new ExpenseService();
+            _bankAccountService = new BankAccountService();
+            _categoryService = new CategoryService();
         }
 
         public ActionResult Index()
@@ -69,20 +73,33 @@ namespace MyWallet.Web.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public JsonResult GetExpenseById(ExpenseViewModel viewModel)
+        public PartialViewResult GetExpenseById(int id)
         {
-            var entity = _expenseService.GetById(viewModel.Id);
-            var expense = new
+            var expense = _expenseService.GetById(id);
+            var expenseViewModel = new ExpenseViewModel
             {
-                entity.Id,
-                entity.Description,
-                entity.Value,
-                Date = entity.Date.ToShortDateString(),
-                entity.IsPaid,
-                entity.BankAccountId,
-                entity.CategoryId
+                Id = expense.Id,
+                Description = expense.Description,
+                Value = expense.Value,
+                Date = expense.Date,
+                IsPaid = expense.IsPaid,
+                BankAccountId = expense.BankAccountId,
+                CategoryId = expense.CategoryId
             };
-            return Json(expense, JsonRequestBehavior.AllowGet);
+
+            var bankAccounts = _bankAccountService.GetByContextId(expense.ContextId);
+            foreach (var item in bankAccounts)
+            {
+                expenseViewModel.SelectListBankAccount.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
+            }
+
+            var categories = _categoryService.GetByContextId(expense.ContextId);
+            foreach (var item in categories)
+            {
+                expenseViewModel.SelectListCategory.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString()});
+            }
+
+            return PartialView("PartialView/_ExpenseEditFields", expenseViewModel);
         }
 
         [HttpPost]
@@ -107,7 +124,7 @@ namespace MyWallet.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
-        
+
         [HttpPost]
         public HttpStatusCodeResult Delete(ExpenseViewModel viewModel)
         {
@@ -116,7 +133,7 @@ namespace MyWallet.Web.Controllers
                 Id = viewModel.Id
             };
 
-        _expenseService.Delete(expense);
+            _expenseService.Delete(expense);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
