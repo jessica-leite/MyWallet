@@ -5,54 +5,14 @@
         <div class="modal-content">
             @using (Html.BeginForm("Edit", null, FormMethod.Post, new { id = "formModalEditExpense" }))
             {
-                @Html.HiddenFor(m => m.Id)
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Expense</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-10">
-                            @Html.LabelFor(m => m.Description)
-                            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group col-md-2 text-center">
-                            @Html.LabelFor(m => m.IsPaid)
-                            @Html.HiddenFor(m => m.IsPaid)
-                            <button id="btnIsPaid" type="button" class="btn btn-danger btn-circle">
-                                <i class="fas fa-thumbs-down"></i>
-                            </button>
-                        </div>
-                    </div>
+                <div id="contentModal-EditExpense" class="modal-body">
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(m => m.Value)
-                            @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(m => m.Date)
-                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control datepicker" })
-                            @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(m => m.CategoryId)
-                            @Html.DropDownListFor(m => m.CategoryId, new List<SelectListItem>(), "", new { @class = "form-control category-list" })
-                            @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(m => m.BankAccountId)
-                            @Html.DropDownListFor(m => m.BankAccountId, new List<SelectListItem>(), "", new { @class = "form-control bank-account-list" })
-                            @Html.ValidationMessageFor(m => m.BankAccountId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

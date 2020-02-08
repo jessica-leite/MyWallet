@@ -1,0 +1,54 @@
+﻿@model MyWallet.Web.ViewModels.Expense.ExpenseViewModel
+
+@Html.HiddenFor(m => m.Id)
+
+<div class="form-row">
+    <div class="form-group col-md-10">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-2 text-center">
+        @Html.LabelFor(m => m.IsPaid)
+        @Html.HiddenFor(m => m.IsPaid)
+
+        @if (Model.IsPaid)
+        {
+            <button id="btnIsPaid" type="button" class="btn btn-success btn-circle btnIsPaid">
+                <i class="fas fa-thumbs-up"></i>
+            </button>
+        }
+        else
+        {
+            <button id="btnIsPaid" type="button" class="btn btn-danger btn-circle btnIsPaid">
+                <i class="fas fa-thumbs-down"></i>
+            </button>
+        }
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Value)
+        @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.Date)
+        @Html.TextBoxFor(m => m.Date, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker" })
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.CategoryId)
+        @Html.DropDownListFor(m => m.CategoryId, Model.SelectListCategory, "", new { @class = "form-control category-list" })
+        @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-6">
+        @Html.LabelFor(m => m.BankAccountId)
+        @Html.DropDownListFor(m => m.BankAccountId, Model.SelectListBankAccount, "", new { @class = "form-control bank-account-list" })
+        @Html.ValidationMessageFor(m => m.BankAccountId, "", new { @class = "text-danger" })
+    </div>
+</div>
