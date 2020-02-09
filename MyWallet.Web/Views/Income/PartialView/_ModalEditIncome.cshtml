@@ -1,0 +1,29 @@
+﻿@model MyWallet.Web.ViewModels.Income.IncomeViewModel
+
+<div class="modal fade" id="editIncomeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("Edit", null, FormMethod.Post, new { id = "formModalEditIncome" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Income</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div id="contentModal-EditIncome" class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="btnSave-ModalEditIncome" type="button" class="btn btn-warning btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-pencil-alt"></i>
+                        </span>
+                        <span class="text">Update</span>
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -27,6 +27,9 @@
 <!-- Modal Form - Add Income -->
 @Html.Partial("PartialView/_ModalDeleteIncome", new MyWallet.Web.ViewModels.Income.IncomeViewModel())
 
+<!-- Modal Form - Edit Income -->
+@Html.Partial("PartialView/_ModalEditIncome", new MyWallet.Web.ViewModels.Income.IncomeViewModel())
+
 
 @section scripts {
     @Scripts.Render("~/bundles/jquery-val")
@@ -35,21 +38,64 @@
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        loadBankAccountDropDownList();
-        loadCategoryDropDownList();
+            loadBankAccountDropDownList();
+            loadCategoryDropDownList();
 
-        $('#dataTable').DataTable();
+            $('#dataTable').DataTable();
 
-  
-         $('#btnOpenIncomeModal').click(function () {
+            $('#btnOpenIncomeModal').click(function () {
                 $('#formModalCreateIncome')[0].reset();
                 $('#createIncomeModal').modal('show');
-         });
+            });
 
-         $('#btnReceived').click(function () {
-                var $received = $('#Received');
+            $(document).on('click', '.btnOpenModal-EditIncome', function () {
+                var incomeId = $(this).data("income-id");
+
+                $.ajax({
+                    url: '@Url.Action("GetIncomeById","Income")',
+                    type: "GET",
+                    data: {Id: incomeId},
+                    success: function (partialView) {
+                        $('#contentModal-EditIncome').html(partialView);
+                        $.validator.unobtrusive.parse($('#formModalEditIncome'));
+                        applyDatePicker();
+
+                        $('#editIncomeModal').modal('show');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
+             });
+
+            $(document).on('click', '#btnSave-ModalEditIncome', function () {
+                var $form = $('#formModalEditIncome');
+
+                if (!$form.valid()) {
+                    return;
+                }
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: "POST",
+                    data: $form.serializeArray(),
+                    success: function (data) {
+                        reloadIncomeDataTable();
+
+                        $('#editIncomeModal').modal('hide');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
+            });
+
+            $(document).on('click','.btnReceived', function () {
+                var $received = $(this).parent().children('#Received');
 
                 if ($received.val() == "False") {
                     $received.val("True");
@@ -59,9 +105,9 @@
 
                 $(this).toggleClass("btn-danger btn-success");
                 $(this).children().toggleClass("fa-thumbs-down fa-thumbs-up");
-         });
+            });
 
-        $('#btnModalCreateIncome').click(function () {
+            $('#btnModalCreateIncome').click(function () {
                 var $form = $('#formModalCreateIncome');
 
                 if (!$form.valid()) {
@@ -81,41 +127,54 @@
                         console.log(error);
                     }
                 });
-        });
+            });
 
-        $(document).on('click','.btnOpenDeleteIncomeModal', function () {
-            $('#deleteIncomeModal').modal('show');
+            $(document).on('click','.btnOpenDeleteIncomeModal', function () {
+                $('#deleteIncomeModal').modal('show');
 
-            var incomeId = $(this).data('income-id');
-            $('#idModalDeleteIncome').attr("value", incomeId);
-        });
+                var incomeId = $(this).data('income-id');
+                $('#idModalDeleteIncome').attr("value", incomeId);
+            });
 
-        $('#btnDeleteIncome').click(function () {
-            var $form = $('#formModalDeleteIncome');
+            $('#btnDeleteIncome').click(function () {
+                var $form = $('#formModalDeleteIncome');
 
-            $.ajax({
-                url: '@Url.Action("Delete","Income")',
-                method: "POST",
-                data: $form.serializeArray(),
-                success: function () {
-                    reloadIncomeDataTable();
-                    $('#deleteIncomeModal').modal('hide');
-                },
-                error: function (error) {
-                    alert("Error, check console");
-                    console.log(error);
-                }
+                $.ajax({
+                    url: '@Url.Action("Delete","Income")',
+                    method: "POST",
+                    data: $form.serializeArray(),
+                    success: function () {
+                        reloadIncomeDataTable();
+                        $('#deleteIncomeModal').modal('hide');
+                    },
+                    error: function (error) {
+                        alert("Error, check console");
+                        console.log(error);
+                    }
+                });
             });
         });
+
+        function loadCategoryDropDownList() {
+            var url = '@Url.Action("GetAllByContextId","Category")';
+            $.get(url, function (data) {
+                $.each(data, function (index, obj) {
+                    var $option = $("<option />");
+                    $option.text(obj.Name);
+                    $option.val(obj.Id);
+                    $(".category-list").append($option);
+                })
+            });
+        }
 
         function reloadIncomeDataTable() {
             var url = '@Url.Action("GetByContext")';
             $('#divIncomeDataTable').load(url, null, function () {
                 $('#dataTable').DataTable();
             });
-        };
+        }
 
-         function loadBankAccountDropDownList() {
+        function loadBankAccountDropDownList() {
             var url = '@Url.Action("GetAllByContextId", "BankAccount")';
             $.getJSON(url, function (data) {
                 $.each(data, function (index, obj) {
@@ -125,20 +184,8 @@
                     $(".bank-account-list").append($option);
                 });
             });
-        };
+        }
 
-        function loadCategoryDropDownList() {
-            var url = '@Url.Action("GetAllByContextId","Category")';
-                $.get(url, function (data) {
-                    $.each(data, function (index, obj) {
-                        var $option = $("<option />");
-                        $option.text(obj.Name);
-                        $option.val(obj.Id);
-                        $(".category-list").append($option);
-                    })
-                });
-        };
-    });
     </script>
 }
 

@@ -1,8 +1,6 @@
 ﻿using MyWallet.Data.Domain;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -16,6 +14,11 @@ namespace MyWallet.Data.Repository
             _context = context;
         }
 
+        public Income GetById(int id)
+        {
+            return _context.Income.Find(id);
+        }
+
         public void Add(Income income)
         {
             _context.Income.Add(income);
@@ -24,6 +27,11 @@ namespace MyWallet.Data.Repository
         public void Delete(Income income)
         {
             _context.Entry(income).State = EntityState.Deleted;
+        }
+
+        public void Update(Income income)
+        {
+            _context.Entry(income).State = EntityState.Modified;
         }
 
         public IEnumerable<Income> GetByContextId(int contextId)
