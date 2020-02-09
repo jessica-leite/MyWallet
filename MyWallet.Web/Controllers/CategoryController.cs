@@ -39,13 +39,13 @@ namespace MyWallet.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateCategoryViewModel createCategoryViewModel)
+        public ActionResult Create(CategoryViewModel categoryViewModel)
         {
             if (ModelState.IsValid)
             {
                 var category = new Category()
                 {
-                    Name = createCategoryViewModel.Name,
+                    Name = categoryViewModel.Name,
                     ContextId = GetCurrentContextId()
                 };
                 _unitOfWork.CategoryRepository.Add(category);
@@ -56,9 +56,8 @@ namespace MyWallet.Web.Controllers
             else
             {
                 SendModelStateErrors();
-                return View(createCategoryViewModel);
+                return View(categoryViewModel);
             }
-
         }
 
         public ActionResult Edit(int id)

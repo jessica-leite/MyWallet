@@ -134,7 +134,6 @@
     <Compile Include="ViewModels\BankAccount\BankAccountViewModel.cs" />
     <Compile Include="ViewModels\BankAccount\ListAllBankAccountsViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\Category\CreateCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\ListAllCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Context\ContextViewModel.cs" />
     <Compile Include="ViewModels\Context\ListAllContextsViewModel.cs" />
@@ -1966,6 +1965,8 @@
     <Content Include="Views\Expense\PartialView\_ExpenseEditFields.cshtml" />
     <Content Include="Views\Income\PartialView\_IncomeEditFields.cshtml" />
     <Content Include="Views\Income\PartialView\_ModalEditIncome.cshtml" />
+    <Content Include="Views\Context\Create.cshtml" />
+    <Content Include="Views\Context\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

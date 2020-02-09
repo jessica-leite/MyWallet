@@ -1,5 +1,7 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -35,8 +37,17 @@ namespace MyWallet.Data.Repository
 
         public IEnumerable<Context> GetByUserId(int userId)
         {
-            return _context.Context.ToList()
-                    .Where(m => m.UserId == userId);
+            return _context.Context
+                .Include(c => c.CurrencyType)
+                .Include(c => c.Country)
+                .Where(c => c.UserId == userId)
+                .ToList();
+        }
+
+        public void SetTheMainContextAsNonMain(int userId)
+        {
+            var mainContext = _context.Context.FirstOrDefault(c => c.UserId == userId && c.IsMainContext);
+            mainContext.IsMainContext = false;
         }
     }
 }

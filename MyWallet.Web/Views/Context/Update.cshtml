@@ -1,0 +1,57 @@
+﻿@model MyWallet.Web.ViewModels.Context.ContextViewModel
+
+@section breadcrumb {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index")">Contexts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm())
+        {
+            <fieldset>
+                <legend>Edit Context</legend>
+                <hr />
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name)
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.CurrencyTypeId)
+                        @Html.DropDownListFor(m => m.CurrencyTypeId, (SelectList)ViewBag.CurrencyTypeSelectList, "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(m => m.CountryId)
+                        @Html.DropDownListFor(m => m.CountryId, (SelectList)ViewBag.CountrySelectList, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+                @if (!Model.IsMainContext)
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBoxFor(m => m.IsMainContext, new { @class = "custom-control-input" })
+                                @Html.LabelFor(m => m.IsMainContext, new { @class = "custom-control-label" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-warning btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-pencil-alt"></i>
+                    </span>
+                    <span class="text">Update</span>
+                </button>
+            </fieldset>
+        }
+    </div>
+</div>

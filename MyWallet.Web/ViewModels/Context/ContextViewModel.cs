@@ -1,6 +1,5 @@
-﻿using MyWallet.Web.ViewModels.User;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace MyWallet.Web.ViewModels.Context
 {
@@ -8,17 +7,21 @@ namespace MyWallet.Web.ViewModels.Context
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Name is required")]
+        [Required]
         public string Name { get; set; }
-        public int UserId { get; set; }
-        public UserViewModel User { get; set; }
-        public int CurrencyTypeId { get; set; }
-        public CurrencyTypeViewModel CurrencyType { get; set; }
-        public int CountryId { get; set; }
-        public CountryViewModel Country { get; set; }
+
+        [Required]
+        [DisplayName("Currency")]
+        public int? CurrencyTypeId { get; set; }
+
+        [Required]
+        [DisplayName("Country")]
+        public int? CountryId { get; set; }
+
+        [DisplayName("Main Context")]
         public bool IsMainContext { get; set; }
 
-        public SelectList CurrencyTypeSelectList { get; set; }
-        public SelectList CountrySelectList { get; set; }
+        public string CurrencySymbol { get; set; }
+        public string CountryName { get; set; }
     }
 }

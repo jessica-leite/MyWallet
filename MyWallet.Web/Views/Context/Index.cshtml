@@ -6,9 +6,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>
-                            Contexts
-                        </th>
+                        <th>Contexts</th>
                     </tr>
                 </thead>
                 @foreach (var context in Model)
@@ -18,7 +16,19 @@
                             @context.Name
                         </td>
                         <td>
-                            <a href="@Url.Action("Edit", new { id = context.Id })" class="btn btn-warning btn-circle">
+                            @if (context.IsMainContext)
+                            {
+                                @Html.DisplayNameFor(m => m.IsMainContext)
+                            }
+                        </td>
+                        <td>
+                            @context.CurrencySymbol
+                        </td>
+                        <td>
+                            @context.CountryName
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Update", new { id = context.Id })" class="btn btn-warning btn-circle">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                         </td>

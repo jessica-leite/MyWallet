@@ -5,7 +5,7 @@ namespace MyWallet.Web.Util
 {
     public class CookieUtil
     {
-        public static string GetUserToken(int userId, string userName, int mainContextId)
+        private static string BuildUserToken(int userId, string userName, int mainContextId)
         {
             var userToken = new UserToken()
             {
@@ -20,7 +20,7 @@ namespace MyWallet.Web.Util
 
         public static void SetAuthCookie(int userId, string userName, int mainContextId, bool? rememberMe = null)
         {
-            string jsonToken = GetUserToken(userId, userName, mainContextId);
+            string jsonToken = BuildUserToken(userId, userName, mainContextId);
             FormsAuthentication.SetAuthCookie(jsonToken, rememberMe.GetValueOrDefault());
         }
     }
