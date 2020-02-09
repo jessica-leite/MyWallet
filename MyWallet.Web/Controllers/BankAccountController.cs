@@ -53,6 +53,7 @@ namespace MyWallet.Web.Controllers
                 bankAccount.CreationDate = DateTime.Now;
 
                 _unitOfWork.BankAccountRepository.Add(bankAccount);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -86,6 +87,7 @@ namespace MyWallet.Web.Controllers
                 bankAccountUpdate.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
 
                 _unitOfWork.BankAccountRepository.Update(bankAccountUpdate);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -110,11 +112,10 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = new BankAccount()
-            {
-                Id = bankAccountViewModel.Id,
-            };
+            var bankAccount = new BankAccount { Id = bankAccountViewModel.Id };
+
             _unitOfWork.BankAccountRepository.Delete(bankAccount);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
@@ -125,8 +126,8 @@ namespace MyWallet.Web.Controllers
 
             var listBankAccount = _unitOfWork.BankAccountRepository.GetByContextId(id);
 
-            var json = listBankAccount.Select(b => new 
-            { 
+            var json = listBankAccount.Select(b => new
+            {
                 b.Id,
                 b.Name
             });

@@ -106,19 +106,15 @@ namespace MyWallet.Web.Controllers
                     photo = memoryStream.ToArray();
                 }
 
-                var oldUser = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
+                var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
+                user.Name = userViewModel.Name;
+                user.LastName = userViewModel.LastName;
+                user.Email = userViewModel.Email;
+                user.Password = userViewModel.Password;
+                user.Photo = photo;
 
-                var updateUser = new User()
-                {
-                    Id = GetCurrentUserId(),
-                    Name = userViewModel.Name,
-                    LastName = userViewModel.LastName,
-                    CreationDate = oldUser.CreationDate,
-                    Email = userViewModel.Email,
-                    Password = userViewModel.Password,
-                    Photo = photo
-                };
-                _unitOfWork.UserRepository.Update(updateUser);
+                _unitOfWork.UserRepository.Update(user);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index", "Dashboard");
             }

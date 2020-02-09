@@ -60,13 +60,16 @@ namespace MyWallet.Web.Controllers
                 Value = viewModel.Value.Value
             };
             _unitOfWork.IncomeRepository.Add(income);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public HttpStatusCodeResult Delete(int id)
         {
             _unitOfWork.IncomeRepository.Delete(new Income { Id = id});
+            _unitOfWork.Commit();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

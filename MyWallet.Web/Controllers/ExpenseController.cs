@@ -64,6 +64,8 @@ namespace MyWallet.Web.Controllers
                 expense.ContextId = GetCurrentContextId();
 
                 _unitOfWork.ExpenseRepository.Add(expense);
+                _unitOfWork.Commit();
+
                 return new HttpStatusCodeResult(HttpStatusCode.Created);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,6 +114,7 @@ namespace MyWallet.Web.Controllers
                 expense.IsPaid = viewModel.IsPaid;
 
                 _unitOfWork.ExpenseRepository.Update(expense);
+                _unitOfWork.Commit();
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -125,6 +128,7 @@ namespace MyWallet.Web.Controllers
         public HttpStatusCodeResult Delete(int id)
         {
             _unitOfWork.ExpenseRepository.Delete(id);
+            _unitOfWork.Commit();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

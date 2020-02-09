@@ -49,6 +49,8 @@ namespace MyWallet.Web.Controllers
                     ContextId = GetCurrentContextId()
                 };
                 _unitOfWork.CategoryRepository.Add(category);
+                _unitOfWork.Commit();
+
                 return RedirectToAction("Index");
             }
             else
@@ -84,6 +86,8 @@ namespace MyWallet.Web.Controllers
                     ContextId = GetCurrentContextId()
                 };
                 _unitOfWork.CategoryRepository.Update(category);
+                _unitOfWork.Commit();
+
                 return RedirectToAction("Index");
             }
             else
@@ -113,6 +117,8 @@ namespace MyWallet.Web.Controllers
                 Id = categoryViewModel.Id,
             };
             _unitOfWork.CategoryRepository.Delete(category);
+            _unitOfWork.Commit();
+
             return RedirectToAction("Index");
         }
 

@@ -47,6 +47,7 @@ namespace MyWallet.Web.Controllers
                 context.UserId = GetCurrentUserId(); 
 
                 _unitOfWork.ContextRepository.Update(context);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -77,6 +78,7 @@ namespace MyWallet.Web.Controllers
                 Id = viewModel.Id
             };
             _unitOfWork.ContextRepository.Delete(context);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
