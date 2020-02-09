@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<MyWallet.Web.ViewModels.Context.ContextViewModel>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Contexts</th>
+                        <th></th>
+                        <th>Currency</th>
+                        <th>Country</th>
                     </tr>
                 </thead>
                 @foreach (var context in Model)
@@ -18,7 +21,7 @@
                         <td>
                             @if (context.IsMainContext)
                             {
-                                @Html.DisplayNameFor(m => m.IsMainContext)
+                                <strong>@Html.DisplayNameFor(m => m.IsMainContext)</strong>
                             }
                         </td>
                         <td>

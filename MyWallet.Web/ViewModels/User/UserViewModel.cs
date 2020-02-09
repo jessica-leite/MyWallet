@@ -7,26 +7,27 @@ namespace MyWallet.Web.ViewModels.User
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Name")]
-        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "Last Name")]
-        [Required(ErrorMessage = "Last Name is required")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Email")]
-        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
+        [Required]
         [Display(Name = "Password")]
-        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Required]
         [Display(Name = "Repeat Password")]
-        [Required(ErrorMessage = "Repeat password is required")]
         [DataType(DataType.Password)]
+        [Compare("Password")]
         public string RepeatPassword { get; set; }
 
         [Display(Name = "Photo")]
