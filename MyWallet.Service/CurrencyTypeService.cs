@@ -6,11 +6,16 @@ namespace MyWallet.Service
 {
     public class CurrencyTypeService
     {
-        CurrencyTypeRepository currencyTypeRepository = new CurrencyTypeRepository();
+        private UnitOfWork _unitOfWork;
+
+        public CurrencyTypeService()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public IEnumerable<CurrencyType> GetAll()
         {
-            return currencyTypeRepository.GetAll();
+            return _unitOfWork.CurrencyTypeRepository.GetAll();
         }
     }
 }

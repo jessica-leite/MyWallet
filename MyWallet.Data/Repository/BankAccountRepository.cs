@@ -7,56 +7,36 @@ namespace MyWallet.Data.Repository
 {
     public class BankAccountRepository
     {
+        private MyWalletDBContext _context;
+
+        public BankAccountRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public void Add(BankAccount bankAccount)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.BankAccount.Add(bankAccount);
-                context.SaveChanges();
-
-            }
+            _context.BankAccount.Add(bankAccount);
         }
 
         public void Update(BankAccount bankAccount)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Modified;
-                context.SaveChanges();
-            }
+            _context.Entry(bankAccount).State = System.Data.Entity.EntityState.Modified;
         }
 
         public void Delete(BankAccount bankAccount)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(bankAccount).State = System.Data.Entity.EntityState.Deleted;
-                context.SaveChanges();
-            }
+            _context.Entry(bankAccount).State = System.Data.Entity.EntityState.Deleted;
         }
 
         public IEnumerable<BankAccount> GetByContextId(int contextId)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.BankAccount.Where(b => b.ContextId == contextId).ToList();
-            }
+            return _context.BankAccount.Where(b => b.ContextId == contextId).ToList();
         }
 
         public BankAccount GetById(int id)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.BankAccount.Find(id);
-            }
-        }
-
-        public IEnumerable<BankAccount> GetAll()
-        {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.BankAccount.ToList();
-            }
+            return _context.BankAccount.Find(id);
         }
     }
 }

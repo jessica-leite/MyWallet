@@ -6,11 +6,16 @@ namespace MyWallet.Service
 {
     public class CountryService
     {
-        CountryRepository countryRepository = new CountryRepository();
+        private UnitOfWork _unitOfWork;
+
+        public CountryService()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public IEnumerable<Country> GetAll()
         {
-            return countryRepository.GetAll();
+            return _unitOfWork.CountryRepository.GetAll();
         }
     }
 }

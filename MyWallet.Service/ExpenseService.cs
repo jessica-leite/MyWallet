@@ -7,41 +7,41 @@ namespace MyWallet.Service
 
     public class ExpenseService
     {
-        private ExpenseRepository _expenseRepository;
+        private UnitOfWork _unitOfWork;
 
         public ExpenseService()
         {
-            _expenseRepository = new ExpenseRepository();
+            _unitOfWork = new UnitOfWork();
         }
 
         public void Add(Expense expense)
         {
-            _expenseRepository.Add(expense);
+            _unitOfWork.ExpenseRepository.Add(expense);
         }
 
         public void Add(IEnumerable<Expense> expenses)
         {
-            _expenseRepository.Add(expenses);
+            _unitOfWork.ExpenseRepository.Add(expenses);
         }
 
         public void Update(Expense expense)
         {
-            _expenseRepository.Update(expense);
+            _unitOfWork.ExpenseRepository.Update(expense);
         }
 
         public void Delete(int id)
         {
-            _expenseRepository.Delete(id);
+            _unitOfWork.ExpenseRepository.Delete(id);
         }
 
         public Expense GetById(int id)
         {
-            return _expenseRepository.GetById(id);
+            return _unitOfWork.ExpenseRepository.GetById(id);
         }
 
         public IEnumerable<Expense> GetByContextId(int contextId)
         {
-            return _expenseRepository.GetAllByContextId(contextId);
+            return _unitOfWork.ExpenseRepository.GetAllByContextId(contextId);
         }
     }
 }

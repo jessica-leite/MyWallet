@@ -6,12 +6,16 @@ namespace MyWallet.Data.Repository
 {
     public class CurrencyTypeRepository
     {
+        private MyWalletDBContext _context;
+
+        public CurrencyTypeRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<CurrencyType> GetAll()
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.CurrencyType.ToList();
-            }
+            return _context.CurrencyType.ToList();
         }
     }
 }

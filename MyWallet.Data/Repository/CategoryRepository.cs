@@ -7,56 +7,64 @@ namespace MyWallet.Data.Repository
 {
     public class CategoryRepository
     {
+        private MyWalletDBContext _context;
+
+        public CategoryRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Category category)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Category.Add(category);
-                context.SaveChanges();
-            }
+            _context.Category.Add(category);
+        }
+
+        public void Add(IEnumerable<Category> categories)
+        {
+            _context.Category.AddRange(categories);
         }
 
         public void Update(Category category)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(category).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            _context.Entry(category).State = EntityState.Modified;
         }
 
         public void Delete(Category category)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(category).State = System.Data.Entity.EntityState.Deleted;
-                context.SaveChanges();
-            }
+            _context.Entry(category).State = EntityState.Deleted;
         }
 
         public Category GetById(int id)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Category.Find(id);
-            }
+            return _context.Category.Find(id);
         }
 
         public IEnumerable<Category> GetAll()
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Category.ToList();
-            }
+            return _context.Category.ToList();
         }
 
         public IEnumerable<Category> GetByContextId(int contextId)
         {
-            using(var context = new MyWalletDBContext())
+            return _context.Category.Where(c => c.ContextId == contextId).ToList();
+        }
+
+        public IEnumerable<Category> GetStandardCategories()
+        {
+            return new List<Category>
             {
-                var list = context.Category.Where(c => c.ContextId == contextId).ToList();
-                return list;
-            }
+                new Category{ Name = "Food" },
+                new Category{ Name = "Groceries" },
+                new Category{ Name = "Shopping" },
+                new Category{ Name = "Transportation" },
+                new Category{ Name = "Entertainment" },
+                new Category{ Name = "Education" },
+                new Category{ Name = "Health" },
+                new Category{ Name = "Home" },
+                new Category{ Name = "Debts" },
+                new Category{ Name = "Salary" },
+                new Category{ Name = "Other" }
+            };
         }
     }
 }

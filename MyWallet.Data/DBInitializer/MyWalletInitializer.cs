@@ -36,7 +36,8 @@ namespace MyWallet.Data.DBInitializer
                 CountryId = portugal.Id,
                 CurrencyTypeId = euro.Id
             };
-            user.AddNewContext(mainContext);
+
+            context.Context.AddOrUpdate(x => x.Id, mainContext);
 
             context.User.AddOrUpdate(x => x.Id, user);
 
@@ -58,7 +59,7 @@ namespace MyWallet.Data.DBInitializer
             };
             context.Category.AddOrUpdate(x => x.Id, category);
 
-            var rowsAffected = context.SaveChanges();
+            context.SaveChanges();
         }
 
     }

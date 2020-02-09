@@ -6,26 +6,26 @@ namespace MyWallet.Service
 {
     public class IncomeService
     {
-        private IncomeRepository _incomeRepository;
+        private UnitOfWork _unitOfWork;
 
         public IncomeService()
         {
-            _incomeRepository = new IncomeRepository();
+            _unitOfWork = new UnitOfWork();
         }
 
         public void Add(Income income)
         {
-            _incomeRepository.Add(income);
+            _unitOfWork.IncomeRepository.Add(income);
         }
 
         public void Delete(Income income)
         {
-            _incomeRepository.Delete(income);
+            _unitOfWork.IncomeRepository.Delete(income);
         }
 
         public IEnumerable<Income> GetByContextId(int contextId)
         {
-            return _incomeRepository.GetByContextId(contextId);
+            return _unitOfWork.IncomeRepository.GetByContextId(contextId);
         }
     }
 }

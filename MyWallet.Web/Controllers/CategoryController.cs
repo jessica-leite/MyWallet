@@ -1,5 +1,5 @@
 ﻿using MyWallet.Data.Domain;
-using MyWallet.Service;
+using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.Category;
 using System.Linq;
 using System.Web.Mvc;
@@ -9,11 +9,16 @@ namespace MyWallet.Web.Controllers
     [Authorize]
     public class CategoryController : BaseController
     {
-        private CategoryService _categoryService = new CategoryService();
+        private UnitOfWork _unitOfWork;
+
+        public CategoryController()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public ActionResult Index()
         {
-            var categories = _categoryService.GetAll();
+            var categories = _unitOfWork.CategoryRepository.GetByContextId(GetCurrentContextId());
 
             var listAllCategoriesViewModel = new ListAllCategoriesViewModel();
             foreach (var category in categories)
@@ -43,7 +48,7 @@ namespace MyWallet.Web.Controllers
                     Name = createCategoryViewModel.Name,
                     ContextId = GetCurrentContextId()
                 };
-                _categoryService.Add(category);
+                _unitOfWork.CategoryRepository.Add(category);
                 return RedirectToAction("Index");
             }
             else
@@ -56,7 +61,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            var category = _categoryService.GetById(id);
+            var category = _unitOfWork.CategoryRepository.GetById(id);
 
             var categoryViewModel = new CategoryViewModel
             {
@@ -78,7 +83,7 @@ namespace MyWallet.Web.Controllers
                     Name = categoryViewModel.Name,
                     ContextId = GetCurrentContextId()
                 };
-                _categoryService.Update(category);
+                _unitOfWork.CategoryRepository.Update(category);
                 return RedirectToAction("Index");
             }
             else
@@ -90,7 +95,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            var category = _categoryService.GetById(id);
+            var category = _unitOfWork.CategoryRepository.GetById(id);
             var viewModel = new CategoryViewModel()
             {
                 Id = category.Id,
@@ -107,7 +112,7 @@ namespace MyWallet.Web.Controllers
             {
                 Id = categoryViewModel.Id,
             };
-            _categoryService.Delete(category);
+            _unitOfWork.CategoryRepository.Delete(category);
             return RedirectToAction("Index");
         }
 
@@ -115,7 +120,7 @@ namespace MyWallet.Web.Controllers
         {
             var id = contextId.HasValue ? contextId.Value : GetCurrentContextId();
 
-            var listCategory = _categoryService.GetByContextId(id);
+            var listCategory = _unitOfWork.CategoryRepository.GetByContextId(id);
 
             var json = listCategory.Select(c => new
             {
@@ -123,6 +128,12 @@ namespace MyWallet.Web.Controllers
                 c.Name
             });
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

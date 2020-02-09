@@ -6,34 +6,34 @@ namespace MyWallet.Service
 {
     public class ContextService
     {
-        private readonly ContextRepository _contextRepository;
+        private UnitOfWork _unitOfWork;
 
         public ContextService()
         {
-            _contextRepository = new ContextRepository();
+            _unitOfWork = new UnitOfWork();
         }
 
         public void AddOrUpdate(Context context)
         {
             if (context.IsNew())
-                _contextRepository.Add(context);
+                _unitOfWork.ContextRepository.Add(context);
             else
-                _contextRepository.Update(context);
+                _unitOfWork.ContextRepository.Update(context);
         }
 
         public void Delete(Context context)
         {
-            _contextRepository.Delete(context);
+            _unitOfWork.ContextRepository.Delete(context);
         }
 
         public Context GetById(int id)
         {
-            return _contextRepository.GetById(id);
+            return _unitOfWork.ContextRepository.GetById(id);
         }
 
-        public IEnumerable<Context> GetAll()
+        public IEnumerable<Context> GetByUserId(int userId)
         {
-            return _contextRepository.GetAll();
+            return _unitOfWork.ContextRepository.GetByUserId(userId);
         }
 
     }

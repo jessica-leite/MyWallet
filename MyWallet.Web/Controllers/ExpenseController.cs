@@ -1,5 +1,5 @@
 ﻿using MyWallet.Data.Domain;
-using MyWallet.Service;
+using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.Expense;
 using System;
 using System.Net;
@@ -10,22 +10,18 @@ namespace MyWallet.Web.Controllers
     [Authorize]
     public class ExpenseController : BaseController
     {
-        private ExpenseService _expenseService;
-        private BankAccountService _bankAccountService;
-        private CategoryService _categoryService;
+        private UnitOfWork _unitOfWork;
 
         public ExpenseController()
         {
-            _expenseService = new ExpenseService();
-            _bankAccountService = new BankAccountService();
-            _categoryService = new CategoryService();
+            _unitOfWork = new UnitOfWork();
         }
 
         public ActionResult Index()
         {
             var contextId = GetCurrentContextId();
 
-            var expenseList = _expenseService.GetByContextId(contextId);
+            var expenseList = _unitOfWork.ExpenseRepository.GetAllByContextId(contextId);
 
             var viewModelList = new ListAllExpensesViewModel();
             viewModelList.Currency = "€";
@@ -67,7 +63,7 @@ namespace MyWallet.Web.Controllers
                 expense.Value = expenseViewModel.Value.Value;
                 expense.ContextId = GetCurrentContextId();
 
-                _expenseService.Add(expense);
+                _unitOfWork.ExpenseRepository.Add(expense);
                 return new HttpStatusCodeResult(HttpStatusCode.Created);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -75,7 +71,7 @@ namespace MyWallet.Web.Controllers
 
         public PartialViewResult GetExpenseById(int id)
         {
-            var expense = _expenseService.GetById(id);
+            var expense = _unitOfWork.ExpenseRepository.GetById(id);
             var expenseViewModel = new ExpenseViewModel
             {
                 Id = expense.Id,
@@ -87,16 +83,16 @@ namespace MyWallet.Web.Controllers
                 CategoryId = expense.CategoryId
             };
 
-            var bankAccounts = _bankAccountService.GetByContextId(expense.ContextId);
+            var bankAccounts = _unitOfWork.BankAccountRepository.GetByContextId(expense.ContextId);
             foreach (var item in bankAccounts)
             {
                 expenseViewModel.SelectListBankAccount.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
             }
 
-            var categories = _categoryService.GetByContextId(expense.ContextId);
+            var categories = _unitOfWork.CategoryRepository.GetByContextId(expense.ContextId);
             foreach (var item in categories)
             {
-                expenseViewModel.SelectListCategory.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString()});
+                expenseViewModel.SelectListCategory.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString() });
             }
 
             return PartialView("PartialView/_ExpenseEditFields", expenseViewModel);
@@ -107,7 +103,7 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var expense = _expenseService.GetById(viewModel.Id);
+                var expense = _unitOfWork.ExpenseRepository.GetById(viewModel.Id);
                 expense.Date = viewModel.Date.Value;
                 expense.Description = viewModel.Description;
                 expense.CategoryId = viewModel.CategoryId.Value;
@@ -115,7 +111,7 @@ namespace MyWallet.Web.Controllers
                 expense.Value = viewModel.Value.Value;
                 expense.IsPaid = viewModel.IsPaid;
 
-                _expenseService.Update(expense);
+                _unitOfWork.ExpenseRepository.Update(expense);
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
@@ -128,7 +124,7 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public HttpStatusCodeResult Delete(int id)
         {
-            _expenseService.Delete(id);
+            _unitOfWork.ExpenseRepository.Delete(id);
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
@@ -137,7 +133,7 @@ namespace MyWallet.Web.Controllers
         {
             var contextId = GetCurrentContextId();
 
-            var expenseList = _expenseService.GetByContextId(contextId);
+            var expenseList = _unitOfWork.ExpenseRepository.GetAllByContextId(contextId);
 
             var viewModelList = new ListAllExpensesViewModel();
             viewModelList.Currency = "€";
@@ -161,6 +157,12 @@ namespace MyWallet.Web.Controllers
                 viewModelList.Expenses.Add(expense);
             }
             return PartialView("~/Views/Expense/PartialView/_ExpensesList.cshtml", viewModelList);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

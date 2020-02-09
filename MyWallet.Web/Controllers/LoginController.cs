@@ -1,4 +1,4 @@
-﻿using MyWallet.Service;
+﻿using MyWallet.Data.Repository;
 using MyWallet.Web.Util;
 using MyWallet.Web.ViewModels.Shared;
 using System.Web.Mvc;
@@ -8,6 +8,13 @@ namespace MyWallet.Web.Controllers
 {
     public class LoginController : BaseController
     {
+        private UnitOfWork _unitOfWork;
+
+        public LoginController()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
+
         // GET: Login
         public ActionResult Index()
         {
@@ -22,7 +29,7 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userDatabase = new UserService().GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);
+                var userDatabase = _unitOfWork.UserRepository.GetByEmailAndPassword(loginViewModel.Email, loginViewModel.Password);
                 if (userDatabase == null)
                 {
                     SendModelStateErrors("Email or Password is invalid");
@@ -43,6 +50,12 @@ namespace MyWallet.Web.Controllers
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

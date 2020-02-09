@@ -6,33 +6,33 @@ namespace MyWallet.Service
 {
     public class UserService
     {
-        private UserRepository _userRepository;
+        private UnitOfWork _unitOfWork;
 
-        public UserService() 
-        { 
-           _userRepository = new UserRepository();
-        } 
+        public UserService()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public void Add(User user)
         {
             user.CreationDate = DateTime.Now;
 
-            _userRepository.Add(user);
+            _unitOfWork.UserRepository.Add(user);
         }
 
         public void Update(User user)
         {
-            _userRepository.Update(user);
+            _unitOfWork.UserRepository.Update(user);
         }
 
         public User GetById(int id)
         {
-            return _userRepository.GetById(id);
+            return _unitOfWork.UserRepository.GetById(id);
         }
 
         public User GetByEmailAndPassword(string email, string password)
         {
-            return _userRepository.GetByEmailAndPassword(email, password);
+            return _unitOfWork.UserRepository.GetByEmailAndPassword(email, password);
         }
 
     }

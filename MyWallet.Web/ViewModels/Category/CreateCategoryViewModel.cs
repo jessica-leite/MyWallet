@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MyWallet.Web.ViewModels.Category
+﻿namespace MyWallet.Web.ViewModels.Category
 {
     using System.ComponentModel.DataAnnotations;
 
-        public class CreateCategoryViewModel
+    public class CreateCategoryViewModel
         {
             public int Id { get; set; }
 

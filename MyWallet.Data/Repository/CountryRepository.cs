@@ -6,12 +6,16 @@ namespace MyWallet.Data.Repository
 {
     public class CountryRepository
     {
+        private MyWalletDBContext _context;
+
+        public CountryRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<Country> GetAll()
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Country.ToList();
-            }
+            return _context.Country.ToList();
         }
     }
 }

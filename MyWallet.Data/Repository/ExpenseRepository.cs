@@ -6,65 +6,51 @@ using System.Data.SqlClient;
 
 namespace MyWallet.Data.Repository
 {
-    public class ExpenseRepository : BaseRepository
+    public class ExpenseRepository
     {
+        private MyWalletDBContext _context;
+
+        public ExpenseRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Expense expense)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Expense.Add(expense);
-                context.SaveChanges();
-            }
+            _context.Expense.Add(expense);
         }
 
         public void Add(IEnumerable<Expense> expenses)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Expense.AddRange(expenses);
-                context.SaveChanges();
-            }
+            _context.Expense.AddRange(expenses);
         }
 
         public void Update(Expense expense)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(expense).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            _context.Entry(expense).State = EntityState.Modified;
         }
 
         public void Delete(Expense expense)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(expense).State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+            _context.Entry(expense).State = EntityState.Deleted;
         }
 
         public void Delete(int id)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.Entry(new Expense { Id = id }).State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+            _context.Entry(new Expense { Id = id }).State = EntityState.Deleted;
         }
 
         public Expense GetById(int id)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                return context.Expense.Find(id);
-            }
+            return _context.Expense.Find(id);
         }
 
         public IEnumerable<Expense> GetAllByContextId(int contextId)
         {
-            using (var connection = new SqlConnection(GetConnectionString))
+            using (var connection = new SqlConnection(_context.Database.Connection.ConnectionString))
             {
+                connection.Open();
+
                 var sqlText = @"SELECT 
                                     e.Id, 
 	                                e.Description, 
@@ -83,8 +69,6 @@ namespace MyWallet.Data.Repository
 
                 var command = new SqlCommand(sqlText, connection);
                 command.Parameters.AddWithValue("ContextId", contextId);
-
-                connection.Open();
 
                 var result = command.ExecuteReader();
 

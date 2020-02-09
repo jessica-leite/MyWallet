@@ -1,4 +1,5 @@
 ﻿using MyWallet.Data.Domain;
+using MyWallet.Data.Repository;
 using MyWallet.Service;
 using MyWallet.Web.ViewModels.Context;
 using System.Collections.Generic;
@@ -9,16 +10,16 @@ namespace MyWallet.Web.Controllers
     [Authorize]
     public class ContextController : BaseController
     {
-        ContextService _contextService;
+        private UnitOfWork _unitOfWork;
 
         public ContextController()
         {
-            _contextService = new ContextService();
+            _unitOfWork = new UnitOfWork();
         }
 
         public ActionResult Index()
         {
-            IEnumerable<Context> listContext = _contextService.GetAll();
+            IEnumerable<Context> listContext = _unitOfWork.ContextRepository.GetByUserId(GetCurrentUserId());
             List <ContextViewModel> viewModel = new List<ContextViewModel>();
 
             foreach (var context in listContext)
@@ -31,17 +32,6 @@ namespace MyWallet.Web.Controllers
             }
 
             return View(viewModel);
-        }
-
-        public ActionResult CreateFirstContext(ContextViewModel contextViewModel)
-        {
-            var listCurrency = new CurrencyTypeService().GetAll();
-            contextViewModel.CurrencyTypeSelectList = new SelectList(listCurrency, "Id", "Name");
-
-            var listCountry = new CountryService().GetAll();
-            contextViewModel.CountrySelectList = new SelectList(listCountry, "Id", "Name");
-
-            return View(contextViewModel);
         }
 
         [HttpPost]
@@ -57,7 +47,7 @@ namespace MyWallet.Web.Controllers
                 context.CountryId = contextViewModel.CountryId;
                 context.UserId = GetCurrentUserId(); 
 
-                _contextService.AddOrUpdate(context);
+                _unitOfWork.ContextRepository.Update(context);
 
                 return RedirectToAction("Index", "Dashboard");
             }
@@ -70,7 +60,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            var context = _contextService.GetById(id);
+            var context = _unitOfWork.ContextRepository.GetById(id);
             var viewModel = new ContextViewModel()
             {
                 Id = context.Id,
@@ -87,9 +77,15 @@ namespace MyWallet.Web.Controllers
             {
                 Id = viewModel.Id
             };
-            _contextService.Delete(context);
+            _unitOfWork.ContextRepository.Delete(context);
 
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
