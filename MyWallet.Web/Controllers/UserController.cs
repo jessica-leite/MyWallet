@@ -1,6 +1,5 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
-using MyWallet.Service;
 using MyWallet.Web.Util;
 using MyWallet.Web.ViewModels.User;
 using System;
@@ -11,13 +10,10 @@ namespace MyWallet.Web.Controllers
 {
     public class UserController : BaseController
     {
-        private UserService _userService;
         private UnitOfWork _unitOfWork;
-
 
         public UserController()
         {
-            _userService = new UserService();
             _unitOfWork = new UnitOfWork();
         }
 
@@ -88,7 +84,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Edit()
         {
-            var user = _userService.GetById(GetCurrentUserId());
+            var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
             var viewModel = new UserViewModel()
             {
                 Name = user.Name,
@@ -110,7 +106,7 @@ namespace MyWallet.Web.Controllers
                     photo = memoryStream.ToArray();
                 }
 
-                var oldUser = _userService.GetById(GetCurrentUserId());
+                var oldUser = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
 
                 var updateUser = new User()
                 {
@@ -122,7 +118,7 @@ namespace MyWallet.Web.Controllers
                     Password = userViewModel.Password,
                     Photo = photo
                 };
-                _userService.Update(updateUser);
+                _unitOfWork.UserRepository.Update(updateUser);
 
                 return RedirectToAction("Index", "Dashboard");
             }

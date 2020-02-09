@@ -1,6 +1,5 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
-using MyWallet.Service;
 using MyWallet.Web.ViewModels.Context;
 using System.Collections.Generic;
 using System.Web.Mvc;

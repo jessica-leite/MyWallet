@@ -1976,10 +1976,6 @@
       <Project>{A9E29F83-0C10-4C16-8668-B3B74A583621}</Project>
       <Name>MyWallet.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MyWallet.Service\MyWallet.Service.csproj">
-      <Project>{F32179E6-A166-4883-8D10-8623CF08DD54}</Project>
-      <Name>MyWallet.Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
