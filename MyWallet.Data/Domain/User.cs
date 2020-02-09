@@ -29,10 +29,5 @@ namespace MyWallet.Data.Domain
         {
             return GetTheMainContext().Id;
         }
-
-        public void AddNewContext(Context context)
-        {
-            Contexts.Add(context);
-        }
     }
 }

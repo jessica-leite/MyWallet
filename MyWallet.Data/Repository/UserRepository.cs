@@ -6,42 +6,35 @@ namespace MyWallet.Data.Repository
 {
     public class UserRepository
     {
+        private MyWalletDBContext _context;
+
+        public UserRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public void Add(User user)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                context.User.Add(user);
-                context.SaveChanges();
-            }
+            _context.User.Add(user);
         }
 
         public void Update(User user)
         {
-            using(var context = new MyWalletDBContext())
-            {
-                context.Entry(user).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            _context.Entry(user).State = EntityState.Modified;
         }
 
         public User GetById(int id)
         {
-            using(var context = new MyWalletDBContext())
-            {
-                return context.User.Find(id);
-            }
+            return _context.User.Find(id);
         }
 
         public User GetByEmailAndPassword(string email, string password)
         {
-            using (var context = new MyWalletDBContext())
-            {
-                var userWithContexts = context.User
-                            .Include(u => u.Contexts)
-                            .FirstOrDefault(u => u.Email == email && u.Password == password);
+            var userWithContexts = _context.User
+                           .Include(u => u.Contexts)
+                           .FirstOrDefault(u => u.Email == email && u.Password == password);
 
-                return userWithContexts;
-            }
+            return userWithContexts;
         }
 
     }

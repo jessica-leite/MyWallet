@@ -1,28 +1,25 @@
 ﻿using MyWallet.Data.Domain;
-using MyWallet.Service;
+using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.Income;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
     public class IncomeController : BaseController
     {
-        private IncomeService _incomeService;
+        private UnitOfWork _unitOfWork;
 
         public IncomeController()
         {
-            _incomeService = new IncomeService();
+            _unitOfWork = new UnitOfWork();
         }
 
         // GET: Income
         public ActionResult Index()
         {
-            var incomeList = _incomeService.GetByContextId(GetCurrentContextId());
+            var incomeList = _unitOfWork.IncomeRepository.GetByContextId(GetCurrentContextId());
             var viewModelList = new ListAllIncomeViewModel();
             viewModelList.Currency = "€";
 
@@ -62,21 +59,24 @@ namespace MyWallet.Web.Controllers
                 Received = viewModel.Received,
                 Value = viewModel.Value.Value
             };
-            _incomeService.Add(income);
+            _unitOfWork.IncomeRepository.Add(income);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
         public HttpStatusCodeResult Delete(int id)
         {
-            _incomeService.Delete(new Income { Id = id});
+            _unitOfWork.IncomeRepository.Delete(new Income { Id = id});
+            _unitOfWork.Commit();
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         public PartialViewResult GetByContext()
         {
-            var incomeList = _incomeService.GetByContextId(GetCurrentContextId());
+            var incomeList = _unitOfWork.IncomeRepository.GetByContextId(GetCurrentContextId());
 
             var viewModelList = new ListAllIncomeViewModel();
             viewModelList.Currency = "€";
@@ -97,6 +97,12 @@ namespace MyWallet.Web.Controllers
                 viewModelList.IncomeList.Add(income);
             }
             return PartialView("PartialView/_IncomeList",viewModelList);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

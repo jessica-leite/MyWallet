@@ -6,48 +6,37 @@ namespace MyWallet.Data.Repository
 {
     public class ContextRepository
     {
+        private MyWalletDBContext _context;
+
+        public ContextRepository(MyWalletDBContext context)
+        {
+            _context = context;
+        }
+
         public void Add(Context context)
         {
-            using (var dbContext = new MyWalletDBContext())
-            {
-                dbContext.Context.Add(context);
-                dbContext.SaveChanges();
-            }
+            _context.Context.Add(context);
         }
 
         public void Update(Context context)
         {
-            using (var dbContext = new MyWalletDBContext())
-            {
-                dbContext.Entry(context).State = System.Data.Entity.EntityState.Modified;
-                dbContext.SaveChanges();
-            }
+            _context.Entry(context).State = System.Data.Entity.EntityState.Modified;
         }
 
         public void Delete(Context context)
         {
-            using (var dbContext = new MyWalletDBContext())
-            {
-                dbContext.Entry(context).State = System.Data.Entity.EntityState.Deleted;
-                dbContext.SaveChanges();
-            }
+            _context.Entry(context).State = System.Data.Entity.EntityState.Deleted;
         }
 
         public Context GetById(int id)
         {
-            using (var dbContext = new MyWalletDBContext())
-            {
-                var context = dbContext.Context.Find(id);
-                return (context);
-            }
+            return _context.Context.Find(id);
         }
 
-        public IEnumerable<Context> GetAll()
+        public IEnumerable<Context> GetByUserId(int userId)
         {
-            using (var dbcontext = new MyWalletDBContext())
-            {
-                return dbcontext.Context.ToList();
-            }
+            return _context.Context.ToList()
+                    .Where(m => m.UserId == userId);
         }
     }
 }

@@ -1,29 +1,27 @@
 ﻿using MyWallet.Data.Domain;
-using MyWallet.Service;
 using MyWallet.Web.ViewModels.BankAccount;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-
+using MyWallet.Data.Repository;
 
 namespace MyWallet.Web.Controllers
 {
     [Authorize]
     public class BankAccountController : BaseController
     {
-        private BankAccountService _bankAccountService;
+        private UnitOfWork _unitOfWork;
 
         public BankAccountController()
         {
-            _bankAccountService = new BankAccountService();
+            _unitOfWork = new UnitOfWork();
         }
-
 
         public ActionResult Index()
         {
-            var list = _bankAccountService.GetAll();
+            var bankAccounts = _unitOfWork.BankAccountRepository.GetByContextId(GetCurrentContextId());
             var listViewModel = new ListAllBankAccountsViewModel();
-            foreach (var bankAccount in list)
+            foreach (var bankAccount in bankAccounts)
             {
                 var viewModel = new BankAccountViewModel()
                 {
@@ -54,7 +52,8 @@ namespace MyWallet.Web.Controllers
                 bankAccount.ContextId = GetCurrentContextId();
                 bankAccount.CreationDate = DateTime.Now;
 
-                _bankAccountService.Add(bankAccount);
+                _unitOfWork.BankAccountRepository.Add(bankAccount);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -67,7 +66,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Edit(int id)
         {
-            var bankAccount = _bankAccountService.GetById(id);
+            var bankAccount = _unitOfWork.BankAccountRepository.GetById(id);
 
             var viewModel = new BankAccountViewModel();
             viewModel.Id = bankAccount.Id;
@@ -82,12 +81,13 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var bankAccountUpdate = _bankAccountService.GetById(bankAccountViewModel.Id);
+                var bankAccountUpdate = _unitOfWork.BankAccountRepository.GetById(bankAccountViewModel.Id);
 
                 bankAccountUpdate.Name = bankAccountViewModel.Name;
                 bankAccountUpdate.OpeningBalance = bankAccountViewModel.OpeningBalance.Value;
 
-                _bankAccountService.Update(bankAccountUpdate);
+                _unitOfWork.BankAccountRepository.Update(bankAccountUpdate);
+                _unitOfWork.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -100,7 +100,7 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Delete(int id)
         {
-            var bankAccount = _bankAccountService.GetById(id);
+            var bankAccount = _unitOfWork.BankAccountRepository.GetById(id);
             var viewModel = new BankAccountViewModel()
             {
                 Id = bankAccount.Id,
@@ -112,11 +112,10 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = new BankAccount()
-            {
-                Id = bankAccountViewModel.Id,
-            };
-            _bankAccountService.Delete(bankAccount);
+            var bankAccount = new BankAccount { Id = bankAccountViewModel.Id };
+
+            _unitOfWork.BankAccountRepository.Delete(bankAccount);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
@@ -125,15 +124,21 @@ namespace MyWallet.Web.Controllers
         {
             var id = contextId.HasValue ? contextId.Value : GetCurrentContextId();
 
-            var listBankAccount = _bankAccountService.GetByContextId(id);
+            var listBankAccount = _unitOfWork.BankAccountRepository.GetByContextId(id);
 
-            var json = listBankAccount.Select(b => new 
-            { 
+            var json = listBankAccount.Select(b => new
+            {
                 b.Id,
                 b.Name
             });
 
             return Json(json, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
