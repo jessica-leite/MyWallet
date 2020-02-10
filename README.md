@@ -23,4 +23,4 @@ Next steps:
 * Import and export of income and expenses
 * MD5
 * Currency quote API
-* Convert photo to Base64
+* Convert profile photo to Base64
