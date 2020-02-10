@@ -20,7 +20,7 @@ Using:
 
 Next steps:
 ------------
-* Import and export of income and expenses
-* MD5
+* User password encryption
+* Import and export of income and expenses (CSV, using Stream)
 * Currency quote API
-* Convert profile photo to Base64
+* Convert profile photo to Base64 (to show the photo in HTML)
