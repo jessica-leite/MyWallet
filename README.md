@@ -1,6 +1,6 @@
 # MyWallet
 
-MyWallet is a financial management project done with an educational objective for my .NET learning.
+MyWallet is a financial management project that is being developed with an educational objective for my .NET learning.
 
 
 Using:
@@ -20,3 +20,7 @@ Using:
 
 Next steps:
 ------------
+* Import and export of income and expenses
+* MD5
+* Currency quote API
+* Convert photo to Base64
