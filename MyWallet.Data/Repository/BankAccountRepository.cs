@@ -1,5 +1,4 @@
 ﻿using MyWallet.Data.Domain;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,6 +36,12 @@ namespace MyWallet.Data.Repository
         public BankAccount GetById(int id)
         {
             return _context.BankAccount.Find(id);
+        }
+
+        public IEnumerable<BankAccount> GetByName(IEnumerable<string> fileBankAccounts, int contextId)
+        {
+            var query = _context.BankAccount.Where(b => b.ContextId == contextId && fileBankAccounts.Contains(b.Name));
+            return query.ToList();
         }
     }
 }

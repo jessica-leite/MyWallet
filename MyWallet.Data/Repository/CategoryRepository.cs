@@ -41,8 +41,7 @@ namespace MyWallet.Data.Repository
 
         public IEnumerable<Category> GetByName(IEnumerable<string> categories, int contextId)
         {
-            IQueryable<Category> query = _context.Category.Where(c => c.ContextId == contextId && categories.Contains(c.Name));
-            var stringQuery = query.ToString();
+            var query = _context.Category.Where(c => c.ContextId == contextId && categories.Contains(c.Name));
             return query.ToList();
         }
 

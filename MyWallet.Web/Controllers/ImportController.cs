@@ -50,16 +50,19 @@ namespace MyWallet.Web.Controllers
                     entry.Date = ConvertToDate(array[0]);
                     entry.Description = array[1];
                     entry.Category = array[2].Trim();
-                    entry.Value = ConvertToDecimal(array[3]);
-                    entry.IsPaid = array[4] == "Pago" ? true : false;
-                    entry.Observation = string.IsNullOrWhiteSpace(array[5]) ? null : array[5];
+                    entry.BankAccount = array[3];
+                    entry.Value = ConvertToDecimal(array[4]);
+                    entry.IsPaid = array[5] == "Pago" ? true : false;
+                    entry.Observation = string.IsNullOrWhiteSpace(array[6]) ? null : array[6];
 
                     entries.Add(entry);
                 }
             }
 
-            var categories = entries.Select(i => i.Category).Distinct();
-            var existentCategories = _unitOfWork.CategoryRepository.GetByName(categories, contextId);
+            var fileCategories = entries.Select(i => i.Category).Distinct();
+            var existentCategories = _unitOfWork.CategoryRepository.GetByName(fileCategories, contextId);
+            var fileBankAccounts = entries.Select(b => b.BankAccount).Distinct();
+            var existentBankAccounts = _unitOfWork.BankAccountRepository.GetByName(fileBankAccounts, contextId);
 
             using (var scope = new TransactionScope())
             {
@@ -70,27 +73,64 @@ namespace MyWallet.Web.Controllers
                     entry.CategoryId = existentCategory == null ? CreateCategoryAndReturnId(entry.Category, contextId)
                         : entry.CategoryId = existentCategory.Id;
 
-                    var expense = new Expense
-                    {
-                        Description = entry.Description,
-                        BankAccountId = 1,
-                        CategoryId = entry.CategoryId,
-                        ContextId = contextId,
-                        CreationDate = DateTime.Now,
-                        Date = entry.Date,
-                        IsPaid = entry.IsPaid,
-                        Observation = entry.Observation,
-                        Value = entry.Value
-                    };
+                    var existentBankAccount = existentBankAccounts.FirstOrDefault(b => b.Name == entry.BankAccount);
+                    entry.BankAccountId = existentBankAccount == null ? CreateBankAccountAndReturnId(entry.BankAccount, contextId)
+                        : entry.BankAccountId = existentBankAccount.Id;
 
-                    _unitOfWork.ExpenseRepository.Add(expense);
+                    if (entry.Value > 0)
+                    {
+                        var income = new Income
+                        {
+                            Description = entry.Description,
+                            BankAccountId = entry.BankAccountId,
+                            CategoryId = entry.CategoryId,
+                            ContextId = contextId,
+                            CreationDate = DateTime.Now,
+                            Date = entry.Date,
+                            Received = entry.IsPaid,
+                            Observation = entry.Observation,
+                            Value = entry.Value
+                        };
+                        _unitOfWork.IncomeRepository.Add(income);
+                    }
+                    else
+                    {
+                        var expense = new Expense
+                        {
+                            Description = entry.Description,
+                            BankAccountId = entry.BankAccountId,
+                            CategoryId = entry.CategoryId,
+                            ContextId = contextId,
+                            CreationDate = DateTime.Now,
+                            Date = entry.Date,
+                            IsPaid = entry.IsPaid,
+                            Observation = entry.Observation,
+                            Value = -entry.Value
+                        };
+                        _unitOfWork.ExpenseRepository.Add(expense);
+                    }
                 }
+
                 _unitOfWork.Commit();
 
                 scope.Complete();
             }
 
             return RedirectToAction("Index", "Expense");
+        }
+
+        private int CreateBankAccountAndReturnId(string bankAccountName, int contextId)
+        {
+            var bankAccount = new BankAccount
+            {
+                Name = bankAccountName,
+                ContextId = contextId,
+                CreationDate = DateTime.Now
+            };
+            _unitOfWork.BankAccountRepository.Add(bankAccount);
+            _unitOfWork.Commit();
+
+            return bankAccount.Id;
         }
 
         private int CreateCategoryAndReturnId(string categoryName, int contextId)
