@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Transactions;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
@@ -33,6 +34,8 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Upload(ImportViewModel importViewModel)
         {
+            var contextId = GetCurrentContextId();
+
             var entries = new List<ImportViewModel>();
             using (var reader = new StreamReader(importViewModel.File.InputStream, Encoding.Default))
             {
@@ -56,19 +59,52 @@ namespace MyWallet.Web.Controllers
             }
 
             var categories = entries.Select(i => i.Category).Distinct();
-            var existentCategories = _unitOfWork.CategoryRepository.GetByName(categories, GetCurrentContextId());
-        
+            var existentCategories = _unitOfWork.CategoryRepository.GetByName(categories, contextId);
 
-
-            foreach (var entry in entries)
+            using (var scope = new TransactionScope())
             {
-                var category = existentCategories.FirstOrDefault(c => c.Name == entry.Category);
-                entry.CategoryId = category == null ? 0 : category.Id;
+
+                foreach (var entry in entries)
+                {
+                    var existentCategory = existentCategories.FirstOrDefault(c => c.Name == entry.Category);
+                    entry.CategoryId = existentCategory == null ? CreateCategoryAndReturnId(entry.Category, contextId)
+                        : entry.CategoryId = existentCategory.Id;
+
+                    var expense = new Expense
+                    {
+                        Description = entry.Description,
+                        BankAccountId = 1,
+                        CategoryId = entry.CategoryId,
+                        ContextId = contextId,
+                        CreationDate = DateTime.Now,
+                        Date = entry.Date,
+                        IsPaid = entry.IsPaid,
+                        Observation = entry.Observation,
+                        Value = entry.Value
+                    };
+
+                    _unitOfWork.ExpenseRepository.Add(expense);
+                }
+                _unitOfWork.Commit();
+
+                scope.Complete();
             }
 
-            //var createCategories = 
-           
-            return null;
+            return RedirectToAction("Index", "Expense");
+        }
+
+        private int CreateCategoryAndReturnId(string categoryName, int contextId)
+        {
+            var category = new Category
+            {
+                Name = categoryName,
+                ContextId = contextId
+            };
+
+            _unitOfWork.CategoryRepository.Add(category);
+            _unitOfWork.Commit();
+
+            return category.Id;
         }
 
         private decimal ConvertToDecimal(string number)
