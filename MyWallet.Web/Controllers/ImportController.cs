@@ -61,6 +61,7 @@ namespace MyWallet.Web.Controllers
 
             var fileCategories = entries.Select(i => i.Category).Distinct();
             var existentCategories = _unitOfWork.CategoryRepository.GetByName(fileCategories, contextId);
+
             var fileBankAccounts = entries.Select(b => b.BankAccount).Distinct();
             var existentBankAccounts = _unitOfWork.BankAccountRepository.GetByName(fileBankAccounts, contextId);
 
@@ -71,11 +72,11 @@ namespace MyWallet.Web.Controllers
                 {
                     var existentCategory = existentCategories.FirstOrDefault(c => c.Name == entry.Category);
                     entry.CategoryId = existentCategory == null ? CreateCategoryAndReturnId(entry.Category, contextId)
-                        : entry.CategoryId = existentCategory.Id;
+                        : existentCategory.Id;
 
                     var existentBankAccount = existentBankAccounts.FirstOrDefault(b => b.Name == entry.BankAccount);
                     entry.BankAccountId = existentBankAccount == null ? CreateBankAccountAndReturnId(entry.BankAccount, contextId)
-                        : entry.BankAccountId = existentBankAccount.Id;
+                        : existentBankAccount.Id;
 
                     if (entry.Value > 0)
                     {
