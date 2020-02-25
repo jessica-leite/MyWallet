@@ -1,0 +1,115 @@
+﻿@model MyWallet.Web.ViewModels.Expense.ExpenseViewModel
+
+<h1 class="h3 mb-2 text-gray-800">
+    Reports
+</h1>
+
+<div class="form-row">
+    <div class="form-group col-md-1">
+        <label for="Date">Start Date</label>
+        <input class="form-control datepicker" data-val="true" data-val-date="The field Date must be a date." data-val-required="The Date field is required." id="Date" name="Date" type="text" value="">
+        <span class="field-validation-valid text-danger" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group col-md-1">
+        <label for="Date">End Date</label>
+        <input class="form-control datepicker" data-val="true" data-val-date="The field Date must be a date." data-val-required="The Date field is required." id="Date" name="Date" type="text" value="">
+        <span class="field-validation-valid text-danger" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+    </div>
+
+    <div class="form-group col-md-2">
+        <label for="CategoryId">Category</label>
+        <select class="form-control category-list" data-val="true" data-val-number="The field Category must be a number." data-val-required="The Category field is required." id="CategoryId" name="CategoryId">
+            <option value=""></option>
+            <option value="1">Casa</option>
+            <option value="2">Luz</option>
+            <option value="3">Alimentação</option>
+            <option value="4">Mercado</option>
+            <option value="5">Salário</option>
+            <option value="6">Saúde</option>
+        </select>
+        <span class="field-validation-valid text-danger" data-valmsg-for="CategoryId" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group col-md-2">
+        <label for="BankAccountId">Bank Account</label>
+        <select class="form-control bank-account-list" data-val="true" data-val-number="The field Bank Account must be a number." data-val-required="The Bank Account field is required." id="BankAccountId" name="BankAccountId">
+            <option value=""></option>
+            <option value="1">Santander</option>
+            <option value="2">Nubank</option>
+        </select>
+        <span class="field-validation-valid text-danger" data-valmsg-for="BankAccountId" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group col-md-1">
+        @Html.LabelFor(m => m.Value)
+        @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-1">
+        @Html.LabelFor(m => m.Value)
+        @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-2">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-1">
+        <label for="BankAccountId">Type</label>
+        <select class="form-control bank-account-list" data-val="true" data-val-number="The field Bank Account must be a number." data-val-required="The Bank Account field is required." id="BankAccountId" name="BankAccountId">
+            <option value="1">All</option>
+            <option value="2">Income</option>
+            <option value="3">Expense</option>
+        </select>
+        <span class="field-validation-valid text-danger" data-valmsg-for="BankAccountId" data-valmsg-replace="true"></span>
+    </div>
+    <div class="form-group col-md-1">
+        <label for="BankAccountId">Situation</label>
+        <select class="form-control bank-account-list" data-val="true" data-val-number="The field Bank Account must be a number." data-val-required="The Bank Account field is required." id="BankAccountId" name="BankAccountId">
+            <option value="1">All</option>
+            <option value="2">Paid</option>
+            <option value="3">Unpaid</option>
+        </select>
+        <span class="field-validation-valid text-danger" data-valmsg-for="BankAccountId" data-valmsg-replace="true"></span>
+    </div>
+</div>
+
+<table class="table table-hover" id="dataTable">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Bank Account</th>
+            <th>$</th>
+            <th>Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < 5; i++)
+        {
+            <tr>
+                <td>Expense</td>
+                <td>24/05/2020</td>
+                <td>Potato</td>
+                <td>Casa</td>
+                <td>Bradesco</td>
+                <td>5.67</td>
+                <td>
+                    @if (true)
+                    {
+                        <button type="button" class="btn btn-success" disabled>
+                            <i class="far fa-thumbs-up"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger" disabled>
+                            <i class="far fa-thumbs-down"></i>
+                        </button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
