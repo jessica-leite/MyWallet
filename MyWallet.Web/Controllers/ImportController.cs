@@ -59,24 +59,20 @@ namespace MyWallet.Web.Controllers
                 }
             }
 
-            var fileCategories = entries.Select(i => i.Category).Distinct();
-            var existentCategories = _unitOfWork.CategoryRepository.GetByName(fileCategories, contextId);
-
-            var fileBankAccounts = entries.Select(b => b.BankAccount).Distinct();
-            var existentBankAccounts = _unitOfWork.BankAccountRepository.GetByName(fileBankAccounts, contextId);
-
             using (var scope = new TransactionScope())
             {
+                var csvCategories = entries.Select(i => i.Category).Distinct();
+                var allCategories = _unitOfWork.CategoryRepository.CreateIfNotExistsAndReturnAll(csvCategories, contextId);
+
+                var csvBankAccounts = entries.Select(b => b.BankAccount).Distinct();
+                var allBankAccounts = _unitOfWork.BankAccountRepository.CreateIfNotExistsAndReturnAll(csvBankAccounts, contextId);
+
+                _unitOfWork.Commit();
 
                 foreach (var entry in entries)
                 {
-                    var existentCategory = existentCategories.FirstOrDefault(c => c.Name == entry.Category);
-                    entry.CategoryId = existentCategory == null ? CreateCategoryAndReturnId(entry.Category, contextId)
-                        : existentCategory.Id;
-
-                    var existentBankAccount = existentBankAccounts.FirstOrDefault(b => b.Name == entry.BankAccount);
-                    entry.BankAccountId = existentBankAccount == null ? CreateBankAccountAndReturnId(entry.BankAccount, contextId)
-                        : existentBankAccount.Id;
+                    entry.CategoryId = allCategories.FirstOrDefault(c => c.Name == entry.Category).Id;
+                    entry.BankAccountId = allBankAccounts.FirstOrDefault(c => c.Name == entry.BankAccount).Id;
 
                     if (entry.Value > 0)
                     {
@@ -119,35 +115,7 @@ namespace MyWallet.Web.Controllers
 
             return RedirectToAction("Index", "Expense");
         }
-
-        private int CreateBankAccountAndReturnId(string bankAccountName, int contextId)
-        {
-            var bankAccount = new BankAccount
-            {
-                Name = bankAccountName,
-                ContextId = contextId,
-                CreationDate = DateTime.Now
-            };
-            _unitOfWork.BankAccountRepository.Add(bankAccount);
-            _unitOfWork.Commit();
-
-            return bankAccount.Id;
-        }
-
-        private int CreateCategoryAndReturnId(string categoryName, int contextId)
-        {
-            var category = new Category
-            {
-                Name = categoryName,
-                ContextId = contextId
-            };
-
-            _unitOfWork.CategoryRepository.Add(category);
-            _unitOfWork.Commit();
-
-            return category.Id;
-        }
-
+       
         private decimal ConvertToDecimal(string number)
         {
             return decimal.Parse(number, _numberFormatInfo);

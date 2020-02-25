@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System;
 
 namespace MyWallet.Data.Repository
 {
@@ -72,5 +73,28 @@ namespace MyWallet.Data.Repository
                 new Category{ Name = "Other" }
             };
         }
+
+        public IEnumerable<Category> CreateIfNotExistsAndReturnAll(IEnumerable<string> newCategoriesName, int contextId)
+        {
+            var existentCategories = GetByName(newCategoriesName, contextId);
+
+            var allCategories = new List<Category>();
+            foreach (var categoryName in newCategoriesName)
+            {
+                var category = existentCategories.FirstOrDefault(c => c.Name == categoryName);
+                if (category == null)
+                {
+                    var newCategory = new Category { Name = categoryName, ContextId = contextId };
+                    Add(newCategory);
+                    allCategories.Add(newCategory);
+                }
+            }
+
+            allCategories.AddRange(existentCategories);
+
+            return allCategories;
+        }
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,10 +39,38 @@ namespace MyWallet.Data.Repository
             return _context.BankAccount.Find(id);
         }
 
-        public IEnumerable<BankAccount> GetByName(IEnumerable<string> fileBankAccounts, int contextId)
+        public IEnumerable<BankAccount> GetByName(IEnumerable<string> bankAccountNames, int contextId)
         {
-            var query = _context.BankAccount.Where(b => b.ContextId == contextId && fileBankAccounts.Contains(b.Name));
+            var query = _context.BankAccount.Where(b => b.ContextId == contextId && bankAccountNames.Contains(b.Name));
             return query.ToList();
+        }
+
+        public IEnumerable<BankAccount> CreateIfNotExistsAndReturnAll(IEnumerable<string> newBankAccountsName, int contextId)
+        {
+            var existentBankAccounts = GetByName(newBankAccountsName, contextId);
+            
+            var allBankAccounts = new List<BankAccount>();
+            foreach (var bankAccountName in newBankAccountsName)
+            {
+                var bankAccount = existentBankAccounts.FirstOrDefault(b => b.Name == bankAccountName);
+                if (bankAccount == null)
+                {
+                    var newBankAccount = new BankAccount
+                    {
+                        Name = bankAccountName,
+                        ContextId = contextId,
+                        CreationDate = DateTime.Now,
+                        OpeningBalance = 0
+                    };
+
+                    Add(newBankAccount);
+
+                    allBankAccounts.Add(newBankAccount);
+                }
+            }
+
+            allBankAccounts.AddRange(existentBankAccounts);
+            return allBankAccounts;
         }
     }
 }
