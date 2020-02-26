@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\Import\ImportViewModel.cs" />
     <Compile Include="ViewModels\Income\IncomeViewModel.cs" />
     <Compile Include="ViewModels\Income\ListAllIncomeViewModel.cs" />
+    <Compile Include="ViewModels\Report\ReportFilterViewModel.cs" />
     <Compile Include="ViewModels\Shared\ErrorViewModel.cs" />
     <Compile Include="ViewModels\Shared\LoginViewModel.cs" />
     <Compile Include="ViewModels\User\UserViewModel.cs" />
@@ -1981,15 +1982,15 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MyWallet.Data\MyWallet.Data.csproj">
       <Project>{A9E29F83-0C10-4C16-8668-B3B74A583621}</Project>
       <Name>MyWallet.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

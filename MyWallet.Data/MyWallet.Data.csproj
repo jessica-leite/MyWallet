@@ -60,6 +60,8 @@
     <Compile Include="Domain\Expense.cs" />
     <Compile Include="Domain\Income.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="DTO\Report\EntryDTO.cs" />
+    <Compile Include="DTO\Report\ReportFilterDTO.cs" />
     <Compile Include="Mapping\BankAccountMapping.cs" />
     <Compile Include="Mapping\CategoryMapping.cs" />
     <Compile Include="Mapping\CountryMapping.cs" />
@@ -78,6 +80,7 @@
     <Compile Include="Repository\CurrencyTypeRepository.cs" />
     <Compile Include="Repository\ExpenseRepository.cs" />
     <Compile Include="Repository\IncomeRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
