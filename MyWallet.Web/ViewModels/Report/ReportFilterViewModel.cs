@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyWallet.Data.DTO.Report;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web.Mvc;
@@ -36,5 +37,15 @@ namespace MyWallet.Web.ViewModels.Report
         public List<SelectListItem> SelectListSituation { get; set; }
         public List<SelectListItem> SelectListBankAccount { get; set; }
         public List<SelectListItem> SelectListCategory { get; set; }
+        public IEnumerable<EntryDTO> Entries { get; set; }
+
+        public ReportFilterViewModel()
+        {
+            SelectListType = new List<SelectListItem>();
+            SelectListSituation = new List<SelectListItem>();
+            SelectListBankAccount = new List<SelectListItem>();
+            SelectListCategory = new List<SelectListItem>();
+            Entries = new List<EntryDTO>();
+        }
     }
 }

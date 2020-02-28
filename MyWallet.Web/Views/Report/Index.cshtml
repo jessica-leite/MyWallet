@@ -51,13 +51,77 @@
             @Html.ValidationMessageFor(m => m.Situation, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div>
-        <button type="submit" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-check"></i>
-            </span>
-            <span class="text">Search</span>
-        </button>
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="text">Search</span>
+            </button>
+        </div>
     </div>
-    
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="dataTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Bank Account</th>
+                        <th>€</th>
+                        <th>Paid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in Model.Entries)
+                    {
+                        <tr>
+                            <td>@entry.Date</td>
+                            <td>@entry.Description</td>
+                            <td>@entry.Category</td>
+                            <td>@entry.BankAccount</td>
+                            <td>@entry.Value</td>
+                            <td>
+                                @if (entry.IsPaid)
+                                {
+                                    <button type="button" class="btn btn-success" disabled>
+                                        <i class="far fa-thumbs-up"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger" disabled>
+                                        <i class="far fa-thumbs-down"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
+}
+
+@section otherCss{
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
 }

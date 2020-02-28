@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
-using System;
+using System.Web.Mvc;
 
 namespace MyWallet.Data.Repository
 {
@@ -94,7 +94,5 @@ namespace MyWallet.Data.Repository
 
             return allCategories;
         }
-
-
     }
 }
