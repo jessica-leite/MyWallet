@@ -1,4 +1,5 @@
 ﻿using MyWallet.Data.DTO.Report;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -68,10 +69,11 @@ namespace MyWallet.Data.Repository
                     sqlText += " AND e.Value <= @EndValue";
                     command.Parameters.AddWithValue("EndValue", filter.EndValue);
                 }
-                //if (description)
-                //{
-                //TODO implement 
-                //}
+                if (!string.IsNullOrEmpty(filter.Description))
+                {
+                    sqlText += " AND e.Description LIKE @Description";
+                    command.Parameters.AddWithValue("Description", $"%{filter.Description}%");
+                }
                 if (filter.Situation.HasValue)
                 {
                     sqlText += " AND e.IsPaid = @Situation";
@@ -87,11 +89,11 @@ namespace MyWallet.Data.Repository
                 while (result.Read())
                 {
                     var entry = new EntryDTO();
-                    entry.Date = result["Date"].ToString();
+                    entry.Date = (DateTime)result["Date"];
                     entry.Description = result["Description"].ToString();
                     entry.Category = result["Category"].ToString();
                     entry.BankAccount = result["BankAccount"].ToString();
-                    entry.Value = result["Value"].ToString();
+                    entry.Value = (decimal)result["Value"];
                     entry.IsPaid = (bool)result["IsPaid"];
 
                     entries.Add(entry);

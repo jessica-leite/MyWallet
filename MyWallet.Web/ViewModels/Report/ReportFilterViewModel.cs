@@ -32,6 +32,7 @@ namespace MyWallet.Web.ViewModels.Report
         [DisplayName("Situation")]
         public int? Situation { get; set; }
         public string Description { get; set; }
+        public string CurrencySymbol { get; set; }
 
         public List<SelectListItem> SelectListType { get; set; }
         public List<SelectListItem> SelectListSituation { get; set; }

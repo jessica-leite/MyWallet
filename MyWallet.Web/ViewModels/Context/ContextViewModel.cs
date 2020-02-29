@@ -22,6 +22,7 @@ namespace MyWallet.Web.ViewModels.Context
         public bool IsMainContext { get; set; }
 
         public string CurrencySymbol { get; set; }
+        public string CurrencyName { get; set; }
         public string CountryName { get; set; }
     }
 }
