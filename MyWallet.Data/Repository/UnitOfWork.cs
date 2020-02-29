@@ -19,6 +19,7 @@ namespace MyWallet.Data.Repository
         private ExpenseRepository _expenseRepository;
         private IncomeRepository _incomeRepository;
         private UserRepository _userRepository;
+        private ReportRepository _reportRepository;
         private bool _disposed;
 
         public BankAccountRepository BankAccountRepository => _bankAccountRepository ?? new BankAccountRepository(_context);
@@ -29,6 +30,7 @@ namespace MyWallet.Data.Repository
         public ExpenseRepository ExpenseRepository => _expenseRepository ?? new ExpenseRepository(_context);
         public IncomeRepository IncomeRepository => _incomeRepository ?? new IncomeRepository(_context);
         public UserRepository UserRepository => _userRepository ?? new UserRepository(_context);
+        public ReportRepository ReportRepository => _reportRepository ?? new ReportRepository(_context);
 
         public void Commit()
         {

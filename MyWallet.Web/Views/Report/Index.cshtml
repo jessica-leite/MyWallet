@@ -1,0 +1,115 @@
+﻿@model MyWallet.Web.ViewModels.Report.ReportFilterViewModel
+
+<h1 class="h3 mb-2 text-gray-800">Reports</h1>
+
+@using (Html.BeginForm())
+{
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.StartDate)
+            @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control datepicker" })
+        </div>
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.EndDate)
+            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control datepicker" })
+        </div>
+
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.CategoryId)
+            @Html.DropDownListFor(m => m.CategoryId, Model.SelectListCategory, "", new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.BankAccountId)
+            @Html.DropDownListFor(m => m.BankAccountId, Model.SelectListBankAccount, "", new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.StartValue)
+            @Html.TextBoxFor(m => m.StartValue, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.EndValue)
+            @Html.TextBoxFor(m => m.EndValue, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-2">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.Type)
+            @Html.DropDownListFor(m => m.Type, Model.SelectListType, "", new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-1">
+            @Html.LabelFor(m => m.Situation)
+            @Html.DropDownListFor(m => m.Situation, Model.SelectListSituation, "", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-success btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="text">Search</span>
+            </button>
+        </div>
+    </div>
+}
+
+@if (Model.Entries.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Bank Account</th>
+                    <th>Paid</th>
+                    <th>@Model.CurrencySymbol</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ decimal total = 0; }
+                @foreach (var entry in Model.Entries)
+                {
+                    <tr>
+                        <td>@entry.Date.ToShortDateString()</td>
+                        <td>@entry.Description</td>
+                        <td>@entry.Category</td>
+                        <td>@entry.BankAccount</td>
+                        <td>
+                            @if (entry.IsPaid)
+                            {
+                                <button type="button" class="btn btn-success" disabled>
+                                    <i class="far fa-thumbs-up"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-danger" disabled>
+                                    <i class="far fa-thumbs-down"></i>
+                                </button>
+                            }
+                        </td>
+                        <td>@entry.Value</td>
+                    </tr>
+                    total += entry.Value; 
+                }
+            </tbody>
+            <tfoot>
+                <tr class="font-weight-bold h5">
+                    <td colspan="4"></td>
+                    <td><u>Total</u></td>
+                    <td><u>@Model.CurrencySymbol @total</u></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+}
+
+
+@section scripts {
+
+}

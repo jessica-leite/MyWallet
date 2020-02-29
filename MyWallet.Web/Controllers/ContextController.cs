@@ -30,6 +30,7 @@ namespace MyWallet.Web.Controllers
                 contextVM.IsMainContext = context.IsMainContext;
                 contextVM.CountryName = context.Country.Name;
                 contextVM.CurrencySymbol = context.CurrencyType.Symbol;
+                contextVM.CurrencyName = context.CurrencyType.Name;
 
                 viewModel.Add(contextVM);
             }
