@@ -8,6 +8,7 @@ namespace MyWallet.Data.Repository
     public class ReportRepository
     {
         private MyWalletDBContext _context;
+
         public ReportRepository(MyWalletDBContext context)
         {
             _context = context;
@@ -49,15 +50,13 @@ namespace MyWallet.Data.Repository
                     sqlText += " AND e.Date <= @EndDate";
                     command.Parameters.AddWithValue("EndDate", filter.EndDate);
                 }
-                if (filter.CategoryId.HasValue)
+                if (filter.CategoriesId != null)
                 {
-                    sqlText += " AND e.CategoryId = @CategoryId";
-                    command.Parameters.AddWithValue("CategoryId", filter.CategoryId);
+                    sqlText += $" AND e.CategoryId IN ({string.Join(",", filter.CategoriesId)})";
                 }
-                if (filter.BankAccountId.HasValue)
+                if (filter.BankAccountsId != null)
                 {
-                    sqlText += " AND e.BankAccountId = @BankAccountId";
-                    command.Parameters.AddWithValue("BankAccountId", filter.BankAccountId);
+                    sqlText += $" AND e.BankAccountId IN({string.Join(",", filter.BankAccountsId)})";
                 }
                 if (filter.StartValue.HasValue)
                 {
@@ -102,5 +101,7 @@ namespace MyWallet.Data.Repository
                 return entries;
             }
         }
+
+
     }
 }

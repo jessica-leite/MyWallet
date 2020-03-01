@@ -7,8 +7,8 @@ namespace MyWallet.Data.DTO.Report
     {
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public int? CategoryId { get; set; }
-        public int? BankAccountId { get; set; }
+        public int[] CategoriesId { get; set; }
+        public int[] BankAccountsId { get; set; }
         public decimal? StartValue { get; set; }
         public decimal? EndValue { get; set; }
         public string Description { get; set; }
