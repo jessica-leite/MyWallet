@@ -15,10 +15,10 @@ namespace MyWallet.Web.ViewModels.Report
         public DateTime? EndDate { get; set; }
 
         [DisplayName("Category")]
-        public int? CategoryId { get; set; }
+        public int? CategoriesId { get; set; }
 
         [DisplayName("Bank Account")]
-        public int? BankAccountId { get; set; }
+        public int? BankAccountsId { get; set; }
 
         [DisplayName("Start Value")]
         public decimal? StartValue { get; set; }

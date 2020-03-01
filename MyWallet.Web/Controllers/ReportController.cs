@@ -32,7 +32,6 @@ namespace MyWallet.Web.Controllers
             var viewModel = GetViewModelWithFilters();
             viewModel.CurrencySymbol = _unitOfWork.CurrencyTypeRepository.GetCurrencySymbolByContextId(contextId);
             viewModel.Entries = entries;
-            var total =  entries.Sum(e => e.Value);
 
             return View(viewModel);
         }
@@ -57,8 +56,8 @@ namespace MyWallet.Web.Controllers
             viewModel.SelectListType.Add(new SelectListItem { Text = "Expense", Value = "1" });
             viewModel.SelectListType.Add(new SelectListItem { Text = "Income", Value = "2" });
 
-            viewModel.SelectListSituation.Add(new SelectListItem { Text = "Paid", Value = "1" });
-            viewModel.SelectListSituation.Add(new SelectListItem { Text = "Unpaid", Value = "0" });
+            viewModel.SelectListSituation.Add(new SelectListItem { Text = "Paid", Value = "true" });
+            viewModel.SelectListSituation.Add(new SelectListItem { Text = "Unpaid", Value = "false" });
 
             return viewModel;
         }

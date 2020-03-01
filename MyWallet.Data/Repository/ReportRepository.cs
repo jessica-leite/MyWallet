@@ -1,19 +1,33 @@
-﻿using MyWallet.Data.DTO.Report;
+﻿using MyWallet.Data.Domain;
+using MyWallet.Data.DTO.Report;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace MyWallet.Data.Repository
 {
     public class ReportRepository
     {
         private MyWalletDBContext _context;
+
         public ReportRepository(MyWalletDBContext context)
         {
             _context = context;
         }
 
         public IEnumerable<EntryDTO> GetByFilter(ReportFilterDTO filter)
+        {
+            if (filter.Type == 1)
+            {
+                return GetExpenseByFilter(filter);
+            }
+
+            return GetIncomeByFilter(filter);
+        }
+
+        public IEnumerable<EntryDTO> GetExpenseByFilter(ReportFilterDTO filter)
         {
             using (var connection = new SqlConnection(_context.Database.Connection.ConnectionString))
             {
@@ -49,15 +63,13 @@ namespace MyWallet.Data.Repository
                     sqlText += " AND e.Date <= @EndDate";
                     command.Parameters.AddWithValue("EndDate", filter.EndDate);
                 }
-                if (filter.CategoryId.HasValue)
+                if (filter.CategoriesId != null)
                 {
-                    sqlText += " AND e.CategoryId = @CategoryId";
-                    command.Parameters.AddWithValue("CategoryId", filter.CategoryId);
+                    sqlText += $" AND e.CategoryId IN ({string.Join(",", filter.CategoriesId)})";
                 }
-                if (filter.BankAccountId.HasValue)
+                if (filter.BankAccountsId != null)
                 {
-                    sqlText += " AND e.BankAccountId = @BankAccountId";
-                    command.Parameters.AddWithValue("BankAccountId", filter.BankAccountId);
+                    sqlText += $" AND e.BankAccountId IN({string.Join(",", filter.BankAccountsId)})";
                 }
                 if (filter.StartValue.HasValue)
                 {
@@ -101,6 +113,62 @@ namespace MyWallet.Data.Repository
 
                 return entries;
             }
+        }
+
+        public IEnumerable<EntryDTO> GetIncomeByFilter(ReportFilterDTO filter)
+        {
+            IQueryable<Income> query = _context
+                .Income
+                .Include(i => i.BankAccount)
+                .Include(i => i.Category)
+                .Where(i => i.ContextId == filter.ContextId);
+
+
+            if (filter.StartDate.HasValue)
+            {
+                query = query.Where(i => i.Date >= filter.StartDate);
+            }
+            if (filter.EndDate.HasValue)
+            {
+                query = query.Where(i => i.Date <= filter.EndDate);
+            }
+            if (filter.CategoriesId != null)
+            {
+                query = query.Where(i => filter.CategoriesId.Contains(i.CategoryId));
+            }
+            if (filter.BankAccountsId != null)
+            {
+                query = query.Where(i => filter.BankAccountsId.Contains(i.BankAccountId));
+            }
+            if (filter.StartValue.HasValue)
+            {
+                query = query.Where(i => i.Value >= filter.StartValue);
+            }
+            if (filter.EndValue.HasValue)
+            {
+                query = query.Where(i => i.Value <= filter.EndValue);
+            }
+            if (!string.IsNullOrEmpty(filter.Description))
+            {
+                query = query.Where(i => i.Description.Contains(filter.Description));
+            }
+            if (filter.Situation.HasValue)
+            {
+                query = query.Where(i => i.Received == filter.Situation);
+            }
+
+            var querySQL = query.ToString();
+
+            return query.Select(i => new EntryDTO
+            {
+                BankAccount = i.BankAccount.Name,
+                Category = i.Category.Name,
+                Date = i.Date,
+                Description = i.Description,
+                IsPaid = i.Received,
+                Value = i.Value
+            })
+            .ToList();
         }
     }
 }

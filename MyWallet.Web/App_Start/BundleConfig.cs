@@ -13,18 +13,18 @@ namespace MyWallet.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                      "~/css/sb-admin-2.min.css",
-                     "~/css/bootstrap-datepicker3.min.css"));
-
-            bundles.Add(new StyleBundle("~/Content/MyWallet").Include(
+                     "~/css/bootstrap-datepicker3.min.css",
+                     "~/css/select2.min.css",
                      "~/Content/MyWallet.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery-bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/MyWallet-js").Include(
                 "~/vendor/jquery/jquery.min.js",
                 "~/vendor/bootstrap/js/bootstrap.bundle.min.js",
                 "~/vendor/jquery-easing/jquery.easing.min.js",
                 "~/js/sb-admin-2.min.js",
                 "~/Scripts/bootstrap-datepicker.min.js",
                 "~/Scripts/bootstrap-datepicker.pt.min.js",
+                "~/Scripts/select2.min.js",
                 "~/Scripts/MyWallet.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-val").Include(
