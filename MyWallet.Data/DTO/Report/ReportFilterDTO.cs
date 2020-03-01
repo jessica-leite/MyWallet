@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MyWallet.Data.DTO.Report
 {
@@ -13,7 +12,7 @@ namespace MyWallet.Data.DTO.Report
         public decimal? EndValue { get; set; }
         public string Description { get; set; }
         public int? Type { get; set; }
-        public int? Situation { get; set; }
+        public bool? Situation { get; set; }
         public int ContextId { get; set; }
     }
 }
