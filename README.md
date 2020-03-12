@@ -16,11 +16,12 @@ Using:
 * Repository
 * Unit of Work 
 * ViewModels
+* Import income and expenses (csv)
 
 
 Next steps:
 ------------
 * User password encryption
-* Import and export of income and expenses (CSV, using Stream)
+* Export income and expenses (csv)
 * Currency quote API
 * Convert profile photo to Base64 (to show the photo in HTML)
