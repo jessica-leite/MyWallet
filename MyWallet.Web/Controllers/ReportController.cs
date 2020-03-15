@@ -1,8 +1,6 @@
 ﻿using MyWallet.Data.DTO.Report;
 using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.Report;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers

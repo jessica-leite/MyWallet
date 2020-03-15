@@ -1,6 +1,6 @@
 ﻿using MyWallet.Data.Domain;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 
 namespace MyWallet.Data.Repository
 {
@@ -36,6 +36,5 @@ namespace MyWallet.Data.Repository
 
             return userWithContexts;
         }
-
     }
 }

@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\CookieUtil.cs" />
+    <Compile Include="Util\CryptographyUtil.cs" />
     <Compile Include="Util\UserToken.cs" />
     <Compile Include="ViewModels\BankAccount\BankAccountViewModel.cs" />
     <Compile Include="ViewModels\BankAccount\ListAllBankAccountsViewModel.cs" />

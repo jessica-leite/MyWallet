@@ -11,6 +11,7 @@ namespace MyWallet.Web.Controllers
     public class UserController : BaseController
     {
         private UnitOfWork _unitOfWork;
+        
 
         public UserController()
         {
@@ -27,14 +28,14 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User
-                {
-                    Name = userViewModel.Name,
-                    LastName = userViewModel.LastName,
-                    Email = userViewModel.Email,
-                    Password = userViewModel.Password,
-                    CreationDate = DateTime.Now
-                };
+                var user = new User();
+
+                user.Name = userViewModel.Name;
+                user.LastName = userViewModel.LastName;
+                user.Email = userViewModel.Email;
+                user.Password = CryptographyUtil.Encrypt(userViewModel.Password);
+                user.CreationDate = DateTime.Now;
+                
 
                 var mainContext = new Context
                 {
@@ -99,19 +100,23 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                byte[] photo = null;
-                using (var memoryStream = new MemoryStream())
+                var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
+
+                if (userViewModel.Photo != null)
                 {
-                    userViewModel.Photo.InputStream.CopyTo(memoryStream);
-                    photo = memoryStream.ToArray();
+                    byte[] photo = null;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        userViewModel.Photo.InputStream.CopyTo(memoryStream);
+                        photo = memoryStream.ToArray();
+                    }
+                    user.Photo = photo;
                 }
 
-                var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
                 user.Name = userViewModel.Name;
                 user.LastName = userViewModel.LastName;
                 user.Email = userViewModel.Email;
-                user.Password = userViewModel.Password;
-                user.Photo = photo;
+                user.Password = CryptographyUtil.Encrypt(userViewModel.Password);
 
                 _unitOfWork.UserRepository.Update(user);
                 _unitOfWork.Commit();
