@@ -30,7 +30,9 @@ namespace MyWallet.Web.ViewModels.User
         [Compare("Password")]
         public string RepeatPassword { get; set; }
 
-        [Display(Name = "Photo")]
-        public HttpPostedFileBase Photo { get; set; }
+        [Display(Name = "New Photo")]
+        public HttpPostedFileBase NewPhoto { get; set; }
+
+        public string PhotoBase64 { get; set; }
     }
 }

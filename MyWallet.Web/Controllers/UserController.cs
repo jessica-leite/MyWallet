@@ -86,28 +86,35 @@ namespace MyWallet.Web.Controllers
         public ActionResult Edit()
         {
             var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
+
             var viewModel = new UserViewModel()
             {
                 Name = user.Name,
                 LastName = user.LastName,
-                Email = user.Email,
+                Email = user.Email
             };
+
+            if (user.Photo != null)
+                viewModel.PhotoBase64 = "data:image/jpeg;base64," + Convert.ToBase64String(user.Photo);
+            else
+                viewModel.PhotoBase64 = "/Content/Img/img_avatar.png";
+
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel userViewModel)
+        public ActionResult Edit(UserViewModel userViewModel) 
         {
             if (ModelState.IsValid)
             {
                 var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
 
-                if (userViewModel.Photo != null)
+                if (userViewModel.NewPhoto != null)
                 {
                     byte[] photo = null;
                     using (var memoryStream = new MemoryStream())
                     {
-                        userViewModel.Photo.InputStream.CopyTo(memoryStream);
+                        userViewModel.NewPhoto.InputStream.CopyTo(memoryStream);
                         photo = memoryStream.ToArray();
                     }
                     user.Photo = photo;
@@ -126,7 +133,7 @@ namespace MyWallet.Web.Controllers
             else
             {
                 SendModelStateErrors();
-                return View();
+                return View(userViewModel);
             }
         }
 

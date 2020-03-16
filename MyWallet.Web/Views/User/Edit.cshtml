@@ -3,18 +3,18 @@
 <div class="row">
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.HiddenFor(m => m.Id)
+        @*@Html.HiddenFor(m => m.Id)*@
 
         <fieldset>
             <legend class="text-center">Edit your Account</legend>
             <div class="form-group row justify-content-center">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <div class="col-md-12">
-                        <img src="~/Content/Img/img_avatar.png" class="img-thumbnail" />
+                            <img id="profileImg" src=@Model.PhotoBase64 class="img-thumbnail img-small" />
                     </div>
                     <div class="input-group mb-3" style="margin-top: 15px;">
                         <div class="custom-file">
-                            @Html.TextBoxFor(m => m.Photo, new { type = "file", @class = "custom-file-input" })
+                            @Html.TextBoxFor(m => m.NewPhoto, new { type = "file", @class = "custom-file-input", onchange = "encodeImageFileAsURL(this)" })
                             <label class="custom-file-label" for="Name">Choose file</label>
                         </div>
                     </div>
@@ -70,6 +70,17 @@
             $('#Password').val('');
             $('#RepeatPassword').val('');
         }
+
+        function encodeImageFileAsURL(element) {
+            var file = element.files[0];
+            var reader = new FileReader();
+            reader.onloadend = function () {
+                var result = reader.result;
+                $('#profileImg').attr("src", result);
+            }
+            reader.readAsDataURL(file);
+        }
+
     </script>
 }
 
