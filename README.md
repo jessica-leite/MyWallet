@@ -17,11 +17,12 @@ Using:
 * Unit of Work 
 * ViewModels
 * Import income and expenses (csv)
+* User password encryption
+* Convert profile photo to Base64 (to show the photo in HTML)
 
 
 Next steps:
 ------------
-* User password encryption
 * Export income and expenses (csv)
 * Currency quote API
-* Convert profile photo to Base64 (to show the photo in HTML)
+
