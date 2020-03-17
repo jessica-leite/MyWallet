@@ -105,6 +105,9 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel) 
         {
+            ModelState.Remove("Password");
+            ModelState.Remove("RepeatPassword");
+
             if (ModelState.IsValid)
             {
                 var user = _unitOfWork.UserRepository.GetById(GetCurrentUserId());
