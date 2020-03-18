@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\Context\ListAllContextsViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\Expense\ExpenseViewModel.cs" />
     <Compile Include="ViewModels\Expense\ListAllExpensesViewModel.cs" />
     <Compile Include="ViewModels\Import\ImportViewModel.cs" />

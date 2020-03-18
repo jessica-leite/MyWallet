@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace MyWallet.Data.Repository
 {
@@ -43,6 +44,21 @@ namespace MyWallet.Data.Repository
         public Expense GetById(int id)
         {
             return _context.Expense.Find(id);
+        }
+
+        public decimal GetTotalByContextAndDate(int contextId, DateTime startDate, DateTime endDate)
+        {
+            var expenses = _context.Expense.Where(e => e.ContextId == contextId && e.Date >= startDate && e.Date <= endDate)
+                .Select(e => e.Value)
+                .ToList();
+
+            decimal result = 0;
+            foreach (var expense in expenses)
+            {
+                result += expense;
+            }
+
+            return result;
         }
 
         public IEnumerable<Expense> GetAllByContextId(int contextId)
@@ -90,6 +106,5 @@ namespace MyWallet.Data.Repository
                 return expenses;
             }
         }
-
     }
 }
