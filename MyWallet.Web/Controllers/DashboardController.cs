@@ -12,12 +12,12 @@ namespace MyWallet.Web.Controllers
 
         public ActionResult Index()
         {
-            var viewModel = new DashboardViewModel();
-            viewModel.TotalExpenses = _unitOfWork.ExpenseRepository
-                .GetTotalByContextAndDate(1, new DateTime(2020,01,05), new DateTime(2020,01,27));
+            var contextId = GetCurrentContextId();
 
-            viewModel.TotalIncomes = _unitOfWork.IncomeRepository
-                .GetTotalByContextAndDate(1, new DateTime(2019, 10, 01), new DateTime(2019, 10, 01));
+            var viewModel = new DashboardViewModel();
+
+            viewModel.TotalExpenses = _unitOfWork.ExpenseRepository.GetCurrentMonthTotalByContextId(contextId); 
+            viewModel.TotalIncomes = _unitOfWork.IncomeRepository.GetCurrentMonthTotalByContextId(contextId);
 
             return View(viewModel);
         }

@@ -30,18 +30,17 @@ namespace MyWallet.Data.Repository
             _context.Entry(income).State = EntityState.Deleted;
         }
 
-        public decimal GetTotalByContextAndDate(int contextId, DateTime startDate, DateTime endDate)
+        public decimal GetCurrentMonthTotalByContextId(int contextId)
         {
-            var incomes = _context.Income
-                .Where(i => i.ContextId == contextId && i.Date >= startDate && i.Date <= endDate)
-                .Select(i => i.Value)
-                .ToList();
+            var currentDate = DateTime.Now;
 
-            decimal total = 0;
-            foreach (var income in incomes)
-            {
-                total += income;
-            }
+            var total = _context.Income
+                .Where(i => i.ContextId == contextId
+                     && i.Received == true
+                     && i.Date.Month == currentDate.Month
+                     && i.Date.Year == currentDate.Year)
+                .Select(i => i.Value)
+                .Sum();
 
             return total;
         }

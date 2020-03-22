@@ -46,19 +46,19 @@ namespace MyWallet.Data.Repository
             return _context.Expense.Find(id);
         }
 
-        public decimal GetTotalByContextAndDate(int contextId, DateTime startDate, DateTime endDate)
+        public decimal GetCurrentMonthTotalByContextId(int contextId)
         {
-            var expenses = _context.Expense.Where(e => e.ContextId == contextId && e.Date >= startDate && e.Date <= endDate)
-                .Select(e => e.Value)
-                .ToList();
+            var currentDate = DateTime.Now;
 
-            decimal result = 0;
-            foreach (var expense in expenses)
-            {
-                result += expense;
-            }
+            var total = _context.Expense
+                .Where(e => e.ContextId == contextId 
+                     && e.IsPaid
+                     && e.Date.Month == currentDate.Month 
+                     && e.Date.Year == currentDate.Year)
+               .Select(e => e.Value)
+               .Sum();
 
-            return result;
+            return total;
         }
 
         public IEnumerable<Expense> GetAllByContextId(int contextId)
