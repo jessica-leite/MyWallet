@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web.Mvc;
 using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels;
@@ -16,8 +19,21 @@ namespace MyWallet.Web.Controllers
 
             var viewModel = new DashboardViewModel();
 
-            viewModel.TotalExpenses = _unitOfWork.ExpenseRepository.GetCurrentMonthTotalByContextId(contextId); 
-            viewModel.TotalIncomes = _unitOfWork.IncomeRepository.GetCurrentMonthTotalByContextId(contextId);
+            viewModel.TotalCurrentMonthExpenses = _unitOfWork.ExpenseRepository.GetCurrentMonthTotalByContextId(contextId); 
+            viewModel.TotalCurrentMonthIncomes = _unitOfWork.IncomeRepository.GetCurrentMonthTotalByContextId(contextId);
+
+            var expensesGroupByMonth = _unitOfWork.ExpenseRepository.GetAnnualExpensesByContextId(contextId);
+
+            var months = new List<string>();
+            foreach (var item in expensesGroupByMonth)
+            {
+                var format = new DateTimeFormatInfo();
+                var monthName = format.GetMonthName(item.Key);
+                months.Add(monthName);
+            }
+
+            viewModel.Months = months.ToArray();
+            viewModel.Expenses = expensesGroupByMonth;
 
             return View(viewModel);
         }

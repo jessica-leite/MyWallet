@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -29,6 +30,16 @@ namespace MyWallet.Data.Repository
         public void Update(Expense expense)
         {
             _context.Entry(expense).State = EntityState.Modified;
+        }
+
+        public IDictionary<int, decimal> GetAnnualExpensesByContextId(int contextId)
+        {
+            var query = _context.Expense.Where(e => e.Date.Year == DateTime.Now.Year);
+
+            IQueryable<IGrouping<int, Expense>> group = query.GroupBy(e => e.Date.Month);
+
+            var result = group.ToDictionary(x => x.Key, x => x.Sum(i => i.Value));
+            return result;
         }
 
         public void Delete(Expense expense)
