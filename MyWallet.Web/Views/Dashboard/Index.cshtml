@@ -286,15 +286,12 @@
     <script>
         var ctx = document.getElementById("myAreaChart");
 
-        var label = @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Key)));
-        var values = @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Value)));
-
         var myLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: label,
+                labels: @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Key))),
                 datasets: [{
-                    label: "Earnings",
+                    label: "Expenses",
                     lineTension: 0.3,
                     backgroundColor: "rgba(78, 115, 223, 0.05)",
                     borderColor: "rgba(78, 115, 223, 1)",
@@ -306,7 +303,22 @@
                     pointHoverBorderColor: "rgba(78, 115, 223, 1)",
                     pointHitRadius: 10,
                     pointBorderWidth: 2,
-                    data: values,
+                    data: @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Value)))
+                },
+                {
+                    label: "Incomes",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(212, 246, 212, 0.2)",
+                    borderColor: "rgba(53, 190, 53, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(53, 190, 53, 1)",
+                    pointBorderColor: "rgba(53, 190, 53, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(53, 190, 53, 1)",
+                    pointHoverBorderColor: "rgba(53, 190, 53, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: @Html.Raw(Json.Encode(Model.AnnualIncomes.Select(i => i.Value))),
                 }],
             },
             options: {
