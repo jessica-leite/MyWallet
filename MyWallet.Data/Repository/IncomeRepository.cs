@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -30,19 +31,16 @@ namespace MyWallet.Data.Repository
             _context.Entry(income).State = EntityState.Deleted;
         }
 
-        public decimal GetCurrentMonthTotalByContextId(int contextId)
+        public IDictionary<int, decimal> GetAnnualIncomesByContextId(int contextId)
         {
-            var currentDate = DateTime.Now;
+            var annualIncomes = _context.Income
+                .Where(i => i.Date.Year == DateTime.Now.Year
+                    && i.ContextId == contextId
+                    && i.Received)
+                .GroupBy(i => i.Date.Month)
+                .ToDictionary(x => x.Key, x => x.Sum(i => i.Value)); //TODO try to get month name directly here
 
-            var total = _context.Income
-                .Where(i => i.ContextId == contextId
-                     && i.Received == true
-                     && i.Date.Month == currentDate.Month
-                     && i.Date.Year == currentDate.Year)
-                .Select(i => i.Value)
-                .Sum();
-
-            return total;
+            return annualIncomes;
         }
 
         public void Update(Income income)

@@ -286,8 +286,8 @@
     <script>
         var ctx = document.getElementById("myAreaChart");
 
-        var label = @Html.Raw(Json.Encode(Model.Months));
-        var values = @Html.Raw(Json.Encode(Model.Expenses.Select(e => e.Value)));
+        var label = @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Key)));
+        var values = @Html.Raw(Json.Encode(Model.AnnualExpenses.Select(e => e.Value)));
 
         var myLineChart = new Chart(ctx, {
             type: 'line',

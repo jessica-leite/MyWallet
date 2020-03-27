@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 
 namespace MyWallet.Data.Repository
@@ -22,11 +21,6 @@ namespace MyWallet.Data.Repository
             _context.Expense.Add(expense);
         }
 
-        public void Add(IEnumerable<Expense> expenses)
-        {
-            _context.Expense.AddRange(expenses);
-        }
-
         public void Update(Expense expense)
         {
             _context.Entry(expense).State = EntityState.Modified;
@@ -34,17 +28,16 @@ namespace MyWallet.Data.Repository
 
         public IDictionary<int, decimal> GetAnnualExpensesByContextId(int contextId)
         {
-            var query = _context.Expense.Where(e => e.Date.Year == DateTime.Now.Year);
+            var query = _context.Expense
+                .Where(e => e.Date.Year == DateTime.Now.Year
+                    && e.ContextId == contextId
+                    && e.IsPaid);
 
             IQueryable<IGrouping<int, Expense>> group = query.GroupBy(e => e.Date.Month);
 
             var result = group.ToDictionary(x => x.Key, x => x.Sum(i => i.Value));
-            return result;
-        }
 
-        public void Delete(Expense expense)
-        {
-            _context.Entry(expense).State = EntityState.Deleted;
+            return result;
         }
 
         public void Delete(int id)
@@ -55,21 +48,6 @@ namespace MyWallet.Data.Repository
         public Expense GetById(int id)
         {
             return _context.Expense.Find(id);
-        }
-
-        public decimal GetCurrentMonthTotalByContextId(int contextId)
-        {
-            var currentDate = DateTime.Now;
-
-            var total = _context.Expense
-                .Where(e => e.ContextId == contextId 
-                     && e.IsPaid
-                     && e.Date.Month == currentDate.Month 
-                     && e.Date.Year == currentDate.Year)
-               .Select(e => e.Value)
-               .Sum();
-
-            return total;
         }
 
         public IEnumerable<Expense> GetAllByContextId(int contextId)

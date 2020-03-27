@@ -10,13 +10,13 @@ namespace MyWallet.Web.ViewModels
         public decimal TotalCurrentMonthExpenses { get; set; }
         public decimal TotalCurrentMonthIncomes { get; set; }
 
-        public string[] Months { get; set; }
-
-        public IDictionary<int, decimal> Expenses { get; set; }
+        public IDictionary<string, decimal> AnnualExpenses { get; set; }
+        public IDictionary<string, decimal> AnnualIncomes { get; set; }
 
         public DashboardViewModel()
         {
-            Expenses = new Dictionary<int, decimal>();
+            AnnualExpenses = new Dictionary<string, decimal>();
+            AnnualIncomes = new Dictionary<string, decimal>();
         }
     }
 }

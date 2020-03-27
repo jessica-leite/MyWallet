@@ -19,21 +19,23 @@ namespace MyWallet.Web.Controllers
 
             var viewModel = new DashboardViewModel();
 
-            viewModel.TotalCurrentMonthExpenses = _unitOfWork.ExpenseRepository.GetCurrentMonthTotalByContextId(contextId); 
-            viewModel.TotalCurrentMonthIncomes = _unitOfWork.IncomeRepository.GetCurrentMonthTotalByContextId(contextId);
-
             var expensesGroupByMonth = _unitOfWork.ExpenseRepository.GetAnnualExpensesByContextId(contextId);
+            var incomesGroupByMonth = _unitOfWork.IncomeRepository.GetAnnualIncomesByContextId(contextId);
+            
+            viewModel.TotalCurrentMonthIncomes = incomesGroupByMonth[DateTime.Now.Month];
+            viewModel.TotalCurrentMonthExpenses = expensesGroupByMonth[DateTime.Now.Month];
 
-            var months = new List<string>();
+            var format = new DateTimeFormatInfo();
             foreach (var item in expensesGroupByMonth)
             {
-                var format = new DateTimeFormatInfo();
-                var monthName = format.GetMonthName(item.Key);
-                months.Add(monthName);
+                viewModel.AnnualExpenses.Add(format.GetMonthName(item.Key), item.Value);
             }
 
-            viewModel.Months = months.ToArray();
-            viewModel.Expenses = expensesGroupByMonth;
+            foreach (var item in incomesGroupByMonth)
+            {
+                viewModel.AnnualIncomes.Add(format.GetMonthName(item.Key), item.Value);
+            }
+
 
             return View(viewModel);
         }
