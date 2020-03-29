@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using MyWallet.Data.DTO;
+using System.Globalization;
 
 namespace MyWallet.Data.Repository
 {
@@ -26,18 +28,62 @@ namespace MyWallet.Data.Repository
             _context.Entry(expense).State = EntityState.Modified;
         }
 
-        public IDictionary<int, decimal> GetAnnualExpensesByContextId(int contextId)
+        public DashboardDTO GetAnnualExpensesByMonthAndContextIdAndCategory(int contextId, DashboardDTO dashboardDTO)
         {
-            var query = _context.Expense
-                .Where(e => e.Date.Year == DateTime.Now.Year
-                    && e.ContextId == contextId
-                    && e.IsPaid);
+            var expensesByYearAndCategory = _context.Expense
+                    .Where(e => e.Date.Year == DateTime.Now.Year
+                        && e.ContextId == contextId
+                        && e.IsPaid)
+                    .Include(c => c.Category)
+                    .GroupBy(e => new
+                    {
+                        e.Date.Month,
+                        Category = e.Category.Name
+                    })
+                    .Select(e => new
+                    {
+                        e.Key.Month,
+                        e.Key.Category,
+                        Value = e.Sum(expense => expense.Value)
+                    })
+                    .ToList();
 
-            IQueryable<IGrouping<int, Expense>> group = query.GroupBy(e => e.Date.Month);
+            var format = new DateTimeFormatInfo();
+            foreach (var expense in expensesByYearAndCategory)
+            {
+                var monthName = format.GetMonthName(expense.Month);
 
-            var result = group.ToDictionary(x => x.Key, x => x.Sum(i => i.Value));
+                if (dashboardDTO.AnnualExpensesByMonth.ContainsKey(monthName))
+                {
+                    dashboardDTO.AnnualExpensesByMonth[monthName] += expense.Value;
+                }
+                else
+                {
+                    dashboardDTO.AnnualExpensesByMonth.Add(monthName, expense.Value);
+                }
 
-            return result;
+                if (expense.Month == DateTime.Now.Month)
+                {
+                    if (dashboardDTO.MontlhyExpensesByCategory.ContainsKey(expense.Category))
+                    {
+                        dashboardDTO.MontlhyExpensesByCategory[expense.Category] += expense.Value;
+                    }
+                    else
+                    {
+                        dashboardDTO.MontlhyExpensesByCategory.Add(expense.Category, expense.Value);
+                    }
+
+                    dashboardDTO.TotalCurrentMonthExpenses += expense.Value;
+                }
+            }
+
+            var top5Categories = dashboardDTO.MontlhyExpensesByCategory
+                                        .OrderByDescending(e => e.Value)
+                                        .Take(5);
+
+            dashboardDTO.MontlhyExpensesByCategory = top5Categories.ToDictionary(e => e.Key, e => e.Value);
+
+            return dashboardDTO;
         }
 
         public void Delete(int id)

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web.Mvc;
+﻿using MyWallet.Data.DTO;
 using MyWallet.Data.Repository;
-using MyWallet.Web.ViewModels;
+using System;
+using System.Web.Mvc;
 
 namespace MyWallet.Web.Controllers
 {
@@ -17,27 +14,13 @@ namespace MyWallet.Web.Controllers
         {
             var contextId = GetCurrentContextId();
 
-            var viewModel = new DashboardViewModel();
+            var dashboardDTO = new DashboardDTO();
 
-            var expensesGroupByMonth = _unitOfWork.ExpenseRepository.GetAnnualExpensesByContextId(contextId);
-            var incomesGroupByMonth = _unitOfWork.IncomeRepository.GetAnnualIncomesByContextId(contextId);
+            dashboardDTO = _unitOfWork.ExpenseRepository.GetAnnualExpensesByMonthAndContextIdAndCategory(contextId, dashboardDTO);
+            dashboardDTO.AnnualIncomesByMonth = _unitOfWork.IncomeRepository.GetAnnualIncomesByMonthAndContextId(contextId);
+            dashboardDTO.TotalCurrentMonthIncomes = dashboardDTO.AnnualIncomesByMonth[DateTime.Now.Month];
             
-            viewModel.TotalCurrentMonthIncomes = incomesGroupByMonth[DateTime.Now.Month];
-            viewModel.TotalCurrentMonthExpenses = expensesGroupByMonth[DateTime.Now.Month];
-
-            var format = new DateTimeFormatInfo();
-            foreach (var item in expensesGroupByMonth)
-            {
-                viewModel.AnnualExpenses.Add(format.GetMonthName(item.Key), item.Value);
-            }
-
-            foreach (var item in incomesGroupByMonth)
-            {
-                viewModel.AnnualIncomes.Add(format.GetMonthName(item.Key), item.Value);
-            }
-
-
-            return View(viewModel);
+            return View(dashboardDTO);
         }
     }
 }

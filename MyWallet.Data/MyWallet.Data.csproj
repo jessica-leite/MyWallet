@@ -81,6 +81,7 @@
     <Compile Include="Domain\Expense.cs" />
     <Compile Include="Domain\Income.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="DTO\DashboardDTO.cs" />
     <Compile Include="DTO\Report\EntryDTO.cs" />
     <Compile Include="DTO\Report\ReportFilterDTO.cs" />
     <Compile Include="Mapping\BankAccountMapping.cs" />
