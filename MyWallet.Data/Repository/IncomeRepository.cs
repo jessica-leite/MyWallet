@@ -1,4 +1,5 @@
 ﻿using MyWallet.Data.Domain;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -27,6 +28,18 @@ namespace MyWallet.Data.Repository
         public void Delete(Income income)
         {
             _context.Entry(income).State = EntityState.Deleted;
+        }
+
+        public IDictionary<int, decimal> GetAnnualIncomesByMonthAndContextId(int contextId)
+        {
+            var annualIncomes = _context.Income
+                .Where(i => i.Date.Year == DateTime.Now.Year
+                    && i.ContextId == contextId
+                    && i.Received)
+                .GroupBy(i => i.Date.Month)
+                .ToDictionary(x => x.Key, x => x.Sum(i => i.Value)); 
+
+            return annualIncomes;
         }
 
         public void Update(Income income)

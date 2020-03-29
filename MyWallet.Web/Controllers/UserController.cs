@@ -105,8 +105,11 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel userViewModel) 
         {
-            ModelState.Remove("Password");
-            ModelState.Remove("RepeatPassword");
+            if (string.IsNullOrWhiteSpace(userViewModel.Password) && string.IsNullOrWhiteSpace(userViewModel.RepeatPassword))
+            {
+                ModelState.Remove("Password");
+                ModelState.Remove("RepeatPassword");
+            }
 
             if (ModelState.IsValid)
             {
@@ -126,7 +129,11 @@ namespace MyWallet.Web.Controllers
                 user.Name = userViewModel.Name;
                 user.LastName = userViewModel.LastName;
                 user.Email = userViewModel.Email;
-                user.Password = CryptographyUtil.Encrypt(userViewModel.Password);
+
+                if (!string.IsNullOrWhiteSpace(userViewModel.Password) && !string.IsNullOrWhiteSpace(userViewModel.RepeatPassword)) //TODO think better about this condition
+                {
+                    user.Password = CryptographyUtil.Encrypt(userViewModel.Password);
+                }
 
                 _unitOfWork.UserRepository.Update(user);
                 _unitOfWork.Commit();

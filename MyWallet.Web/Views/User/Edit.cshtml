@@ -3,7 +3,7 @@
 <div class="row">
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @*@Html.HiddenFor(m => m.Id)*@
+        @Html.HiddenFor(m => m.PhotoBase64) //TODO See if there is a better solution for this field
 
         <fieldset>
             <legend class="text-center">Edit your Account</legend>
