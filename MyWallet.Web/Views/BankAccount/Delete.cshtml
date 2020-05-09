@@ -4,15 +4,15 @@
     <div class="col-md-4">
         @using (Html.BeginForm("Delete", "BankAccount", FormMethod.Post, new { @class = "user" }))
         {
-            @Html.HiddenFor(c => c.Id)
+            @Html.HiddenFor(b => b.Id)
             <fieldset>
                 <legend>Delete BankAccount</legend>
                 <hr />
                 <div class="form-group">
-                    @Html.LabelFor(c => c.Name)
+                    @Html.LabelFor(b => b.Name)
                 </div>
                 <div class="form-group">
-                    @Html.TextBoxFor(c => c.Name, new { @class = "form-control form-control-user", disabled = true })
+                    @Html.TextBoxFor(b => b.Name, new { @class = "form-control", @readonly = true })
                 </div>
                 <button type="submit" class="btn btn-danger btn-icon-split">
                     <span class="icon text-white-50">

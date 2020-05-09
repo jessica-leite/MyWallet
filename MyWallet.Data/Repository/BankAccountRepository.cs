@@ -72,5 +72,13 @@ namespace MyWallet.Data.Repository
             allBankAccounts.AddRange(existentBankAccounts);
             return allBankAccounts;
         }
+
+        public bool HasDependentExpensesOrIncomes(int bankAccountId)
+        {
+            var dependentExpenses = _context.Expense.Any(e => e.BankAccountId == bankAccountId);
+            var dependentIncomes = _context.Income.Any(i => i.BankAccountId == bankAccountId);
+
+            return dependentExpenses || dependentIncomes;
+        }
     }
 }

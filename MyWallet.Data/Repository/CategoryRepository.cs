@@ -94,5 +94,13 @@ namespace MyWallet.Data.Repository
 
             return allCategories;
         }
+
+        public bool HasDependentExpensesOrIncomes(int categoryId)
+        {
+            var dependentExpenses = _context.Expense.Any(e => e.CategoryId == categoryId);
+            var dependentIncomes = _context.Income.Any(i => i.CategoryId == categoryId);
+
+            return dependentExpenses || dependentIncomes;
+        }
     }
 }

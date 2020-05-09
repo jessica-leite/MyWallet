@@ -111,14 +111,20 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Delete(CategoryViewModel categoryViewModel)
         {
-            var category = new Category()
-            {
-                Id = categoryViewModel.Id,
-            };
-            _unitOfWork.CategoryRepository.Delete(category);
-            _unitOfWork.Commit();
 
-            return RedirectToAction("Index");
+            var dependentExpensesOrIncomes = _unitOfWork.CategoryRepository.HasDependentExpensesOrIncomes(categoryViewModel.Id);
+            if (dependentExpensesOrIncomes)
+            {
+                SendModelStateErrors("Dependent expenses or incomes exist. Please delete them or switch to another category before deleting this category.");
+                return View(categoryViewModel);
+            }
+            else
+            {
+                _unitOfWork.CategoryRepository.Delete(new Category { Id = categoryViewModel.Id});
+                
+                _unitOfWork.Commit();
+                return RedirectToAction("Index");
+            }
         }
 
         public JsonResult GetAllByContextId(int? contextId)

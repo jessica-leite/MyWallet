@@ -112,12 +112,22 @@ namespace MyWallet.Web.Controllers
         [HttpPost]
         public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = new BankAccount { Id = bankAccountViewModel.Id };
+            var dependentExpensesOrIncomes = _unitOfWork.BankAccountRepository.HasDependentExpensesOrIncomes(bankAccountViewModel.Id);
+            if (dependentExpensesOrIncomes)
+            {
+                SendModelStateErrors("Dependent expenses or incomes exist. Please delete them or switch to another bank account before deleting this bank account.");
 
-            _unitOfWork.BankAccountRepository.Delete(bankAccount);
-            _unitOfWork.Commit();
+                return View(bankAccountViewModel);
+            }
+            else
+            {
+                var bankAccount = new BankAccount { Id = bankAccountViewModel.Id };
 
-            return RedirectToAction("Index");
+                _unitOfWork.BankAccountRepository.Delete(bankAccount);
+                _unitOfWork.Commit();
+
+                return RedirectToAction("Index");
+            }
         }
 
         public JsonResult GetAllByContextId(int? contextId)
