@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MyWallet.Web.ViewModels.Context.ContextViewModel>
+﻿@using MyWallet.Web.ViewModels.Context;
+@model IEnumerable<MyWallet.Web.ViewModels.Context.ContextViewModel>
+
 
 <div class="row">
     <div class="col-md-6">
@@ -40,7 +42,14 @@
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.Action("Delete", context)" class="btn btn-danger btn-circle">
+                            <a href="@Url.Action("Delete", 
+                                    new DeleteContextViewModel{ 
+                                        Id = context.Id,
+                                        Name = context.Name,
+                                        IsMainContext = context.IsMainContext
+                                    })"
+                               class="btn btn-danger btn-circle">
+
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

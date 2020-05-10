@@ -140,6 +140,7 @@
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\ListAllCategoriesViewModel.cs" />
     <Compile Include="ViewModels\Context\ContextViewModel.cs" />
+    <Compile Include="ViewModels\Context\DeleteContextViewModel.cs" />
     <Compile Include="ViewModels\Context\ListAllContextsViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />

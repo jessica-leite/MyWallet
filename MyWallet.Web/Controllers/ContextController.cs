@@ -113,14 +113,14 @@ namespace MyWallet.Web.Controllers
             }
         }
 
-        public ActionResult Delete(ContextViewModel viewModel)
+        public ActionResult Delete(DeleteContextViewModel viewModel)
         {
             return View(viewModel);
         }
 
         [HttpPost]
         [ActionName("Delete")]
-        public ActionResult DeleteConfirmed(ContextViewModel viewModel)
+        public ActionResult DeleteConfirmed(DeleteContextViewModel viewModel)
         {
             var hasExpensesOrIncomes = _unitOfWork.ContextRepository.HasExpensesOrIncomesByContextId(viewModel.Id);
             if (hasExpensesOrIncomes)
