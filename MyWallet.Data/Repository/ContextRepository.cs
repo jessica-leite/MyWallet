@@ -48,5 +48,13 @@ namespace MyWallet.Data.Repository
             var mainContext = _context.Context.FirstOrDefault(c => c.UserId == userId && c.IsMainContext);
             mainContext.IsMainContext = false;
         }
+
+        public bool HasExpensesOrIncomesByContextId(int contextId)
+        {
+            var hasExpenses = _context.Expense.Any(e => e.ContextId == contextId);
+            var hasIncomes = _context.Income.Any(i => i.ContextId == contextId);
+
+            return hasExpenses || hasIncomes;
+        }
     }
 }

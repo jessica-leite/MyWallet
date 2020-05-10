@@ -113,29 +113,33 @@ namespace MyWallet.Web.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(ContextViewModel viewModel)
         {
-            var context = _unitOfWork.ContextRepository.GetById(id);
-            var viewModel = new ContextViewModel()
-            {
-                Id = context.Id,
-                Name = context.Name
-            };
-
             return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Delete(ContextViewModel viewModel)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(ContextViewModel viewModel)
         {
-            var context = new Context()
+            var hasExpensesOrIncomes = _unitOfWork.ContextRepository.HasExpensesOrIncomesByContextId(viewModel.Id);
+            if (hasExpensesOrIncomes)
             {
-                Id = viewModel.Id
-            };
-            _unitOfWork.ContextRepository.Delete(context);
-            _unitOfWork.Commit();
+                SendModelStateErrors("Dependent expenses or incomes exist. Please delete them or switch to another context before deleting this context.");
 
-            return RedirectToAction("Index");
+                return View(viewModel);
+            }
+            else
+            {
+                var context = new Context()
+                {
+                    Id = viewModel.Id
+                };
+                _unitOfWork.ContextRepository.Delete(context);
+                _unitOfWork.Commit();
+
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
