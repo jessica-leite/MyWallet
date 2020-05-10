@@ -96,20 +96,14 @@ namespace MyWallet.Web.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(CategoryViewModel categoryViewModel)
         {
-            var category = _unitOfWork.CategoryRepository.GetById(id);
-            var viewModel = new CategoryViewModel()
-            {
-                Id = category.Id,
-                Name = category.Name,
-
-            };
-            return View(viewModel);
+            return View(categoryViewModel);
         }
 
         [HttpPost]
-        public ActionResult Delete(CategoryViewModel categoryViewModel)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(CategoryViewModel categoryViewModel)
         {
 
             var hasExpensesOrIncomes = _unitOfWork.CategoryRepository.HasExpensesOrIncomesByCategoryId(categoryViewModel.Id);
