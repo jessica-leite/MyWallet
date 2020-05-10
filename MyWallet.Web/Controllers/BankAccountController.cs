@@ -1,9 +1,9 @@
 ﻿using MyWallet.Data.Domain;
+using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.BankAccount;
 using System;
 using System.Linq;
 using System.Web.Mvc;
-using MyWallet.Data.Repository;
 
 namespace MyWallet.Web.Controllers
 {
@@ -98,22 +98,17 @@ namespace MyWallet.Web.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
         {
-            var bankAccount = _unitOfWork.BankAccountRepository.GetById(id);
-            var viewModel = new BankAccountViewModel()
-            {
-                Id = bankAccount.Id,
-                Name = bankAccount.Name,
-            };
-            return View(viewModel);
+            return View(bankAccountViewModel);
         }
 
         [HttpPost]
-        public ActionResult Delete(BankAccountViewModel bankAccountViewModel)
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(BankAccountViewModel bankAccountViewModel)
         {
-            var dependentExpensesOrIncomes = _unitOfWork.BankAccountRepository.HasDependentExpensesOrIncomes(bankAccountViewModel.Id);
-            if (dependentExpensesOrIncomes)
+            var hasExpensesOrIncomes = _unitOfWork.BankAccountRepository.HasExpensesOrIncomesByBankAccountId(bankAccountViewModel.Id);
+            if (hasExpensesOrIncomes)
             {
                 SendModelStateErrors("Dependent expenses or incomes exist. Please delete them or switch to another bank account before deleting this bank account.");
 

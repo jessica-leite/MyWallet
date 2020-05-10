@@ -1,10 +1,20 @@
 ﻿@model MyWallet.Web.ViewModels.BankAccount.BankAccountViewModel
 
+@section breadcrumb {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index")">Bank Accounts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+}
+
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Delete", "BankAccount", FormMethod.Post, new { @class = "user" }))
         {
             @Html.HiddenFor(b => b.Id)
+            @Html.HiddenFor(b => b.OpeningBalance)
             <fieldset>
                 <legend>Delete BankAccount</legend>
                 <hr />

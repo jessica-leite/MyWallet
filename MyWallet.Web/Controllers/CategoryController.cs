@@ -112,16 +112,16 @@ namespace MyWallet.Web.Controllers
         public ActionResult Delete(CategoryViewModel categoryViewModel)
         {
 
-            var dependentExpensesOrIncomes = _unitOfWork.CategoryRepository.HasDependentExpensesOrIncomes(categoryViewModel.Id);
-            if (dependentExpensesOrIncomes)
+            var hasExpensesOrIncomes = _unitOfWork.CategoryRepository.HasExpensesOrIncomesByCategoryId(categoryViewModel.Id);
+            if (hasExpensesOrIncomes)
             {
                 SendModelStateErrors("Dependent expenses or incomes exist. Please delete them or switch to another category before deleting this category.");
                 return View(categoryViewModel);
             }
             else
             {
-                _unitOfWork.CategoryRepository.Delete(new Category { Id = categoryViewModel.Id});
-                
+                _unitOfWork.CategoryRepository.Delete(new Category { Id = categoryViewModel.Id });
+
                 _unitOfWork.Commit();
                 return RedirectToAction("Index");
             }

@@ -1,8 +1,7 @@
 ﻿using MyWallet.Data.Domain;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
-using System.Web.Mvc;
+using System.Linq;
 
 namespace MyWallet.Data.Repository
 {
@@ -95,12 +94,12 @@ namespace MyWallet.Data.Repository
             return allCategories;
         }
 
-        public bool HasDependentExpensesOrIncomes(int categoryId)
+        public bool HasExpensesOrIncomesByCategoryId(int categoryId)
         {
-            var dependentExpenses = _context.Expense.Any(e => e.CategoryId == categoryId);
-            var dependentIncomes = _context.Income.Any(i => i.CategoryId == categoryId);
+            var hasExpenses = _context.Expense.Any(e => e.CategoryId == categoryId);
+            var hasIncomes = _context.Income.Any(i => i.CategoryId == categoryId);
 
-            return dependentExpenses || dependentIncomes;
+            return hasExpenses || hasIncomes;
         }
     }
 }

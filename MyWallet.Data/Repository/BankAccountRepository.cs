@@ -48,7 +48,7 @@ namespace MyWallet.Data.Repository
         public IEnumerable<BankAccount> CreateIfNotExistsAndReturnAll(IEnumerable<string> newBankAccountsName, int contextId)
         {
             var existentBankAccounts = GetByName(newBankAccountsName, contextId);
-            
+
             var allBankAccounts = new List<BankAccount>();
             foreach (var bankAccountName in newBankAccountsName)
             {
@@ -73,12 +73,12 @@ namespace MyWallet.Data.Repository
             return allBankAccounts;
         }
 
-        public bool HasDependentExpensesOrIncomes(int bankAccountId)
+        public bool HasExpensesOrIncomesByBankAccountId(int bankAccountId)
         {
-            var dependentExpenses = _context.Expense.Any(e => e.BankAccountId == bankAccountId);
-            var dependentIncomes = _context.Income.Any(i => i.BankAccountId == bankAccountId);
+            var hasExpenses = _context.Expense.Any(e => e.BankAccountId == bankAccountId);
+            var hasIncomes = _context.Income.Any(i => i.BankAccountId == bankAccountId);
 
-            return dependentExpenses || dependentIncomes;
+            return hasExpenses || hasIncomes;
         }
     }
 }
