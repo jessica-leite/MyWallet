@@ -1,7 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
 using MyWallet.Web.ViewModels.Context;
-using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -29,8 +28,10 @@ namespace MyWallet.Web.Controllers
                 contextVM.Name = context.Name;
                 contextVM.IsMainContext = context.IsMainContext;
                 contextVM.CountryName = context.Country.Name;
+                contextVM.CountryId = context.CountryId;
                 contextVM.CurrencySymbol = context.CurrencyType.Symbol;
                 contextVM.CurrencyName = context.CurrencyType.Name;
+                contextVM.CurrencyTypeId = context.CurrencyTypeId;
 
                 viewModel.Add(contextVM);
             }
@@ -75,26 +76,16 @@ namespace MyWallet.Web.Controllers
             }
         }
 
-        public ActionResult Update(int id)
+        public ActionResult Update(ContextViewModel contextViewModel)
         {
-            var context = _unitOfWork.ContextRepository.GetById(id);
-
-            var contextViewModel = new ContextViewModel
-            {
-                Id = context.Id,
-                Name = context.Name,
-                IsMainContext = context.IsMainContext,
-                CountryId = context.CountryId,
-                CurrencyTypeId = context.CurrencyTypeId
-            };
-
             LoadDropDownListCountryAndCurrency();
 
             return View(contextViewModel);
         }
 
         [HttpPost]
-        public ActionResult Update(ContextViewModel contextViewModel)
+        [ActionName("Update")]
+        public ActionResult UpdateConfirmed(ContextViewModel contextViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +93,6 @@ namespace MyWallet.Web.Controllers
                 oldContext.Name = contextViewModel.Name;
                 oldContext.CurrencyTypeId = contextViewModel.CurrencyTypeId.Value;
                 oldContext.CountryId = contextViewModel.CountryId.Value;
-                oldContext.UserId = GetCurrentUserId();
 
                 if (!oldContext.IsMainContext && contextViewModel.IsMainContext)
                 {

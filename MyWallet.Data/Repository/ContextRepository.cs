@@ -1,5 +1,4 @@
 ﻿using MyWallet.Data.Domain;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -22,12 +21,12 @@ namespace MyWallet.Data.Repository
 
         public void Update(Context context)
         {
-            _context.Entry(context).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(context).State = EntityState.Modified;
         }
 
         public void Delete(Context context)
         {
-            _context.Entry(context).State = System.Data.Entity.EntityState.Deleted;
+            _context.Entry(context).State = EntityState.Deleted;
         }
 
         public Context GetById(int id)
