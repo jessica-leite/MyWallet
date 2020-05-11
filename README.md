@@ -1,8 +1,6 @@
-# MyWallet <progress value="70" max="100">70 %</progress>
-<progress value="70" max="100">70 %</progress>
-MyWallet is a financial management project that is being developed with an educational objective for my .NET learning.
+# MyWallet
 
-<progress value="70" max="100">70 %</progress>
+MyWallet is a financial management project that is being developed with an educational objective for my .NET learning.
 
 Using:
 ------------
