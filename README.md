@@ -2,7 +2,6 @@
 
 MyWallet is a financial management project that is being developed with an educational objective for my .NET learning.
 
-
 Using:
 ------------
 * C#
