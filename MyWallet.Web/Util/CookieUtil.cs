@@ -23,5 +23,15 @@ namespace MyWallet.Web.Util
             string jsonToken = BuildUserToken(userId, userName, mainContextId);
             FormsAuthentication.SetAuthCookie(jsonToken, rememberMe.GetValueOrDefault());
         }
+
+        public static void UpdateUserToken(UserToken userToken, int newMainContextId)
+        {
+            SetAuthCookie(userToken.UserId, userToken.Name, newMainContextId);
+        }
+
+        public static void UpdateUserToken(UserToken userToken, string newUserName)
+        {
+            SetAuthCookie(userToken.UserId, newUserName, userToken.MainContextId);
+        }
     }
 }

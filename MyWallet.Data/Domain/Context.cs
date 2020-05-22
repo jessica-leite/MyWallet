@@ -11,10 +11,5 @@
         public int CountryId { get; set; }
         public Country Country { get; set; }
         public bool IsMainContext { get; set; }
-
-        public bool IsNew()
-        {
-            return Id == 0;
-        }
     }
 }

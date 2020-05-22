@@ -1,5 +1,6 @@
 ﻿using MyWallet.Data.Domain;
 using MyWallet.Data.Repository;
+using MyWallet.Web.Util;
 using MyWallet.Web.ViewModels.Context;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -20,7 +21,7 @@ namespace MyWallet.Web.Controllers
         {
             IEnumerable<Context> listContext = _unitOfWork.ContextRepository.GetByUserId(GetCurrentUserId());
             List<ContextViewModel> viewModel = new List<ContextViewModel>();
-
+            
             foreach (var context in listContext)
             {
                 var contextVM = new ContextViewModel();
@@ -58,13 +59,19 @@ namespace MyWallet.Web.Controllers
                 context.IsMainContext = contextViewModel.IsMainContext;
                 context.UserId = GetCurrentUserId();
 
+                _unitOfWork.ContextRepository.Add(context);
+
                 if (context.IsMainContext)
                 {
                     _unitOfWork.ContextRepository.SetTheMainContextAsNonMain(context.UserId);
-                }
+                    _unitOfWork.Commit();
 
-                _unitOfWork.ContextRepository.Add(context);
-                _unitOfWork.Commit();
+                    CookieUtil.UpdateUserToken(GetUserToken(), context.Id);
+                }
+                else
+                {
+                    _unitOfWork.Commit();
+                }
 
                 return RedirectToAction("Index");
             }
@@ -89,18 +96,19 @@ namespace MyWallet.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var oldContext = _unitOfWork.ContextRepository.GetById(contextViewModel.Id);
-                oldContext.Name = contextViewModel.Name;
-                oldContext.CurrencyTypeId = contextViewModel.CurrencyTypeId.Value;
-                oldContext.CountryId = contextViewModel.CountryId.Value;
+                var context = _unitOfWork.ContextRepository.GetById(contextViewModel.Id);
+                context.Name = contextViewModel.Name;
+                context.CurrencyTypeId = contextViewModel.CurrencyTypeId.Value;
+                context.CountryId = contextViewModel.CountryId.Value;
 
-                if (!oldContext.IsMainContext && contextViewModel.IsMainContext)
+                if (!context.IsMainContext && contextViewModel.IsMainContext)
                 {
-                    _unitOfWork.ContextRepository.SetTheMainContextAsNonMain(oldContext.UserId);
-                    oldContext.IsMainContext = contextViewModel.IsMainContext;
+                    _unitOfWork.ContextRepository.SetTheMainContextAsNonMain(context.UserId);
+                    context.IsMainContext = contextViewModel.IsMainContext;
+                    CookieUtil.UpdateUserToken(GetUserToken(), context.Id);
                 }
 
-                _unitOfWork.ContextRepository.Update(oldContext);
+                _unitOfWork.ContextRepository.Update(context);
                 _unitOfWork.Commit();
 
                 return RedirectToAction("Index");
