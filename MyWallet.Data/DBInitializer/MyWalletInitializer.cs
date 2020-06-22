@@ -10,16 +10,16 @@ namespace MyWallet.Data.DBInitializer
         protected override void Seed(MyWalletDBContext context)
         {
             var euro = new CurrencyType { Id = 1, Name = "Euro", Symbol = "€" };
-            var dollar = new CurrencyType { Id = 2, Name = "Dollar", Symbol = "$" };
             var real = new CurrencyType { Id = 3, Name = "Real", Symbol = "R$" };
+            var dollar = new CurrencyType { Id = 2, Name = "Dollar", Symbol = "$" };
 
-            context.CurrencyType.AddOrUpdate(x => x.Id, euro, dollar, real);
+            context.CurrencyType.AddOrUpdate(x => x.Id, euro, real, dollar);
 
             var portugal = new Country { Id = 1, Name = "Portugal" };
             var brazil = new Country { Id = 2, Name = "Brazil" };
-            var france = new Country { Id = 3, Name = "France" };
+            var usa = new Country { Id = 3, Name = "USA" };
 
-            context.Country.AddOrUpdate(x => x.Id, portugal, brazil, france);
+            context.Country.AddOrUpdate(x => x.Id, portugal, brazil, usa);
 
             var user = new User();
             user.Name = "Jéssica";

@@ -10,7 +10,7 @@ namespace MyWallet.Data
     {
         public MyWalletDBContext()
         {
-            Database.SetInitializer<MyWalletDBContext>(new MyWalletInitializer());
+            Database.SetInitializer(new MyWalletInitializer());
         }
 
         public DbSet<User> User { get; set; }

@@ -18,7 +18,9 @@ namespace MyWallet.Web.Controllers
 
             dashboardDTO = _unitOfWork.ExpenseRepository.GetAnnualExpensesByMonthAndContextIdAndCategory(contextId, dashboardDTO);
             dashboardDTO.AnnualIncomesByMonth = _unitOfWork.IncomeRepository.GetAnnualIncomesByMonthAndContextId(contextId);
-            //dashboardDTO.TotalCurrentMonthIncomes = dashboardDTO.AnnualIncomesByMonth[DateTime.Now.Month];
+
+            dashboardDTO.TotalCurrentMonthIncomes = 
+                dashboardDTO.AnnualIncomesByMonth.Count > 0 ? dashboardDTO.AnnualIncomesByMonth[DateTime.Now.Month] : 0;
             
             return View(dashboardDTO);
         }
